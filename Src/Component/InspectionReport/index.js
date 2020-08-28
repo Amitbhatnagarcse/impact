@@ -1,0 +1,542 @@
+
+import React, { useEffect, useRef, useState } from "react"
+import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,AsyncStorage,Modal,Platform} from 'react-native';
+import Styles from './style';
+import { SinglePickerMaterialDialog , MultiPickerMaterialDialog } from 'react-native-material-dialog';
+
+import DatePicker from 'react-native-datepicker';
+import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
+import backarrow from '../../../assets/img/backnew.png'
+import down from '../../../assets/img/downspinner.png';
+import file_upload from '../../../assets/img/file_upload.png';
+import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
+import ImagePicker from 'react-native-image-picker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
+
+const InspectionReport = ({navigation}) => {
+
+ // const itemp = navigation.state.params.id;
+ 
+  const [pir_no, setPir] = useState("")  
+  const [district_id, setDistrict] = useState("")  
+  const [district_name, setDistrict_name] = useState("")  
+  const [center_name, setCenter_name] = useState("")  
+  const [center_id, setCenter_id] = useState("")  
+  const [center_address ,setCenterAdddrress] = useState("")
+  const [center_reg_no , setRegNo] = useState("")
+  const [date , setDate] = useState("")
+  const [time , setTime] = useState("select time")
+  const [authority , setAuthority] = useState("")
+  const [attachmnet , setAttachmnet] = useState("choose file")
+  const [loading , setloading] = useState(false)
+  const [listing ,setListing] = useState([])
+  const [district_list  ,setDistrictListing] = useState([])
+
+  const [center_listing ,setCenterListing] = useState([])
+  const [role ,setrole] = useState([])
+  const [unitid ,setUnitId] = useState([''])
+
+  const [visiblesingle ,setSingleVisible] = useState([])
+  const [current_dialogue ,setCurrentDialog] = useState("")
+  const [permisssion, setPermission] = useState(RESULTS.DENIED)
+  const [imageSelector, setImageSelector] = useState(false)
+  const [imagedata, setImage] = useState('')
+  const [maxdate,setMaxDate] = useState('')
+  const [show,setShow] = useState(false)
+  const [file_extension,setFileExtension] = useState(false)
+ 
+  var block_id =''
+
+
+    const allowLocationPermission =  () => {
+    
+    if (permisssion == RESULTS.DENIED) {
+        requestMultiple([PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE, PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,PERMISSIONS.ANDROID.CAMERA]).then(
+            (statuses) => {
+              
+                if (Platform.OS == 'android') {
+
+                  if(statuses[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE] == RESULTS.BLOCKED)
+                  {
+                    
+                    openSettings().catch(() => console.warn('cannot open settings'));
+                    return;
+                  }
+                  setPermission( statuses[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE])  
+                }
+
+            },
+        );
+
+    }
+    else {
+      openSettings().catch(() => console.log('cannot open settings'));
+    }
+    }
+
+    const readData = async () => {
+      try {
+        const role_id = await AsyncStorage.getItem("role")
+        if (role_id !== null) {
+        setrole(role_id)
+        }
+        block_id = await AsyncStorage.getItem('blockid')
+        _unit = await AsyncStorage.getItem('unitid')
+        setUnitId(_unit)
+      } catch (e) {
+      }
+      
+    
+    }
+    const identity_Popup = () => {  
+    setCurrentDialog('district')
+      setSingleVisible(true)
+      setListing(district_list)
+    }
+    const identity_Popup_center = () => {  
+      setCurrentDialog('center')
+      setSingleVisible(true)
+      setListing(center_listing)
+      //this.setState({ singlePickerVisible: true ,dataSource : current_list.IdentityProofType})
+    }
+    const imagepicker = async () => {  
+    setImageSelector(true)
+    }
+
+    const selectFile = async () => {
+      // Pick a single file
+        try {
+          const res = await DocumentPicker.pick({
+            type: [DocumentPicker.types.pdf],
+          });
+          setImageSelector(false)
+          debugger
+        console.warn(res.size)
+        //  const dirs = RNFetchBlob.fs.dirs;
+      
+          var data_r = await RNFS.readFile( res.fileCopyUri , 'base64').then(resp => { return resp });
+        setImage(data_r)
+        setFileExtension('.pdf')
+      
+      //     var path = dirs.DCIMDir + `/${res.name}.pdf`;      
+      //     RNFetchBlob.fs.writeFile(path,data_r, 'base64')
+      //     .then((res) => {console.warn("File : ", res)});
+      // if (Platform.OS === 'android') {
+      //   RNFetchBlob.android.actionViewIntent(path, 'application/pdf');
+      // } else {
+      //   RNFetchBlob.ios.previewDocument(path);
+      // }
+        } catch (err) {
+          if (DocumentPicker.isCancel(err)) {
+            // User cancelled the picker, exit any dialogs or menus and move on
+          } else {
+            throw err;
+          }
+        }
+    }
+
+    const launchCamera = () => {
+      let options = {
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+          quality: 0.4,
+        },
+      };
+
+      if (imageSelector == true)
+        setImageSelector(false)
+
+      ImagePicker.launchCamera(options, (response) => {
+
+
+        if (response.didCancel) {
+          handleBackButtonClick();
+        } else if (response.error) {
+
+          handleBackButtonClick();
+        } else if (response.customButton) {
+
+
+          handleBackButtonClick();
+        } else {
+          //let source = { uri: 'data:image/jpeg;base64,' + response.data };
+          
+          setFileExtension('.jpeg')
+          setImage(response.data)
+          //console.log(JSON.stringify(response));
+          // this.setState({
+          //   imagebasesix: JSON.stringify(source),
+          //   action_file_name: response.fileName
+          // })
+          // this.setState({
+          //   filePath: response,
+          //   fileData: response.data,
+          //   fileUri: response.uri,
+          //   iconUri: require('../../assets/img/image.png'),
+          //   fileName: response.fileName
+          // });
+        }
+      });
+    }
+
+
+    const launchImageLibrary = () => {
+      let options = {
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+          quality: 0.4,
+        },
+      };
+
+      ImagePicker.launchImageLibrary(options, (response) => {
+
+        if (imageSelector == true)
+        setImageSelector(false)
+
+        if (response.didCancel) {
+
+        } else if (response.error) {
+x
+        } else if (response.customButton) {
+
+
+        } else {
+
+          //let source1 = { uri: 'data:image/jpeg;base64,' + response.data };
+          setFileExtension('.jpeg')
+       
+          setImage(response.data)
+         console.log(response.data)
+
+          //console.warn(JSON.stringify(response));
+          // this.setState({
+          //   imagebasesix: JSON.stringify(source1),
+          //   action_file_name: response.fileName
+          // })x
+
+          // this.setState({
+          //   filePath: response,
+          //   fileData: response.data,
+          //   fileUri: response.uri,
+          //   iconUri: require('../../assets/img/image.png'),
+          //   fileName: response.fileName
+          // });
+        }
+      });
+    }
+
+    const onSubmit = async () => {
+
+      var data = new URLSearchParams();
+      data.append('PIRNo',pir_no);
+      data.append('PIRDate',date);
+      data.append('PIRTime',time);
+      data.append('PIRAppAuth',authority);
+      data.append('CID',center_id);
+      data.append('Did',district_id);
+      data.append('Role',role);
+      data.append('DocFile',imagedata);
+      data.append('FileExtension',file_extension);
+      data.append('UploadBy',unitid);
+      console.log(data.toString())
+      _retrieveData(data ,'SavePIReport')
+    }
+  useEffect(() => {
+   
+    readData()
+    if(role != '')
+    {
+    
+      var data = new URLSearchParams();
+      //data.append('Role',role);
+      data.append('Role','2');
+     _retrieveData(data ,'GetAllDistrict')
+     var date = new Date().getDate(); //Current Date
+     var month = new Date().getMonth() + 1; //Current Month
+     var year = new Date().getFullYear(); //Current Year
+     setMaxDate(year + '-' + month + '-' + date )
+    
+     //allowLocationPermission()
+    }
+    // dispatch(getDashboardRequest(data.toString()))
+  }, [role]);
+
+
+  const _retrieveData = async (data ,front) => {
+    setloading(true)
+    
+      fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data.toString(),
+        json: true,
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          setloading(false)
+          if(responseJson.Status)
+          {
+
+            if(front == 'GetAllDistrict')
+            setDistrictListing(responseJson.ResponseData)
+             if(front =='GetCentersByDID')
+            setCenterListing(responseJson.ResponseData)
+              if(front == 'GetCenterDetail')
+              {
+                setCenterAdddrress(responseJson.ResponseData.CenterAddress)
+                setRegNo(responseJson.ResponseData.RegNo +  " "+ responseJson.ResponseData.ValidThrough)
+              }
+              if(front == 'SavePIReport')
+                  {
+                    alert(responseJson.Message)  
+                  }
+            }
+         
+          else{
+            alert(responseJson.Message)
+          }
+        })
+        .catch(error => {
+          //this.setState({ load: false });
+          setloading(false)
+        
+        });
+    
+   }
+
+   const _headerBar = () => {
+    return (
+      <View style={Styles.headerView}>
+      
+          <View style={{ width: 50, height: 40,   zIndex: 1,alignContent:'center' ,justifyContent:'center'}}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+               <Image
+              style={{ width: 35, height: 35,paddingLeft:10,padding:5}}
+              source={backarrow}
+            />
+            </TouchableOpacity>
+          </View>
+
+          <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report</Text>
+        
+         
+      </View>
+      
+      
+      )
+  };
+
+    return (
+      <SafeAreaView style={Styles.container} >
+          
+        <View style={Styles.container}>
+        {_headerBar()}
+
+        {imageSelector == true && (
+        <View>
+          <Modal style={Styles.dialogue}
+            isVisible={imageSelector}
+            transparent={true}
+            animationType={"fade"}
+            onRequestClose={() => setImageSelector(false)}
+          >
+            <View style={Styles.dialogue}>
+              <View style={Styles.dialogueContainer}>
+                <Text style={Styles.dialogCamera} onPress={launchCamera}>Camera</Text>
+                <Image style={{ width: 280, height: 1, backgroundColor: '#e1e1e1'}} />
+                <Text style={Styles.dialogCamera} onPress={launchImageLibrary}>Gallery</Text>
+                <Image style={{ width: 280, height: 1, backgroundColor: '#e1e1e1'}} />
+                <Text style={Styles.dialogCamera} onPress={selectFile}>File</Text>
+                <Image style={{ width: 280, height: 1, backgroundColor: '#e1e1e1'}} />
+                <Text style={Styles.dialogueCancel}
+                  onPress={() => setImageSelector(false)}
+                >Close</Text>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
+
+        <SinglePickerMaterialDialog
+         title={'Pick Value '}
+         scrolled
+         items={listing.map((row, index) =>
+           ( { value: row.Code, label: row.CodeText })) }
+          visible={visiblesingle}
+          selectedItem=  {district_id}
+          onCancel={() => setSingleVisible(false)}
+          onOk={result => {  
+ 
+      if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
+      setSingleVisible(false)
+        if(current_dialogue == 'district')                    
+        {
+          setDistrict(result.selectedItem.value)
+          setDistrict_name(result.selectedItem.label) 
+          var data = new URLSearchParams();
+          data.append('Did',result.selectedItem.value);
+          _retrieveData(data ,'GetCentersByDID')
+
+        }  
+       else
+        {
+          setCenter_name(result.selectedItem.label)
+          setCenter_id(result.selectedItem.value)
+          var data = new URLSearchParams();
+          data.append('Cid',result.selectedItem.value);
+          _retrieveData(data ,'GetCenterDetail')
+        }
+      
+      } else {
+              alert('please select value');
+      }
+  
+
+  
+    }}
+    />
+     
+        <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}> State </Text>
+       <TouchableOpacity style={{width:'50%',flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',}} onPress = {() => identity_Popup()}>
+         <Text style={Styles.inputliketext}
+              >{district_name}</Text>
+              <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
+        marginBottom:3,alignItems: 'center',}}/>
+           </TouchableOpacity>
+          </View>
+
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}> Center Name </Text>
+       <TouchableOpacity style={{width:'50%',flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',}} onPress = {() => identity_Popup_center()}>
+         <Text style={Styles.inputliketext}
+              >{center_name}</Text>
+              <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
+        marginBottom:3,alignItems: 'center',}}/>
+           </TouchableOpacity>
+          </View>
+ 
+
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>Center Address</Text>
+        <Text style={Styles.input}  >{center_address} </Text>
+          </View>
+
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>Center Reg No. Valid Thru Date</Text>
+        <Text style={Styles.input}  > { center_reg_no } </Text>
+          </View>
+
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>PIR No.</Text>
+        <TextInput
+                        style={Styles.input}
+                        placeholderTextColor="#adb4bc"
+                        returnKeyType="next"
+                        autoCapitalize="none"
+                        value = {pir_no}
+                        autoCorrect={false}
+                        keyboardType="default"
+                        onChangeText={value => setPir(value)}  />
+          </View>
+
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>Appropriate Authority</Text>
+        <TextInput
+                        style={Styles.input}
+                        placeholderTextColor="#adb4bc"
+                        returnKeyType="next"
+                        autoCapitalize="none"
+                        value = {authority}
+                        autoCorrect={false}
+                        keyboardType="default"
+                        onChangeText={value => setAuthority(value)}  />
+          </View>
+
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>Date</Text>
+        <DatePicker
+        style={{width: '50%',borderColor:'#000',borderWidth:1,height:40,backgroundColor:'white'}}
+        date={date}
+        mode="date"
+        placeholder="select date"
+        format="YYYY/MM/DD"
+        minDate="2018-05-01"
+        maxDate={maxdate}
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0,
+            borderColor:'#fff'
+          },
+          dateInput: {
+            marginLeft: 34
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => {setDate(date)}}
+      />  
+          </View>
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>Time</Text>
+        { !show &&(
+        <TouchableOpacity style={{width:'50%',flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',}} onPress = {() => setShow(true)}>
+         <Text style={Styles.inputlikefile}
+              >{time}</Text>
+              <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
+        marginBottom:3,alignItems: 'center',}}/>
+           </TouchableOpacity>
+        )}
+           {show && (
+        <RNDateTimePicker
+        style={{flex: 1}}
+         mode="time" 
+        value={new Date()} 
+        onChange={ (event, value) => {   
+          setShow(false)
+          console.warn(value)
+          setTime(JSON.stringify(value).substring(12,17))} }
+        />
+      )}
+          
+       
+        </View>
+          <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}> Attachmnet </Text>
+       <TouchableOpacity style={{width:'50%',flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',}} onPress = {() => imagepicker()}>
+         <Text style={Styles.inputlikefile}
+              >{attachmnet}</Text>
+              <Image source={file_upload} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
+        marginBottom:3,alignItems: 'center',}}/>
+           </TouchableOpacity>
+          </View>
+          <Image style={{width: 150, height: 150}} source={imagedata}/>
+          </View>
+
+        <TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
+             <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',
+		borderColor: 'white',width:'100%',textAlign:'center'}} >Submit</Text>
+        </TouchableOpacity>
+       </SafeAreaView>
+  );
+}
+
+export default InspectionReport;
