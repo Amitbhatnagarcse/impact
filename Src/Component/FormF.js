@@ -19,6 +19,8 @@ import {
   Alert,
   AsyncStorage,
 } from 'react-native';
+import {BASE_URL} from '../../Constants'
+
 
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { connect } from 'react-redux';
@@ -206,7 +208,7 @@ class FormF extends Component {
    async cllapiforgetinglist(front) {
     this.setState({ load: true });
    var data = new URLSearchParams();
-     fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+     fetch(BASE_URL+front, {
        method: "POST",
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded'
@@ -248,7 +250,7 @@ class FormF extends Component {
    // this.setState({ load: true });
    var data = new URLSearchParams();
    data.append('stateid',id)
-     fetch("http://164.100.153.176/pcpndtdemo/api/User/GetDistrict", {
+     fetch(BASE_URL+"GetDistrict", {
        method: "POST",
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded'
@@ -276,7 +278,7 @@ class FormF extends Component {
    var data = new URLSearchParams();
    data.append('cid','37');
    //data.append('MasterCode',id);
-     fetch("http://164.100.153.176/pcpndtdemo/api/User/GetDoctor", {
+     fetch(BASE_URL+"GetDoctor", {
        method: "POST",
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded'

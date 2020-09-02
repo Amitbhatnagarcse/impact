@@ -126,7 +126,7 @@ input: {
 		borderColor: 'white',
 		borderRadius: 1,
 		color: 'white',
-		width:'50%',
+		width:'45%',
 	    marginLeft:0,
 	    marginRight:0,
 		fontSize: 14,
@@ -136,17 +136,12 @@ input: {
 	  },
 	  buttonsubmityellow: {
 	
-		textAlign: 'center', 
-		borderWidth: 1,
-		borderRadius: 2,
 		color: 'white',
-		width:'50%',
+		width:'10%',
 	    marginLeft:0,
 		marginRight:0,
 		alignItems: "center",
-		fontSize: 14,
-		fontWeight: 'bold',
-		padding: 5,
+		
 	  }
 
 

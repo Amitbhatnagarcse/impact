@@ -6,14 +6,45 @@ import down from '../../../assets/img/downspinner.png';
 import file_upload from '../../../assets/img/file_upload.png';
  import Item from "./Item";
  import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
+ import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
+ import {BASE_URL} from '../../../Constants'
 
 
-const PirList = ({navigation}) => {
+const PirList = ({navigation }) => {
 
     const [role ,setrole] = useState('')
     const [district_id ,setDistrict] = useState('')
     const [loading , setloading] = useState(false)
     const [listing ,setListing] = useState([])
+    const [permisssion, setPermission] = useState(RESULTS.DENIED)
+
+
+    const allowStoragePermission =  () => {
+    
+      if (permisssion == RESULTS.DENIED) {
+          requestMultiple([PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE, PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE]).then(
+              (statuses) => {
+                
+                  if (Platform.OS == 'android') {
+  
+                    if(statuses[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE] == RESULTS.BLOCKED)
+                    {
+                      
+                      openSettings().catch(() => console.warn('cannot open settings'));
+                      return;
+                    }
+                    setPermission( statuses[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE])  
+                  }
+  
+              },
+          );
+  
+      }
+      else {
+        openSettings().catch(() => console.log('cannot open settings'));
+      }
+      }
+    
 
     const readData = async () => {
         
@@ -38,17 +69,17 @@ const PirList = ({navigation}) => {
       }
       const editdata = async(item) => {
 
-        navigation.navigate('InspectionReport' , { id : item.PirId } )
+        navigation.navigate('InspectionReport' , { id : item } )
 
       }
 
 
   const _retrieveData = async (data ,front,p_id) => {
 
-    console.warn(district_id + " cal " +role)
+  
     setloading(true)
   
-      fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+      fetch(BASE_URL+front, {
         method: "POST",
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -64,7 +95,10 @@ const PirList = ({navigation}) => {
           {
               console.log(responseJson)
             if(front == 'GetPIReportByDID')
-            setListing(responseJson.ResponseData)
+            {
+              setListing(responseJson.ResponseData)
+            }
+          
             if(front == 'DeletePIReport')
             {
               
@@ -109,7 +143,7 @@ const PirList = ({navigation}) => {
    const  _renderItem = (item , index,navigation_) => 
      {
       return (
-       <Item item = {item }  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata}/>  
+       <Item item = {item }  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata} role ={role}/>  
       )
     }
 
@@ -118,7 +152,6 @@ const PirList = ({navigation}) => {
         readData()
         if(district_id != '' && role != '')
         {
-          
           var data = new URLSearchParams();
           data.append('Year','2020');
           data.append('Did',district_id);
@@ -128,8 +161,13 @@ const PirList = ({navigation}) => {
          var date = new Date().getDate(); //Current Date
          var month = new Date().getMonth() + 1; //Current Month
          var year = new Date().getFullYear(); //Current Year
-       
-        
+         const unsubscribe = navigation.addListener('focus', () => {
+          _retrieveData(data ,'GetPIReportByDID')
+         });
+     
+         // Return the function to unsubscribe from the event so it gets removed on unmount
+         return unsubscribe;
+          allowStoragePermission()
          //allowLocationPermission()
         }
         // dispatch(getDashboardRequest(data.toString()))

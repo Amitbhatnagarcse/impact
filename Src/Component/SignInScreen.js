@@ -3,6 +3,7 @@ import OrientationLoadingOverlay from "react-native-orientation-loading-overlay"
 import backarrow from "../../assets/img/blackback_arrow.png";
 //import background from '../../assets/img/backpinview.jpg';
 import LinearGradient from 'react-native-linear-gradient';
+import {BASE_URL} from '../../Constants'
 
 import {
   StyleSheet,
@@ -86,7 +87,7 @@ export default class SignInScreen extends React.Component {
      this.setState({ load: true });
     var data = new URLSearchParams();
     data.append('MobileNo',this.state.username);
-      fetch("http://164.100.153.176/pcpndtdemo/api/User/PostValidateUser", {
+      fetch(BASE_URL+"PostValidateUser", {
         method: "POST",
         headers: {
           'Accept' : "application/json",
@@ -135,7 +136,7 @@ export default class SignInScreen extends React.Component {
 
   var data = new URLSearchParams();
   data.append('MobileNo', this.state.username);
-  fetch("http://164.100.153.176/pcpndtdemo/api/User/PostValidateUser", {
+  fetch(BASE_URL+"PostValidateUser", {
       method: "POST",
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

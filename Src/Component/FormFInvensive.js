@@ -19,6 +19,7 @@ import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import MultiSelect from 'react-native-multiple-select';
 import ThumbImpressionFormF from './ThumbimpressionFormF';
+import {BASE_URL} from '../../Constants'
 
 var current_dialogue = '';
 var current_list ='';
@@ -303,7 +304,7 @@ class FormFInvensive extends Component
     this.setState({ load: true });
  
 
-     fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+     fetch(BASE_URL+front, {
        method: "POST",
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded'
@@ -466,7 +467,7 @@ class FormFInvensive extends Component
        data.append('MasterCode',MasterCode);
        data.append('cid','3297');
 
-         fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+         fetch(BASE_URL+front, {
            method: "POST",
            headers: {
              'Content-Type': 'application/x-www-form-urlencoded'

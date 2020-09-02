@@ -9,18 +9,8 @@ export const SCREEN_DASHBOARD='Dashboard'
 export const SCREEN_QUESTIONS='QuestionScreen'
 export const SCREEN_SURVEY_LIST='SurveyListScreen'
 export const SCREEN_SURVEY_DETAIL='SurveyDetailScreen'
-
-
-
-
-
-
-
 // Other Constants
 
-export const SHARE_APP_LINK_IOS = 'https://itunes.apple.com/us/app/gonear/id1425381449?ls=1&mt=8';
-export const RATE_SHARE_APP_LINK_IOS = 'itms-apps://itunes.apple.com/us/app/id${1425381449}?mt=8.';
-export const RATE_SHARE_APP_LINK_ANDROID = 'https://play.google.com/store/apps/details?id=com.gonear';
 export const KEY_BOAD_TYPE_NUMBER = 'number-pad';
 export const KEY_BOAD_TYPE_DEFAULT = 'default';
 export const KEY_NOFICATIONDATA = 'noficationData';
@@ -28,9 +18,6 @@ export const KEY_LABEL = 'label';
 export const KEY_VALUE = 'value';
 export const KEY_IS_CHECKED = 'is_checked';
 
-export const KEY_LONGITUDE = 'longitude';
-export const KEY_LATITUDE = 'latitude';
-export const EMITTER_NOTIFICATION = 'emitter_noti';
 
 export const KEY_CLICK_ACTION = 'click_action';
 export const KEY_USER_DATA = 'user_data';

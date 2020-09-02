@@ -4,9 +4,9 @@ import { StyleSheet,Dimensions,SafeAreaView, View,TouchableOpacity,Button ,Text 
 import backarrow from '../../assets/img/backnew.png';
 import Pdf from 'react-native-pdf';
 import images from '../../assets/img/imgBase64.js';
-//import RNFetchBlob from 'react-native-fetch-blob'
 import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
 
+import {BASE_URL} from '../../Constants'
 
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
@@ -63,10 +63,6 @@ export default class PDFExample extends React.Component {
     } else {
       RNFetchBlob.ios.previewDocument(path);
     }
-
-    // create a path you want to write to
-    // :warning: on iOS, you cannot write into `RNFS.MainBundlePath`,
-    // but `RNFS.DocumentDirectoryPath` exists on both platforms and is writable
 
         } 
  
@@ -132,7 +128,7 @@ export default class PDFExample extends React.Component {
         // this.setState({ load: true });
         var data = new URLSearchParams();
         data.append('PatientId',id_)
-          fetch("http://164.100.153.176/pcpndtdemo/api/User/GetFormFDetail", {
+          fetch(BASE_URL+"GetFormFDetail", {
             method: "POST",
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'

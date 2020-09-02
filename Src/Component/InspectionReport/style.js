@@ -5,14 +5,7 @@ export default StyleSheet.create({
 body:{
 	flex:1, 
 },
-input: {
-	borderWidth: 1,
-	margin: 5,
-    padding:5,
-    width:'50%',
-	fontSize:14,
-	height: 40
-  },
+
 
   button: {
     marginBottom: 10,
@@ -62,13 +55,22 @@ input: {
 		borderWidth: 1,
 		paddingStart:5,
 		borderColor:'#1133ee',
-		padding:0,
 		width:'50%',
 		fontSize:14,
-		height:30,
 		marginRight:0.5,
-		flexDirection:'row',
+		
 	  },
+	  inputfixheight: {
+		backgroundColor:'#fff',
+		 borderWidth: 1,
+		 paddingStart:5,
+		 borderColor:'#1133ee',
+		 width:'50%',
+		 fontSize:14,
+		 height:40,
+		
+		 
+	   },
 	  inputliketext: {
 		backgroundColor:'#fff',
 		 borderWidth: 1,

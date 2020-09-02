@@ -22,6 +22,7 @@ import {
   View,
 } from 'react-native';
 
+import {BASE_URL} from '../../Constants'
 
 import backarrow from '../../assets/img/backnew.png';
 import {
@@ -53,7 +54,7 @@ const DashBoardChart = ({navigation}) => {
     var data = new URLSearchParams();
     data.append('Role','2');
     data.append('UnitId','3');
-      fetch("http://164.100.153.176/pcpndtdemo/api/User/DashboardData", {
+      fetch(BASE_URL+"DashboardData", {
         method: "POST",
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'

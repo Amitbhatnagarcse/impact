@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, View, Platform, Picker, ActivityIndicator, Button, Alert} from 'react-native';
 import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
 const SHORT_LIST = ["List element 1", "List element 2", "List element 3"];
+import {BASE_URL} from '../../Constants'
 
 var current_dialogue = '';
 const data = [
@@ -36,7 +37,7 @@ export default class Project extends Component {
  
    var data = new URLSearchParams();
   
-     fetch("http://164.100.153.176/pcpndtdemo/api/User/Stateandidentityprooftype", {
+     fetch(BASE_URL+"Stateandidentityprooftype", {
        method: "POST",
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded'

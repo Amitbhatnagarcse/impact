@@ -18,6 +18,7 @@ import ThumbImpressionFormF from './ThumbimpressionFormF';
 import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { centrename } from '../String';
+import {BASE_URL} from '../../Constants'
 
 var current_dialogue = '';
 var current_list =[];
@@ -247,7 +248,7 @@ class FormFSecond extends Component
         this.setState({ load: true });
      
 
-         fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+         fetch(BASE_URL+front, {
            method: "POST",
            headers: {
              'Content-Type': 'application/x-www-form-urlencoded'
@@ -282,7 +283,7 @@ class FormFSecond extends Component
        data.append('MasterCode',MasterCode);
        data.append('cid','3297');
 
-         fetch("http://164.100.153.176/pcpndtdemo/api/User/"+front, {
+         fetch(BASE_URL+front, {
            method: "POST",
            headers: {
              'Content-Type': 'application/x-www-form-urlencoded'

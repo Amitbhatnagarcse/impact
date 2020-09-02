@@ -19,6 +19,7 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
+import {BASE_URL} from '../Constants'
 
 import GetBusinessReward from './Component/GetBusinessReward';
 import {getBusinessRequest,getPregnancyRequest} from './actions'
@@ -102,7 +103,7 @@ class App extends Component {
    data.append('Year', '2020');
    
     
-     fetch("http://164.100.153.176/pcpndtdemo/api/User/DayEndSummary", {
+     fetch(BASE_URL+"DayEndSummary", {
        method: "POST",
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded'
