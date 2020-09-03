@@ -17,9 +17,11 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  AsyncStorage,
+
 } from 'react-native';
 import {BASE_URL} from '../../Constants'
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";

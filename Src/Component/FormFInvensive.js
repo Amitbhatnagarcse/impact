@@ -9,9 +9,11 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  AsyncStorage,
+
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import backarrow from '../../assets/img/backnew.png';
 import { SinglePickerMaterialDialog , MultiPickerMaterialDialog } from 'react-native-material-dialog';
 

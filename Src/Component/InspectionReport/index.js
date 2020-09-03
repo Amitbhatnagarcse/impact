@@ -1,8 +1,9 @@
 
 import React, { useEffect, useRef, useState } from "react"
-import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,AsyncStorage,Modal,Platform,Alert} from 'react-native';
+import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,Alert} from 'react-native';
 import Styles from './style';
 import { SinglePickerMaterialDialog , MultiPickerMaterialDialog } from 'react-native-material-dialog';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import DatePicker from 'react-native-datepicker';
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";

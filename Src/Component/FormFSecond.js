@@ -9,7 +9,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  AsyncStorage,
+ 
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import backarrow from '../../assets/img/backnew.png';
@@ -19,6 +19,7 @@ import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { centrename } from '../String';
 import {BASE_URL} from '../../Constants'
+import AsyncStorage from '@react-native-community/async-storage';
 
 var current_dialogue = '';
 var current_list =[];

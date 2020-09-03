@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   SafeAreaView,
-  AsyncStorage,
   Image,
   ImageBackground,
   Platform,
@@ -25,6 +24,7 @@ import {
   Alert,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class SignInScreen extends React.Component {

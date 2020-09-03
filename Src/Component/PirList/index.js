@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,AsyncStorage,Modal,Platform,FlatList} from 'react-native';
+import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,FlatList} from 'react-native';
 import Styles from './style';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import backarrow from '../../../assets/img/backnew.png'
 import down from '../../../assets/img/downspinner.png';
 import file_upload from '../../../assets/img/file_upload.png';

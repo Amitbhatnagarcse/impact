@@ -1,9 +1,10 @@
 
 import React, { useEffect, useRef, useState } from "react"
-import { Image, SafeAreaView, StatusBar, Text ,ImageBackground,BackHandler, AsyncStorage} from "react-native"
+import { Image, SafeAreaView, StatusBar, Text ,ImageBackground,BackHandler} from "react-native"
 import ReactNativePinView from "react-native-pin-view"
 import backarrow from '../../assets/img/delete.png';
 import background from '../../assets/img/backpinview.jpg';
+import AsyncStorage from '@react-native-community/async-storage';
 
 var pin_code = '';
 const PinScren = ({navigation}) => {

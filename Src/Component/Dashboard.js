@@ -1,5 +1,6 @@
 import React from 'react';
-import {AsyncStorage, Platform,StyleSheet, Image, ImageBackground, BackHandler, FlatList, Text, View, TouchableHighlight, TouchableWithoutFeedback, SafeAreaView,Dimensions } from 'react-native';
+import { Platform,StyleSheet, Image, ImageBackground, BackHandler, FlatList, Text, View, TouchableHighlight, TouchableWithoutFeedback, SafeAreaView,Dimensions } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const DEVICE_HEIGHT = Dimensions.get('window').height - ( Platform.OS === 'ios' ? 180 : 120);
 
