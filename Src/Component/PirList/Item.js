@@ -42,7 +42,7 @@ export default function Item(  { item  , index ,navigation ,actionPer ,editfun ,
           if(responseJson.Status)
           {
             var image = responseJson.ResponseData[0].AttachedFile
-            debugger
+            
             download(image,responseJson.ResponseData[0].FileExtension)         
           }
           else{

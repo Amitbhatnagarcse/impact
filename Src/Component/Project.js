@@ -47,7 +47,6 @@ export default class Project extends Component {
      })
        .then(response => response.json())
        .then(responseJson => {
-         debugger;
          this.setState({ load: false ,dataSource : responseJson.IdentityProofType,singlePickerVisible : true});
          console.warn(JSON.stringify(responseJson.Message));
          //console.warn(JSON.stringify(dataSource));

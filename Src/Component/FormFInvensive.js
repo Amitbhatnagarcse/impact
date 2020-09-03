@@ -213,7 +213,7 @@ class FormFInvensive extends Component
     }
     else if(this.state.thumb_checked)
     {
-      debugger
+   
       if(namet == '') 
       {
         alert('please select thumb impression name ');

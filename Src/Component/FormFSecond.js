@@ -297,7 +297,7 @@ class FormFSecond extends Component
            
             if(responseJson.Status)
             {
-              debugger
+            
             this.setState({ load: false  });
              if(front == 'GetDocTypeList')
              { 
@@ -348,7 +348,7 @@ class FormFSecond extends Component
         }
 
          getIndex(email) {
-           debugger
+           
             var val = refered_by.findIndex(obj => obj.value === email);
             this.cllapiforgetinglist('GetDocTypeList',email)
             this.setState({'select_proc':refered_by[val].label})

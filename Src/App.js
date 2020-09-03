@@ -113,7 +113,7 @@ class App extends Component {
      })
        .then(response => response.json())
        .then(responseJson => {
-         debugger;
+        
          this.setState({ load: false ,date : '',total_sono:'',women_sono:''});
          //console.warn(JSON.stringify(responseJson.ResposeData));
          console.warn(JSON.stringify(responseJson.Message));
