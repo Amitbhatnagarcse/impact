@@ -17,6 +17,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  BackHandler,
   StyleSheet,
   Text,
   View,
@@ -37,12 +38,12 @@ const DashBoardChart = ({navigation}) => {
   const screenWidth  = Dimensions.get("window").width;
   const [loading , setloading] = useState([false]); 
   const loadings = useSelector((state) => state.loading);
-  const [listing ,setListing] = useState([{"TotFormFInYear":0,"TotFormFInMonth":0,"TotFormFInDate":0,"NewCentresInMonth":0,"NewCentresInYear":0,"TotFormAPending":0}])
+  const [listing ,setListing] = useState([{"TotFormFInYear":20000,"TotFormFInMonth":20000,"TotFormFInDate":20000,"NewCentresInMonth":20000,"NewCentresInYear":20000,"TotFormAPending":20000}])
 
   const dispatch = useDispatch();
 	useEffect(() => {
 
-    _retrieveData()
+    //_retrieveData()
     
     // dispatch(getDashboardRequest(data.toString()))
     
@@ -108,7 +109,8 @@ const DashBoardChart = ({navigation}) => {
       population: listing[0].NewCentresInYear,
       color: "rgba(126, 99, 7, 0.7)",
       legendFontColor: "#000",
-      legendFontSize: 18
+      legendFontSize: 18,
+      
     },
     {
       name: "Current Month",
@@ -128,25 +130,25 @@ const DashBoardChart = ({navigation}) => {
   ];
   const datapie2 = [
     {
-      name: "TotFormFInYear",
+      name: "Tot In Year",
       population: listing[0].TotFormFInYear,
       color: "rgba(74, 96, 232, 0.8)",
       legendFontColor: "#fff",
-      legendFontSize: 13
+      legendFontSize: 18
     },
     {
-      name: "TotFormFInMonth",
+      name: "Tot In Month",
       population: listing[0].TotFormFInMonth,
       color: "brown",
       legendFontColor: "#fff",
-      legendFontSize: 13
+      legendFontSize: 18
     },
     {
-      name: "TotFormFInDate",
+      name: "Tot In Date",
       population: listing[0].TotFormFInDate,
       color: "red",
       legendFontColor: "#fff",
-      legendFontSize: 13
+      legendFontSize: 18
     },
    
   ];
@@ -211,21 +213,20 @@ const DashBoardChart = ({navigation}) => {
   marginTop : 15,
   backgroundColor:'#ffffff',
    shadowColor: '#cc8800',
-   shadowOffset: { width: 0, height: 1 },
+   shadowOffset: { width: 10, height: 1 },
    shadowOpacity: 0.9,
    shadowRadius: 2,
    elevation: 2}}>
 
 <PieChart
   data={datapie}
-  width={screenWidth-16}
-  height={220}
+  width={screenWidth-2}
+  height={245}
   showLegend = {false}
-  
   chartConfig={chartConfig}
   accessor="population"
   backgroundColor="transparent"
-  paddingLeft="-10"
+  paddingLeft="5"
 
   absolute
 />
@@ -257,14 +258,13 @@ const DashBoardChart = ({navigation}) => {
      
 <PieChart
   data={datapie2}
-  width={screenWidth-16}
-  height={220}
+  width={screenWidth-2}
+  height={245}
   showLegend = {false}
-  
   chartConfig={chartConfig2}
   accessor="population"
   backgroundColor="transparent"
-  paddingLeft="-10"
+  paddingLeft="5"
 
   absolute
 />

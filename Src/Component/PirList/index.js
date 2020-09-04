@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,FlatList} from 'react-native';
+import { Text,Alert ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,FlatList} from 'react-native';
 import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -9,7 +9,7 @@ import file_upload from '../../../assets/img/file_upload.png';
  import Item from "./Item";
  import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
  import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
- import {BASE_URL} from '../../../Constants'
+ import {BASE_URL,Yellowcolour} from '../../../Constants'
 
 
 const PirList = ({navigation }) => {
@@ -58,15 +58,31 @@ const PirList = ({navigation }) => {
           setDistrict(district_i)
       
       }
-
+ 
+      const deletecnfrm = async (id) =>
+      {
+        var data = new URLSearchParams();
+        data.append('PirId',id);
+        data.append('Role',role)
+        _retrieveData(data ,'DeletePIReport',id)
+      }
       const deleteItemById = async (id) => {
         
         // const filteredData = listing.filter(item => item.PirId !== id);
+        Alert.alert(
+          '',
+          'Are You Sure you want to delete',
+          [
+            {text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel'},
+            {text: 'Yes', onPress: () => deletecnfrm(id)},
+          
+          ],
+          { 
+            cancelable: true 
+          }
+        );
         // setListing(filteredData)
-        var data = new URLSearchParams();
-        data.append('PirId',id);
-        data.append('Role','3')
-        _retrieveData(data ,'DeletePIReport',id)
+      
    
       }
       const editdata = async(item) => {
@@ -176,7 +192,7 @@ const PirList = ({navigation }) => {
       }, [district_id,role]);
 
       return (
-        <SafeAreaView style={Styles.container} >
+        <SafeAreaView style={{flex: 1, backgroundColor: Yellowcolour}} >
             
           <View style={Styles.container}>
           <OrientationLoadingOverlay visible={loading}>
@@ -199,13 +215,16 @@ const PirList = ({navigation }) => {
               numColumns={1}
               bounces={false}
             />
-             <TouchableOpacity    onPress={() => navigation.navigate('InspectionReport')}>
-             <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',
-		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
-        </TouchableOpacity>
+            
+          
+      
            
           </View>
-          </SafeAreaView>
+          <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
+             <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',paddingTop:15,height:60,fontSize:18,
+		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
+        </TouchableOpacity>
+          </SafeAreaView> 
       )
 
 }

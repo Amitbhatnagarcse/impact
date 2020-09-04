@@ -15,6 +15,7 @@ import {
   TextInput,
   Image,
   Button,
+  BackHandler,
   Alert,
   TouchableOpacity,
   ActivityIndicator
@@ -27,7 +28,6 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
 import backarrow from '../assets/img/backnew.png';
 
-
 class App extends Component {
  
   state = {
@@ -37,6 +37,15 @@ class App extends Component {
     women_sono: ''
   };
 
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    
+    //this.props.navigation.goBack()
+  }
 
   onChangeText(key, value) {
     this.setState({
@@ -61,12 +70,7 @@ class App extends Component {
      this.cllapiforPregnancy();
    }
   }
-  toggleDrawer() {
-    this.props.navigation.goBack()
-    // this.setState({
-    //   isOpen: !this.state.isOpen,
-    // });
-  }
+  
 
   _headerBar = () => {
     return (
@@ -127,6 +131,8 @@ class App extends Component {
  
   componentDidMount(){
 
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
     var data = new URLSearchParams();
     data.append('cid', '3289');
     data.append('month', '3');
@@ -135,12 +141,7 @@ class App extends Component {
 
     this.props.getPregnancyRequest(
       data.toString()
-    )
-
-    // this.props.getBusinessRequest({
-    //   "business_id": 7,
-    //   "reward_type": "reviews"
-    // })
+       )
   }
 
   handleClick( name ,wom , dat){

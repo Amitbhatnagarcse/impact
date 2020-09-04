@@ -17,7 +17,7 @@ export const KEY_NOFICATIONDATA = 'noficationData';
 export const KEY_LABEL = 'label';
 export const KEY_VALUE = 'value';
 export const KEY_IS_CHECKED = 'is_checked';
-
+export const Yellowcolour = '#cc8800';
 
 export const KEY_CLICK_ACTION = 'click_action';
 export const KEY_USER_DATA = 'user_data';

@@ -13,12 +13,12 @@ import file_upload from '../../../assets/img/file_upload.png';
 import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
 import ImagePicker from 'react-native-image-picker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import {BASE_URL} from '../../../Constants'
 
 var pid_id = ''
+
 const InspectionReport = ({navigation ,route}) => {
 
   const [pir_no, setPir] = useState("")  
@@ -31,11 +31,10 @@ const InspectionReport = ({navigation ,route}) => {
   const [date , setDate] = useState("")
   const [time , setTime] = useState("select time")
   const [authority , setAuthority] = useState("")
-  const [attachmnet , setAttachmnet] = useState("choose file")
+  const [attachmnet , setAttachmnetName] = useState("select file")
   const [loading , setloading] = useState(false)
   const [listing ,setListing] = useState([])
   const [district_list  ,setDistrictListing] = useState([])
-
   const [center_listing ,setCenterListing] = useState([])
   const [role ,setrole] = useState([])
   const [unitid ,setUnitId] = useState([''])
@@ -115,6 +114,7 @@ const InspectionReport = ({navigation ,route}) => {
             type: [DocumentPicker.types.pdf],
           });
           setImageSelector(false)
+          setAttachmnetName(res.name)
        
         
         if( Number(res.size) > 1048576)
@@ -221,7 +221,7 @@ x
             return
           }
           setFileExtension('.jpeg')
-       
+          setAttachmnetName(response.fileName)
           setImage(response.data)
           //console.warn(JSON.stringify(response));
           // this.setState({
@@ -240,6 +240,14 @@ x
       });
     }
 
+    const changetime = async (timeString) =>{
+    
+      var H = +timeString.substr(0, 2);
+      var h = H % 12 || 12;
+      var ampm = (H < 12 || H === 24) ? " AM" : " PM";
+      timeString = h + timeString.substr(2, 3) + ampm;
+      setTime(timeString)
+    }
     const onSubmit = async () => {
 
       var data = new URLSearchParams();
@@ -320,7 +328,6 @@ x
 
   const _retrieveData = async (data ,front) => {
     setloading(true)
-      debugger
       fetch(BASE_URL+front, {
         method: "POST",
         headers: {
@@ -459,7 +466,7 @@ x
     />
      
         <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}> City </Text>
+        <Text style={Styles.inputtext}> District </Text>
        <TouchableOpacity style={{width:'50%',flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',}} onPress = {() => identity_Popup()}>
@@ -567,7 +574,12 @@ x
         value={new Date()} 
         onChange={ (event, value) => {  
           setShow(false)
-          setTime((''+value).substring(16,21))}}
+          changetime((''+value).substring(16,21))
+          //setTime((''+value).substring(16,21))
+        }
+        }
+         
+          
         />
       )}
           

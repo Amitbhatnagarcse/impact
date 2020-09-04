@@ -41,9 +41,8 @@ export default function Item(  { item  , index ,navigation ,actionPer ,editfun ,
           setloading(false)
           if(responseJson.Status)
           {
-            var image = responseJson.ResponseData[0].AttachedFile
-            
-            download(image,responseJson.ResponseData[0].FileExtension)         
+            const image = responseJson.ResponseData[0].AttachedFile
+            download(''+image,responseJson.ResponseData[0].FileExtension)         
           }
           else{
             alert(responseJson.Message)
@@ -88,7 +87,7 @@ export default function Item(  { item  , index ,navigation ,actionPer ,editfun ,
      }
   
     return (
-      <View style = {{margin:5 ,borderRadius: 5, borderColor:'#e1e1e1' ,elevation : 5,backgroundColor: 'rgba(52, 52, 52, 0.4)'}}>
+      <View style = {{margin:5 ,borderRadius: 5, shadowColor: '#cc8800', borderColor:'#e1e1e1' ,elevation : 5,backgroundColor: 'rgba(52, 52, 52, 0.4)'}}>
        <OrientationLoadingOverlay visible={loading}>
           <View>
             <Image
@@ -111,15 +110,11 @@ export default function Item(  { item  , index ,navigation ,actionPer ,editfun ,
           </View> 
 
           <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>PIR Date</Text>
-        <Text style={Styles.input}  >{item.PIRDate} </Text>
+        <Text style={Styles.inputtext}>PIR Date Time</Text>
+        <Text style={Styles.input}  >{item.PIRDate} {item.PIRTime} </Text>
           </View> 
 
-          <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>PIR Time</Text>
-        <Text style={Styles.input}  >{item.PIRTime} </Text>
-          </View> 
-
+      
           <View style={Styles.inputboxview} >
         <Text style={Styles.inputtext}>PIR Appropirate Authority</Text>
         <Text style={Styles.input}  >{item.PIRAppAuth} </Text>
@@ -136,7 +131,6 @@ export default function Item(  { item  , index ,navigation ,actionPer ,editfun ,
         </TouchableOpacity>
         <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
           _retrieveData('GetPIReportDetail',item.PirId)
-          //download(item)
           }>
         <Image source={file_upload} style={{ bottom: 0, right: 2,height:30,width:30,  justifyContent: 'center',
         marginBottom:2,alignItems: 'center'}}/>

@@ -8,8 +8,7 @@ import {
   Image,
   Text,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
+
 
 const window = Dimensions.get('window');
 

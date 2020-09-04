@@ -8,15 +8,17 @@ import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
 import { Col } from 'native-base';
 import background from '../../assets/img/backpinview.jpg';
+import {Yellowcolour} from '../../Constants'
+//import footer from '../../assets/img/footer.jpg'
+import FooterComponent from '../CommonComponent/Footer'
 
-
-const arrayEarnRewards = [
+const arrayEarnReward = [
   {
     name: 'DASHBOARD',
     img: require('../../assets/img/dashboard.png')
   },
   {
-    name: 'RENEWAL \n APPLICATION',
+    name: 'Report',
     img: require('../../assets/img/renewal.png')
   },
   {
@@ -27,7 +29,32 @@ const arrayEarnRewards = [
     name: 'FORM F',
     img: require('../../assets/img/formf.png')
   },
- 
+  {
+    name: 'Feedback',
+    img: require('../../assets/img/feedback.png')
+  },
+]
+const rollthree = [
+  {
+    name: 'DASHBOARD',
+    img: require('../../assets/img/dashboard.png')
+  },
+  {
+    name: 'PIR UPLOAD',
+    img: require('../../assets/img/renewal.png')
+  },
+  {
+    name: 'DAY \n END \nSUMMARY',
+    img: require('../../assets/img/dayendsummary.png')
+  },
+  {
+    name: 'Report',
+    img: require('../../assets/img/formf.png')
+  },
+  {
+    name: 'Feedback',
+    img: require('../../assets/img/feedback.png')
+  },
 ]
 
 var role ="";
@@ -45,9 +72,7 @@ class Dashboard extends React.Component {
               token: '',
               pageType: "HomeScreen",
               title : 'Impact',
-              arrayEarnRewards,
-            
-            
+              arrayEarnRewards:[],         
             }
    }
 
@@ -61,16 +86,18 @@ class Dashboard extends React.Component {
 
     await  AsyncStorage.getItem('role', (err, result) => {
         this.role = result; 
-       
-
+        
+       if(result == '5' || result =='3')
+       {
+        this.setState({ arrayEarnRewards : rollthree})
+       }
+       else
+       {
+       this.setState({ arrayEarnRewards : arrayEarnReward})
+       }
        });
-       
-    // await  AsyncStorage.getItem('username', (err, result) => {
-    //     username = result;
-    //   });    
-
+           
   }
-
 
   componentDidMount()
   {
@@ -98,43 +125,39 @@ class Dashboard extends React.Component {
         <ImageBackground
           source={item.img}
           resizeMode ={"center"}
-          style={{margin:1, flex: 1, resizeMode: 'cover', height: ((DEVICE_HEIGHT) / 3) }}>
-          <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.4)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}>
-
-            <TouchableHighlight onPress={() => {
+          style={{padding:2, flex: 1, resizeMode: 'cover', height: ((DEVICE_HEIGHT) / 3 -20) }}>
+             <TouchableHighlight
+             style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.4)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}
+             onPress={() => {
+             
               if(item.name == 'DAY \n END \nSUMMARY')
               this.props.navigation.navigate('Home')
               else if (item.name =='FORM F')
               {
               this.props.navigation.navigate('Formf')
               }
-              else if(item.name == 'RENEWAL \n APPLICATION')
+              else if(item.name == 'PIR UPLOAD')
               {
                 //this.props.navigation.navigate('InspectionReport')
                 this.props.navigation.navigate('PirList')
                 //this.props.navigation.navigate('PDFExample');
                 //this.props.navigation.navigate('ShareDemo');
               }
-              else 
+              else if(item.name ==  'DASHBOARD')
               {
-                
-                if(this.role == "5")
-                {
-                 // alert('Only Admin will acces this data')
-                this.props.navigation.navigate('DashBoardChart');
-                }
-                else
-                {
                   this.props.navigation.navigate('DashBoardChart');
-                }
-               
-                //this.props.navigation.navigate('ShareDemo');
               }
-              
+              else
+              {
+
+              }  
             }}>
+          <View >
+
+           
               <Text style={{ color: 'white', fontSize: 20 , fontFamily: 'Cochin', fontWeight: 'bold', textAlign: 'center' }}>{item.name}</Text>
-            </TouchableHighlight>
           </View>
+          </TouchableHighlight>
 
         </ImageBackground>
 
@@ -187,10 +210,12 @@ class Dashboard extends React.Component {
 
   getArrayByType(type) {
   
+    
+
     var array = {
-      'HomeScreen':this.state.arrayEarnRewards,
-     
+    'HomeScreen':this.state.arrayEarnRewards,  
     };
+
     return (array[type] || array['default']);
   }
 
@@ -216,16 +241,16 @@ class Dashboard extends React.Component {
   render() {
     const columntype = this.getColumnType(this.state.pageType);
 
-    const menu = <Menu onItemSelected={this.onMenuItemSelected} type='home'      navigation={this.props.navigation}
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} type='home'  navigation={this.props.navigation}
     />;
 
     return (
       <SideMenu
-      menu={menu}
-      isOpen={this.state.isOpen}
-      onChange={isOpen => this.updateMenuState(isOpen)}
+       menu={menu}
+       isOpen={this.state.isOpen}
+       onChange={isOpen => this.updateMenuState(isOpen)}
     >
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Yellowcolour }}>
 
         <View style={styles.container}>
         <ImageBackground
@@ -249,6 +274,9 @@ class Dashboard extends React.Component {
 
          </ImageBackground>
         </View>
+    
+      <FooterComponent/>
+    
       </SafeAreaView>
       </SideMenu>
 
