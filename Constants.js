@@ -18,6 +18,7 @@ export const KEY_LABEL = 'label';
 export const KEY_VALUE = 'value';
 export const KEY_IS_CHECKED = 'is_checked';
 export const Yellowcolour = '#cc8800';
+export const Gradientcolour = '#66d9ff'
 
 export const KEY_CLICK_ACTION = 'click_action';
 export const KEY_USER_DATA = 'user_data';
@@ -85,11 +86,13 @@ export const METHOD_TYPE_PUT = 'PUT';
 
 //export const BASE_URL = 'http://18.188.100.196:3000/';
 export const BASE_URL = 'http://164.100.153.176/pcpndtdemo/api/User/';
-export const AUTH_URL = BASE_URL+'auth/';
+
 
 
 export const API_GET_BUSINESS_REWARD = BASE_URL+'getbusiness_points';
 export const API_GET_PGREGNANCY_LIST = BASE_URL+'Dayendsummarylist';
 export const API_GET_DASHBOARD_CHART = BASE_URL+'DashboardData';
+export const API_GET_FORMF_REPORT_CHART = BASE_URL+'FormFReport';
+//export const API_GET_FORMF_REPORT_CHART = BASE_URL+'Dayendsummarylist';
 
 

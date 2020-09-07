@@ -34,6 +34,7 @@ import ShareDemo from '../Component/ShareDemo';
 import DashBoardChart from '../Component/DashBoardChart';
 import InspectionReport from '../Component/InspectionReport';
 import PirList from '../Component/PirList';
+import FormfReport from '../Component/FormfReport';
 
 
 import {
@@ -89,6 +90,7 @@ function App() {
       <Stack.Screen name="ShareDemo" component={ShareDemo} />
       <Stack.Screen name="InspectionReport" component={InspectionReport} />
       <Stack.Screen name="PirList" component={PirList} />
+      <Stack.Screen name="FormfReport" component={FormfReport} />
       
       </Stack.Navigator>
     </NavigationContainer>

@@ -193,7 +193,9 @@ export default class SignInScreen extends React.Component {
         this.storeItem("pin",this.state.pin);
         this.storeItem("unitid",this.state.logindata.UnitId.toString());
         this.storeItem("userid",this.state.logindata.UserId.toString());        
+        this.storeItem("username",this.state.logindata.UserName);        
         this.storeItem("role",this.state.logindata.Role.toString());
+
         this.props.navigation.navigate('PinScreen');
       }
       else

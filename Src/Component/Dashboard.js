@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform,StyleSheet, Image, ImageBackground, BackHandler, FlatList, Text, View, TouchableHighlight, TouchableWithoutFeedback, SafeAreaView,Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
 
 const DEVICE_HEIGHT = Dimensions.get('window').height - ( Platform.OS === 'ios' ? 180 : 120);
 
@@ -8,7 +9,7 @@ import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
 import { Col } from 'native-base';
 import background from '../../assets/img/backpinview.jpg';
-import {Yellowcolour} from '../../Constants'
+import {Yellowcolour,Gradientcolour} from '../../Constants'
 //import footer from '../../assets/img/footer.jpg'
 import FooterComponent from '../CommonComponent/Footer'
 
@@ -17,10 +18,10 @@ const arrayEarnReward = [
     name: 'DASHBOARD',
     img: require('../../assets/img/dashboard.png')
   },
-  {
-    name: 'Report',
-    img: require('../../assets/img/renewal.png')
-  },
+  // {
+  //   name: 'Report',
+  //   img: require('../../assets/img/renewal.png')
+  // },
   {
     name: 'DAY \n END \nSUMMARY',
     img: require('../../assets/img/dayendsummary.png')
@@ -30,8 +31,12 @@ const arrayEarnReward = [
     img: require('../../assets/img/formf.png')
   },
   {
-    name: 'Feedback',
+    name: 'FEEDBACK',
     img: require('../../assets/img/feedback.png')
+  },
+  {
+    name: 'FORMF REPORT',
+    img: require('../../assets/img/formfreport.png')
   },
 ]
 const rollthree = [
@@ -48,11 +53,11 @@ const rollthree = [
     img: require('../../assets/img/dayendsummary.png')
   },
   {
-    name: 'Report',
-    img: require('../../assets/img/formf.png')
+    name: 'FORMF REPORT',
+    img: require('../../assets/img/formfreport.png')
   },
   {
-    name: 'Feedback',
+    name: 'FEEDBACK',
     img: require('../../assets/img/feedback.png')
   },
 ]
@@ -72,7 +77,8 @@ class Dashboard extends React.Component {
               token: '',
               pageType: "HomeScreen",
               title : 'Impact',
-              arrayEarnRewards:[],         
+              arrayEarnRewards:[], 
+              username :''        
             }
    }
 
@@ -83,11 +89,13 @@ class Dashboard extends React.Component {
         this.center_name = result;
 
       });
-
+    await AsyncStorage.getItem('username',(err ,result) => {
+      this.setState({username : result})
+    })
     await  AsyncStorage.getItem('role', (err, result) => {
         this.role = result; 
         
-       if(result == '5' || result =='3')
+       if(result == '0' || result =='3' || result=='1')
        {
         this.setState({ arrayEarnRewards : rollthree})
        }
@@ -120,14 +128,14 @@ class Dashboard extends React.Component {
 
   _renderItem(item) {
     return (
-      <Col style={{ padding: 1, paddingLeft: 0 ,margin:2}}>
+      <Col style={{ padding: 2, paddingLeft: 0}}>
 
         <ImageBackground
           source={item.img}
           resizeMode ={"center"}
-          style={{padding:2, flex: 1, resizeMode: 'cover', height: ((DEVICE_HEIGHT) / 3 -20) }}>
+          style={{padding:2, flex: 1, resizeMode: 'cover', height: ((DEVICE_HEIGHT) / 3 -22) }}>
              <TouchableHighlight
-             style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.4)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}
+             style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.32)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}
              onPress={() => {
              
               if(item.name == 'DAY \n END \nSUMMARY')
@@ -146,6 +154,10 @@ class Dashboard extends React.Component {
               else if(item.name ==  'DASHBOARD')
               {
                   this.props.navigation.navigate('DashBoardChart');
+              }
+              else if(item.name == 'FORMF REPORT')
+              {
+                this.props.navigation.navigate('FormfReport')
               }
               else
               {
@@ -258,7 +270,13 @@ class Dashboard extends React.Component {
           resizeMode ={"cover"}
           backgroundColor = {'#e1e1e1'}
           style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}>
-        {this._headerBar()}
+          {this._headerBar()}
+          <LinearGradient colors={[Gradientcolour, Yellowcolour]} style={styles.containertabwhite}>
+          <Text style={styles.tabtitledata}> Welcome</Text>
+          <View style={styles.line}></View>
+    <Text style={styles.tabtitledata}> {this.state.username }</Text>
+
+          </LinearGradient>
           {this.props.loading && <MaterialIndicator color="#5B5A5F" size={30} trackWidth={2} />}
           {!this.props.loading && (this.state.pageType === "HomeScreen" ) &&
             <FlatList
@@ -307,6 +325,24 @@ const styles = StyleSheet.create({
     marginTop: 0,
     fontFamily: ''
   },
+  containertabwhite: {
+		
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: Gradientcolour,
+		borderRadius:1,
+		borderWidth: 0.5,
+		borderColor: '#000'
+    },
+    line :{
+			width:1,
+			height:40,
+			backgroundColor:'#000',
+	  },
+    tabtitledata :{
+      flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#000'
+      },
  
    button: {
     color: 'white',

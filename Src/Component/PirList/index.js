@@ -4,8 +4,7 @@ import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import backarrow from '../../../assets/img/backnew.png'
-import down from '../../../assets/img/downspinner.png';
-import file_upload from '../../../assets/img/file_upload.png';
+
  import Item from "./Item";
  import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
  import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
@@ -149,19 +148,15 @@ const PirList = ({navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report List</Text>
-        
-         
-      </View>
-      
-      
+          <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report List</Text> 
+      </View>    
       )
      };
 
    const  _renderItem = (item , index,navigation_) => 
      {
       return (
-       <Item item = {item }  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata} role ={role}/>  
+       <Item item = {item}  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata} role ={role}/>  
       )
     }
 
@@ -174,6 +169,7 @@ const PirList = ({navigation }) => {
           data.append('Year','2020');
           data.append('Did',district_id);
           data.append('Role',role);
+          
 
          _retrieveData(data ,'GetPIReportByDID')
          var date = new Date().getDate(); //Current Date

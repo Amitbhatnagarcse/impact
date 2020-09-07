@@ -38,13 +38,12 @@ const DashBoardChart = ({navigation}) => {
   const screenWidth  = Dimensions.get("window").width;
   const [loading , setloading] = useState([false]); 
   const loadings = useSelector((state) => state.loading);
-  const [listing ,setListing] = useState([{"TotFormFInYear":20000,"TotFormFInMonth":20000,"TotFormFInDate":20000,"NewCentresInMonth":20000,"NewCentresInYear":20000,"TotFormAPending":20000}])
+  const [listing ,setListing] = useState([{"TotFormFInYear":0,"TotFormFInMonth":0,"TotFormFInDate":0,"NewCentresInMonth":0,"NewCentresInYear":0,"TotFormAPending":0}])
 
   const dispatch = useDispatch();
 	useEffect(() => {
 
-    //_retrieveData()
-    
+    _retrieveData()
     // dispatch(getDashboardRequest(data.toString()))
     
   }, [loadings]);

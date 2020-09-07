@@ -14,7 +14,7 @@ import OrientationLoadingOverlay from "react-native-orientation-loading-overlay"
 import { BASE_URL } from '../../../Constants';
 
 
-export default function Item(  { item  , index ,navigation ,actionPer ,editfun ,role} )
+export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
 {
  
 

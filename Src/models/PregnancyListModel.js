@@ -12,5 +12,9 @@ export default class PregnancyListModel {
        
         return callApi(Constants.METHOD_TYPE_POST, Constants.API_GET_DASHBOARD_CHART, requestBody)
     }
+    static getFormFReport(requestBody)
+    {
+        return callApi(Constants.METHOD_TYPE_POST,Constants.API_GET_FORMF_REPORT_CHART,requestBody)
+    }
 
 }

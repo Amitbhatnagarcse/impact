@@ -1,6 +1,5 @@
 import * as Constants from '../../Constants';
 
-
 export async function callApi(methodType, apiUrl, request) {
   if (methodType == Constants.METHOD_TYPE_POST) {
     
@@ -13,6 +12,7 @@ export async function callApi(methodType, apiUrl, request) {
       json: true,
     })
       .then(response => {
+        
         const statusCode = response.status;
         const data = response.json();
         return Promise.all([statusCode, data]);

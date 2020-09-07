@@ -14,15 +14,25 @@ export const createAction = (type, payload) => {
   };
 
   
+  export const getFORMFREPORTRequest = (requestBody) =>
+  createAction(Types.GET_FORMFREPORT_LIST_REQUEST,{requestBody});
+  export const getFORMFREPORTStarted = () =>
+  createAction(Types.GET_FORMFREPORT_LIST_STARTED);
+  export const getFORMFREPORTSuccess = (response) =>
+  createAction(Types.GET_FORMFREPORT_LIST_SUCCESS,{response});
+  export const getFORMFREPORTFailure = (response) =>
+  createAction(Types.GET_FORMFREPORT_LIST_FAILURE,{response});
+
+
 
   export const getBusinessRequest = (requestBody) =>
-    createAction(Types.GET_BUSINESS_REWARDS_REQUEST,{requestBody});
-export const getBusinessStarted = () =>
-    createAction(Types.GET_BUSINESS_REWARDS_STARTED);
-export const getBusinessSuccess = (response) =>
-    createAction(Types.GET_BUSINESS_REWARDS_SUCCESS,{response});
-export const getBusinessFailure = (response) =>
-    createAction(Types.GET_BUSINESS_REWARDS_FAILURE,{response});
+  createAction(Types.GET_BUSINESS_REWARDS_REQUEST,{requestBody});
+  export const getBusinessStarted = () =>
+  createAction(Types.GET_BUSINESS_REWARDS_STARTED);
+  export const getBusinessSuccess = (response) =>
+  createAction(Types.GET_BUSINESS_REWARDS_SUCCESS,{response});
+  export const getBusinessFailure = (response) =>
+  createAction(Types.GET_BUSINESS_REWARDS_FAILURE,{response});
 
 
     export const getPregnancyRequest = (requestBody) =>

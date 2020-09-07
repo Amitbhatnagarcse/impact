@@ -5,7 +5,6 @@ import Immutable from 'seamless-immutable';
 export const createReducer = (initialState, config) => {
     return (state = initialState, action) => {
         if (config[action.type]) {
-            
             return config[action.type](state, action);
         }
         return state;
@@ -18,17 +17,32 @@ export const initialState =  Immutable.from({
     businesPoints: [],
     pregnancyList : [],
     dashboardList : [],
-
+    formfreport : [],
 
 });
+
+
+export const getFormFCallStarted = state =>
+    state.merge({
+        loading: true,
+    });
+export const getFormFCallSuccess = (state, response) =>
+
+        state.merge({
+        loading: false,
+        formfreport: response.response.ResponseData
+
+    });
+export const getFormFCallFailure = state =>
+    state.merge({
+        loading: false,
+    }); 
 
 
 export const getBusinessCallStarted = state =>
     state.merge({
         loading: true,
-
-    })
-    ;
+    });
 export const getBusinessCallSuccess = (state, response) =>
     state.merge({
         loading: false,
@@ -44,8 +58,7 @@ export const getBusinessCallFailure = state =>
     state.merge({
         loading: true,
 
-    })
-    ;
+    });
 export const getPreganancyCallSuccess = (state, response) =>
   
     state.merge({
@@ -77,7 +90,6 @@ export const getPreganancyCallFailure = state =>
 
     const appReducer = createReducer(initialState, {
  
-
         [Types.GET_BUSINESS_REWARDS_STARTED]: getBusinessCallStarted,
         [Types.GET_BUSINESS_REWARDS_SUCCESS]: getBusinessCallSuccess,
         [Types.GET_BUSINESS_REWARDS_FAILURE]: getBusinessCallFailure,
@@ -87,7 +99,9 @@ export const getPreganancyCallFailure = state =>
         [Types.GET_DASHBOARD_LIST_REQUEST]: getDashboardStarted,
         [Types.GET_DASHBOARD_LIST_SUCCESS]: getDashboardCallSuccess,
         [Types.GET_DASHBOARD_LIST_FAILURE]: getDashboardCallFailure,
-      
+        [Types.GET_FORMFREPORT_LIST_STARTED] : getFormFCallStarted,
+        [Types.GET_FORMFREPORT_LIST_SUCCESS] : getFormFCallSuccess,
+        [Types.GET_FORMFREPORT_LIST_FAILURE] : getFormFCallFailure,
       
       });
       
