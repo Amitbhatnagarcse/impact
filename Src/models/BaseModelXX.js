@@ -15,6 +15,7 @@ export async function callApi(methodType, apiUrl, request) {
         
         const statusCode = response.status;
         const data = response.json();
+        console.log(data.toString())
         return Promise.all([statusCode, data]);
       })
       .then(([statusCode, data]) => {

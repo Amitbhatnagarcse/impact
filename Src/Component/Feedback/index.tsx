@@ -7,20 +7,14 @@ import {BASE_URL,Yellowcolour} from '../../../Constants'
 import FooterComponent from '../../CommonComponent/Footer'
 import { useSelector, useDispatch } from 'react-redux';
 import { getFORMFREPORTRequest } from '../../actions';
-import TabZeroComponent from '../FormfReport/TabZero';
-import TabFiveComponent from '../FormfReport/TabFive';
-import TabThreeComponent from '../FormfReport/TabThree';
-import TabFiveData from '../FormfReport/TabFiveData';
-import TabThreeData from './TabThreeData'
-import TabZeroData from './TabZeroData'
+
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
+import moment from 'react-moment';
 import DatePicker from 'react-native-datepicker';    
-import { compareAsc, format } from 'date-fns'
 
 
-var did = ''
 
-const FormfReport = ( {navigation} ) => {
+const Feedback = ( {navigation} ) => {
 
     const dispatch = useDispatch()
     const loading = useSelector((state) => state.loading);
@@ -29,16 +23,7 @@ const FormfReport = ( {navigation} ) => {
     const [date , setDate] = useState('')
     const [maxdate , setMaxDate] = useState('')
     const [role ,setrole] = useState('')
-    const setTableHeader = ()=>
-    {
-         if(role == '3')
-        return(<TabThreeComponent navigation = {navigation}/>)
-        else if(role =='5')
-        return(<TabFiveComponent navigation = {navigation}/>)
-        else
-        return(<TabZeroComponent navigation = {navigation}/>)
-    }
-  
+   
     const _headerBar = () => {
         return (
           <View style={Styles.headerView}>
@@ -57,55 +42,30 @@ const FormfReport = ( {navigation} ) => {
           )
          };
 
-         const getDaten = async () =>{
-          var date = new Date().getDate(); //Current Date
-          var month = new Date().getMonth() + 1; //Current Month
-          var year = new Date().getFullYear(); //Current Year
-         
-          var yesterday = new Date(Date.now() - 864e5);
-           setDate(''+format(new Date(yesterday), 'yyyy/MM/dd'))  
-           setMaxDate(year + '-' + month + '-' + date)
-         }
          const readData = async () => {
         
             const role_id = await AsyncStorage.getItem("role")
-           if(role_id == '3')
-           {
-             did = await AsyncStorage.getItem('districtid')
-           }
-            if(role_id =='5')
-            {
-             did = await AsyncStorage.getItem('centreid')
-            }
+         
             if (role_id !== null) {
                 setrole(role_id)                         
               }
         }
-         const  _renderItem = (item , index) => 
-          {       
-            if(role == '3')
-            return(  <TabThreeData item={item} navigation = {navigation}/> )
-            else if(role =='5')
-            return(  <TabFiveData item={item} navigation = {navigation}/> )
-            else
-            return(  <TabZeroData item={item} navigation = {navigation}/> )
-          }
+        
           useEffect(() => {
    
             readData()
-            getDaten()
-            if(role != '' && date !='')
-            {
-               //  FromDate=2018/07/15&Did=101&Role=3
-                var data = new URLSearchParams();
-                data.append('FromDate',date);
-                if(role =='3' || role =='5')
-                data.append('did',did);
-                data.append('Role',role);
-                console.warn(data.toString())
-                dispatch(getFORMFREPORTRequest(data.toString()))
+            if(role != '')
+            { 
+                // FromDate=2018/07/15&Did=101&Role=3
+                // var data = new URLSearchParams();
+                // data.append('FromDate','2018/07/15');
+                // if(role =='3' || role =='5')
+                // data.append('did',did);
+                // data.append('Role',role);
+                // console.log(data.toString())
+                // dispatch(getFORMFREPORTRequest(data.toString()))
             }
-          }, [role,date]);
+          }, [role]);
 
           
   return (
@@ -135,7 +95,7 @@ const FormfReport = ( {navigation} ) => {
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(date) => setDate(date)}
+        onDateChange={(date) => {setDate(date)}}
       />  
 
     <OrientationLoadingOverlay visible={loading}>
@@ -148,23 +108,11 @@ const FormfReport = ( {navigation} ) => {
           </View>
         </OrientationLoadingOverlay>
   
-    {setTableHeader()}
   
-    {loading == false &&
-        <FlatList 
-              style={{
-               flex:1,
-              backgroundColor:'#fff',width:'100%'}}
-              renderItem={(item, index) => _renderItem(item.item,index)}
-              data={foflisting}
-              numColumns={1}
-              bounces={false}
-            />
-    }
         </View>
 <FooterComponent/>
 </SafeAreaView> 
  );
 };
 
-export default FormfReport;
+export default Feedback;

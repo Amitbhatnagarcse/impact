@@ -35,6 +35,7 @@ import DashBoardChart from '../Component/DashBoardChart';
 import InspectionReport from '../Component/InspectionReport';
 import PirList from '../Component/PirList';
 import FormfReport from '../Component/FormfReport';
+import Feedback from '../Component/Feedback';
 
 
 import {
@@ -91,6 +92,7 @@ function App() {
       <Stack.Screen name="InspectionReport" component={InspectionReport} />
       <Stack.Screen name="PirList" component={PirList} />
       <Stack.Screen name="FormfReport" component={FormfReport} />
+      <Stack.Screen name="Feedback" component={Feedback} />
       
       </Stack.Navigator>
     </NavigationContainer>

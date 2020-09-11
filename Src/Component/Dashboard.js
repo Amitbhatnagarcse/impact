@@ -53,13 +53,13 @@ const rollthree = [
     img: require('../../assets/img/dayendsummary.png')
   },
   {
-    name: 'FORMF REPORT',
-    img: require('../../assets/img/formfreport.png')
-  },
-  {
     name: 'FEEDBACK',
     img: require('../../assets/img/feedback.png')
   },
+  {
+    name: 'FORMF REPORT',
+    img: require('../../assets/img/formfreport.png')
+  }
 ]
 
 var role ="";
@@ -118,8 +118,7 @@ class Dashboard extends React.Component {
   }
 
   handleBackButtonClick() {
-    //alert('hello');
-    BackHandler.exitApp();
+   BackHandler.exitApp();
     //this.props.navigation.goBack(null);
     return true;
   }
