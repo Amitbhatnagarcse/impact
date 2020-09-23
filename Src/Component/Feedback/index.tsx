@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react"
-import { View, Text ,Image ,TouchableOpacity ,SafeAreaView,FlatList} from 'react-native';
+import { View, Text ,Image ,TouchableOpacity ,SafeAreaView,FlatList,BackHandler} from 'react-native';
 import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 import pngIcons  from '../../../assets/img/images';
@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getFORMFREPORTRequest } from '../../actions';
 
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
-import moment from 'react-moment';
 import DatePicker from 'react-native-datepicker';    
 
 
@@ -23,6 +22,8 @@ const Feedback = ( {navigation} ) => {
     const [date , setDate] = useState('')
     const [maxdate , setMaxDate] = useState('')
     const [role ,setrole] = useState('')
+    const [selectedValue, setSelectedValue] = useState("java");
+
    
     const _headerBar = () => {
         return (
@@ -37,7 +38,7 @@ const Feedback = ( {navigation} ) => {
                 </TouchableOpacity>
               </View>
     
-              <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>FORM F REPORT</Text> 
+              <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>FEEDBACK</Text> 
           </View>    
           )
          };
@@ -50,7 +51,15 @@ const Feedback = ( {navigation} ) => {
                 setrole(role_id)                         
               }
         }
-        
+
+
+          const backAction = () => {
+
+            navigation.goBack(null)
+            return true;
+          };
+
+
           useEffect(() => {
    
             readData()
@@ -65,6 +74,12 @@ const Feedback = ( {navigation} ) => {
                 // console.log(data.toString())
                 // dispatch(getFORMFREPORTRequest(data.toString()))
             }
+
+            BackHandler.addEventListener("hardwareBackPress", backAction);
+
+            return () =>
+              BackHandler.removeEventListener("hardwareBackPress", backAction);
+            
           }, [role]);
 
           
@@ -97,6 +112,7 @@ const Feedback = ( {navigation} ) => {
         }}
         onDateChange={(date) => {setDate(date)}}
       />  
+      
 
     <OrientationLoadingOverlay visible={loading}>
           <View>
@@ -108,7 +124,7 @@ const Feedback = ( {navigation} ) => {
           </View>
         </OrientationLoadingOverlay>
   
-  
+        
         </View>
 <FooterComponent/>
 </SafeAreaView> 

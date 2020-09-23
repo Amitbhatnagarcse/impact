@@ -12,7 +12,7 @@ const TabThreeData
           
     <Text style={Styles.tabtitledata}>{item.CenterName}</Text>
             <View style={Styles.line} />
-    <Text style={Styles.tabtitledata}>{item.FormFCount}</Text>
+    <Text style={Styles.tabtitledatahalf}>{item.FormFCount}</Text>
         </View>
       );
 }

@@ -1,6 +1,6 @@
  
 import React from 'react';
-import { StyleSheet,Dimensions,SafeAreaView, View,TouchableOpacity,Button ,Text ,Image ,Platform} from 'react-native';
+import { StyleSheet,Dimensions,SafeAreaView,BackHandler, View,TouchableOpacity,Button ,Text ,Image ,Platform} from 'react-native';
 import backarrow from '../../assets/img/backnew.png';
 import Pdf from 'react-native-pdf';
 import images from '../../assets/img/imgBase64.js';
@@ -114,9 +114,19 @@ export default class PDFExample extends React.Component {
         this.shareMultipleImages()
         //this.shareToFiles();
     }
+    componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+  
+    handleBackButtonClick() {
+      alert('please use back arrow this back press is disabled for security reason')
+      //this.props.navigation.goBack(null);
+      return true;
+    }
     componentDidMount()
     {
-      
+      BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
       const{ id_pdf  } = this.props.route.params;
         this.getpdf(id_pdf);
         this.allowLocationPermission();
@@ -158,7 +168,7 @@ export default class PDFExample extends React.Component {
               <View style={styles.headerView}>
               
                   <View style={{ width: 50, height: 40,   zIndex: 1,alignContent:'center' ,justifyContent:'center'}}>
-                  <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}>
                     <Image
                       style={{ width: 35, height: 35,paddingLeft:10,padding:5}}
                       source={backarrow}

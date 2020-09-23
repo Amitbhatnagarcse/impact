@@ -82,6 +82,13 @@ input: {
 		width:'35%',
 		fontSize:13,
 		flex:1, 
+	  },  inputtextbig: {
+		padding:2,
+		width:'35%',
+		fontSize:13,
+		flex:1, 
+		paddingBottom:10,
+		paddingTop:10
 	  },
 	  dialogue:{
 		// backgroundColor:'blue',

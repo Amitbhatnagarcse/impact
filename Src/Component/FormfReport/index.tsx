@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react"
-import { View, Text ,Image ,TouchableOpacity ,SafeAreaView,FlatList} from 'react-native';
+import { View, Text ,Image ,TouchableOpacity ,SafeAreaView,FlatList,BackHandler} from 'react-native';
 import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 import pngIcons  from '../../../assets/img/images';
@@ -16,6 +16,7 @@ import TabZeroData from './TabZeroData'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import DatePicker from 'react-native-datepicker';    
 import { compareAsc, format } from 'date-fns'
+import { da } from "date-fns/locale";
 
 
 var did = ''
@@ -26,7 +27,7 @@ const FormfReport = ( {navigation} ) => {
     const loading = useSelector((state) => state.loading);
     const foflisting = useSelector((state) => state.formfreport);
 
-    const [date , setDate] = useState('')
+    const [dates , setDate] = useState('')
     const [maxdate , setMaxDate] = useState('')
     const [role ,setrole] = useState('')
     const setTableHeader = ()=>
@@ -39,6 +40,11 @@ const FormfReport = ( {navigation} ) => {
         return(<TabZeroComponent navigation = {navigation}/>)
     }
   
+    const setFunctionDate = async(dat) =>
+    {
+      console.warn('call api')
+     await setDate(dat)
+    }
     const _headerBar = () => {
         return (
           <View style={Styles.headerView}>
@@ -90,22 +96,34 @@ const FormfReport = ( {navigation} ) => {
             else
             return(  <TabZeroData item={item} navigation = {navigation}/> )
           }
+
+const backAction = () => {
+
+  navigation.goBack(null)
+  return true;
+};
+
           useEffect(() => {
    
             readData()
+            if(dates == '')
             getDaten()
-            if(role != '' && date !='')
+            if(role != '' && dates !='')
             {
                //  FromDate=2018/07/15&Did=101&Role=3
                 var data = new URLSearchParams();
-                data.append('FromDate',date);
+                data.append('FromDate',dates);
                 if(role =='3' || role =='5')
                 data.append('did',did);
                 data.append('Role',role);
                 console.warn(data.toString())
                 dispatch(getFORMFREPORTRequest(data.toString()))
             }
-          }, [role,date]);
+            BackHandler.addEventListener("hardwareBackPress", backAction);
+
+            return () =>
+              BackHandler.removeEventListener("hardwareBackPress", backAction);
+          }, [role,dates]);
 
           
   return (
@@ -113,12 +131,12 @@ const FormfReport = ( {navigation} ) => {
     <View style={Styles.container}>
     {_headerBar()}  
     <DatePicker
-        style={{width: '50%',borderColor:'#000',borderWidth:1,height:35,backgroundColor:'white'}}
-        date={date}
+        style={{margin :10,width: '90%',borderColor:'#000',borderWidth:1,height:40,backgroundColor:'white'}}
+        date={dates}
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
+        minDate="2018/05/01"
         maxDate={maxdate}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
@@ -135,7 +153,7 @@ const FormfReport = ( {navigation} ) => {
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(date) => setDate(date)}
+        onDateChange={(date) =>    setFunctionDate(date)  }
       />  
 
     <OrientationLoadingOverlay visible={loading}>

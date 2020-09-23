@@ -12,7 +12,7 @@ const TabThree
           
             <Text style={Styles.tabtitle}>Center Name</Text>
             <View style={Styles.line} />
-            <Text style={Styles.tabtitle}>FormF Entered</Text>
+            <Text style={Styles.tabtitlehlaf}>FormF Entered</Text>
         </View>
       );
 }

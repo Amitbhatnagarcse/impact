@@ -24,6 +24,7 @@ import {
 } from 'react-native';
 
 import {BASE_URL} from '../../Constants'
+import AsyncStorage from '@react-native-community/async-storage';
 
 import backarrow from '../../assets/img/backnew.png';
 import {
@@ -37,23 +38,52 @@ const DashBoardChart = ({navigation}) => {
 
   const screenWidth  = Dimensions.get("window").width;
   const [loading , setloading] = useState([false]); 
+  const [role , setrole] = useState(['']); 
+  const [unitid , setunitid] = useState(['']); 
+
   const loadings = useSelector((state) => state.loading);
   const [listing ,setListing] = useState([{"TotFormFInYear":0,"TotFormFInMonth":0,"TotFormFInDate":0,"NewCentresInMonth":0,"NewCentresInYear":0,"TotFormAPending":0}])
-
   const dispatch = useDispatch();
+
+  const readData = async () => {
+        
+    const role_id = await AsyncStorage.getItem("role")
+    setrole(role_id) 
+    const unit_id = await AsyncStorage.getItem('unitid')
+
+     setunitid(unit_id) 
+  
+}
+
+
+const backAction = () => {
+
+  navigation.goBack(null)
+  return true;
+};
 	useEffect(() => {
 
-    _retrieveData()
+    readData()
+
+    if(role != '' && unitid !='')
+    {
+      _retrieveData()
+    }
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
     // dispatch(getDashboardRequest(data.toString()))
     
-  }, [loadings]);
+  }, [role,unitid]);
   
   const _retrieveData = async () => {
  
     setloading(true)
     var data = new URLSearchParams();
-    data.append('Role','2');
-    data.append('UnitId','3');
+    data.append('Role',role);
+    data.append('UnitId',unitid);
+    console.warn(data.toString())
       fetch(BASE_URL+"DashboardData", {
         method: "POST",
         headers: {

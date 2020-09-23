@@ -17,6 +17,8 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  FlatList,
+  BackHandler,
 
 } from 'react-native';
 import {BASE_URL} from '../../Constants'
@@ -26,6 +28,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { connect } from 'react-redux';
+
 import DatePicker from 'react-native-datepicker';    
 import backarrow from '../../assets/img/backnew.png';
 import down from '../../assets/img/downspinner.png';
@@ -40,6 +43,7 @@ var center_id = '';
 var center_name  = '';
 var center_reg_date = ''
 var center_reg_no = ''
+var my_navigation;
 var doctor_list = [{Code: 'Radiologist', CodeText : '' ,Address : '' },];
 
 import { CheckBox } from 'react-native-elements'
@@ -84,6 +88,7 @@ class FormF extends Component {
     id_proof_value : '',
     patient_name:'',
     dataSource :[],
+    nonprocedurelist :[],
     singlePickerVisible : false,
     multiPickerVisible : false,
     age:0,
@@ -204,12 +209,12 @@ class FormF extends Component {
   }
    conditionMessage(message)
   {
-    alert('Please Enter ' + message);
+    alert('Enter ' + message);
   }
 
    async cllapiforgetinglist(front) {
     this.setState({ load: true });
-   var data = new URLSearchParams();
+    var data = new URLSearchParams();
      fetch(BASE_URL+front, {
        method: "POST",
        headers: {
@@ -304,18 +309,29 @@ class FormF extends Component {
        });
    }
 
+   componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+   alert('please use back arrow this back press is disabled for security reason')
+    //this.props.navigation.goBack(null);
+    return true;
+  }
   componentDidMount(){
-   // alert('call api did mount');
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+      
+
     this.cllapiforgetinglist('Stateandidentityprooftype');
-  this._retrieveData(centreid);
-  var date = new Date().getDate(); //Current Date
-  var month = new Date().getMonth() + 1; //Current Month
-  var year = new Date().getFullYear(); //Current Year
+    this._retrieveData(centreid);
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
  
-  this.setState({
-    maxDate:
-      year + '-' + month + '-' + date ,
-  })
+      this.setState({
+        maxDate:
+          year + '-' + month + '-' + date ,
+      })
   }
 
   onSubmit()
@@ -327,7 +343,7 @@ class FormF extends Component {
     // y  
     // check if not true then state id and district id in this
    
-   //patient reg date get async  
+  
     if(this.state.date == '')
     {
        this.conditionMessage(' Registration Date');
@@ -356,16 +372,41 @@ class FormF extends Component {
       this.conditionMessage('Age');
       return;
     }
+    if(this.state.age > 45)
+    {
+      this.conditionMessage(' Age Can not be greater then 45')
+      return;
+    }
      if(this.state.number_child_boy == '-1')
     {
       this.conditionMessage('Total Child Boy');
       return;
+    }
+    if(this.state.number_child_boy =='0'  && this.state.number_child_boy_age.trim() != '')
+    {
+      this.setState({number_child_boy_age : ''})
     }
      if(this.state.number_child_boy !='0'  && this.state.number_child_boy_age.trim() == '')
     {
       this.conditionMessage('Total Child Boy Age');
       return;
     }
+   // set condition here
+ //patient reg date get async  
+ if(this.state.number_child_boy !='0'  && this.state.number_child_boy_age.trim() != '')
+ {
+
+  var datava = this.state.number_child_boy_age.split(",")
+  datava = datava.filter(Number)
+  console.warn(datava);
+   var  size =  datava.length 
+  if(size != this.state.number_child_boy)
+  {
+    this.conditionMessage('correct total child boy age')
+    return;
+  }
+
+ }
      if(this.state.number_child_girl == '-1')
     {
       this.conditionMessage('Total Child Girl');
@@ -376,6 +417,25 @@ class FormF extends Component {
       this.conditionMessage('Total Child Girl Age');
       return;
     }
+    if(this.state.number_child_girl =='0' && this.state.number_child_girl_age.trim() != '')
+    {
+      this.setState({number_child_girl_age : ''})
+    }
+     //patient reg date get async  
+   if(this.state.number_child_girl !='0'  && this.state.number_child_girl_age.trim() != '')
+   {
+
+    var datava = this.state.number_child_girl_age.split(",")
+    datava = datava.filter(Number)
+    console.warn(datava);
+     var  size =  datava.length 
+    if(size != this.state.number_child_girl)
+    {
+      this.conditionMessage('correct total child girl age')
+      return;
+    }
+ 
+   }
      if(this.state.relation_id == '-1' || this.state.relation_id =='0')
     {
       this.conditionMessage('Relation');
@@ -553,8 +613,12 @@ class FormF extends Component {
           selectedItems={this.state.scrolledMultiPickerSelectedItems}
           onCancel={() => this.setState({ multiPickerVisible: false })}
           onOk={result => {
+            console.warn(result)
+            
             if(result.selectedItems.length > 0)
             {
+              this.setState({  nonprocedurelist : result.selectedItems})
+            
               total_non_invansive = result.selectedItems.length;
               var value = '';
               for(let i =0 ; i <total_non_invansive; i++)
@@ -599,7 +663,7 @@ class FormF extends Component {
         }
        else if(current_dialogue == 'state')
         {
-          this.setState({ 'state': result.selectedItem.label , 'state_id'  :result.selectedItem.value });
+          this.setState({ 'state': result.selectedItem.label , 'state_id'  :result.selectedItem.value ,'district':'',district_id:''});
           this.cllapiforgetingDistrictlist(result.selectedItem.value);
         }
         else if (current_dialogue == 'district')
@@ -770,6 +834,7 @@ class FormF extends Component {
                         placeholderTextColor="#adb4bc"
                         placeholder = {'2,3,4 (years)'}
                         returnKeyType="next"
+                        keyboardType= "numeric"
                         autoCapitalize="none"
                         value = {this.state.number_child_boy_age}
                         autoCorrect={false}
@@ -796,6 +861,7 @@ class FormF extends Component {
                         placeholderTextColor="#adb4bc"
                         placeholder = {'2,3,4 (years)'}
                         returnKeyType="next"
+                        keyboardType= "numeric"
                         autoCapitalize="none"
                         value = {this.state.number_child_girl_age}
                         autoCorrect={false}
@@ -902,9 +968,11 @@ class FormF extends Component {
 
           <View style={styles.inputboxview} >
         <Text style={styles.inputtext}>Telephone No.</Text>
-        <View style = {styles.input}>
+        <View style = {styles.inputview}>
         <TextInput
                         style={{width:'30%', borderRightWidth: 1,
+                        fontSize:14,
+                        height:35,
                         borderColor:'#1133ee',}}
                         placeholderTextColor="#adb4bc"
                         returnKeyType="next"
@@ -915,7 +983,8 @@ class FormF extends Component {
                         keyboardType="numeric"
                         onChangeText={value => this.onChangeText("telephonr_prefix", value)}  />
         <TextInput
-                        style={{width:'70%'}}
+                        style={{width:'70%', fontSize:14,marginLeft:5,
+                        height:35,}}
                         placeholderTextColor="#adb4bc"
                         returnKeyType="next"
                         autoCapitalize="none"
@@ -1044,7 +1113,7 @@ class FormF extends Component {
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
+        minDate="2019-01-01"
         maxDate="2030-06-01"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
@@ -1069,21 +1138,39 @@ class FormF extends Component {
           var year = new Date().getFullYear();
           var datecureent = (year +'/'+ month +'/'+ datev); 
           var date2 = new Date(datecureent);  
-          // To calculate the time difference of two dates 
-          var Difference_In_Time = date2.getTime() - date1.getTime();           
-              var total_weak = 0 ;
-           if(259200001 >  Number(Difference_In_Time)) 
-           {
-             total_weak = 0;
-           }
-           else if(  518400001 > Number(Difference_In_Time) )
-           {
-            total_weak = 1;
-           }
-           else 
-           {
-            total_weak = Math.floor( Difference_In_Time / (1000 * 3600 * 24) / 7 ); 
-           }
+          var Difference_In_Time = date2.getTime() - date1.getTime();  
+          var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+
+          console.warn(Number(Difference_In_Days))   
+               var total_weak = 0 ;
+               
+               if(Difference_In_Days < 4)
+               total_weak = 0
+               else if(Difference_In_Days < 10)
+               total_weak = 1
+               else
+               {
+                 Difference_In_Days = Difference_In_Days+3
+                total_weak =Math.floor( Difference_In_Days / 7)
+
+               }
+              
+          //  if(172800000 <=  Number(Difference_In_Time)) 
+          //  {
+             
+          //    total_weak = 0;
+          //    debugger
+          //  }
+          //  else if(  518400001 > Number (Difference_In_Time))
+          //  {
+             
+          //   total_weak = 1;
+          //   debugger
+          //  }
+          //  else 
+          //  {
+          //   total_weak = Math.floor( Difference_In_Time / (1000 * 3600 * 24) / 7 ); 
+          //  }
           // {
           //   Difference_In_Time = Difference_In_Time - 259200000
           //   var total_weak = Math.floor( Difference_In_Time / (1000 * 3600 * 24) / 7 ); 
@@ -1134,7 +1221,15 @@ class FormF extends Component {
           />
           </View>
        
-        
+        { this.state.invans == 1 &&
+        <FlatList  
+                    data={this.state.nonprocedurelist}  
+                    renderItem={({item}) =>  
+                    <Text style={styles.item} >{item.label}</Text>}  
+                    
+                />  
+
+        }
        
 
          </View>
@@ -1201,17 +1296,38 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFEFD5'
   },  
   input: {
-   backgroundColor:'#fff',
-    borderWidth: 1,
-    paddingStart:5,
-    borderColor:'#1133ee',
-    padding:0,
-    width:'50%',
-    fontSize:14,
-    height:30,
-    marginRight:0.5,
-    flexDirection:'row',
-  },
+    backgroundColor:'#fff',
+     borderWidth: 1,
+     paddingStart:5,
+     borderColor:'#1133ee',
+     padding:0,
+     width:'50%',
+     fontSize:14,
+     height:30,
+     marginRight:0.5,
+     flexDirection:'row',
+   },
+   inputview: {
+    backgroundColor:'#fff',
+     borderWidth: 1,
+     paddingStart:5,
+     borderColor:'#1133ee',
+     width:'50%',
+     fontSize:14,
+     marginRight:0.5,
+     flexDirection:'row',
+   },
+   heightinputview: {
+    backgroundColor:'#fff',
+     borderWidth: 1,
+     paddingStart:5,
+     borderColor:'#1133ee',
+     width:'50%',
+     fontSize:14,
+     marginRight:0.5,
+     flexDirection:'row',
+
+   },
   inputliketext: {
     backgroundColor:'#fff',
      borderWidth: 1,
@@ -1261,7 +1377,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: 12,
     textAlign:'center',
-  }
+  },
+  item: {  
+    padding: 5,  
+    fontSize: 14,  
+    borderColor: 'black',
+    borderWidth: 1,
+}, 
 });
 
 

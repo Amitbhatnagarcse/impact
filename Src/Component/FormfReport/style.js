@@ -14,6 +14,16 @@ export default StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#000'
 	  },
+	  containertabcolumn: {
+		
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: Yellowcolour,
+		borderRadius:0.5,
+		borderWidth: 0.5,
+		borderColor: Yellowcolour
+	  },
 	  containertabwhite: {
 		flex:1,
 		flexDirection: 'row',
@@ -25,14 +35,20 @@ export default StyleSheet.create({
 		borderColor: '#000'
 	  },
 	  tabtitledata :{
-		flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#000'
+		flex:1,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#000'
+	  },
+	  tabtitledatahalf :{
+		flex:0.5,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#000'
 	  },
 	  tabtitle :{
-		flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#fff'
+		flex:1,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#fff'
+	  },
+	  tabtitlehlaf :{
+		flex:0.5,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#fff'
 	  },
 	  line :{
 			width:1,
-			height:40,
+			height:50,
 			backgroundColor:'#000',
 	  },
 body:{

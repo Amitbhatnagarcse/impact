@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react"
-import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,Alert} from 'react-native';
+import { Text ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,Alert,BackHandler} from 'react-native';
 import Styles from './style';
 import { SinglePickerMaterialDialog , MultiPickerMaterialDialog } from 'react-native-material-dialog';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -284,6 +284,11 @@ x
   
       _retrieveData(data.toString() ,'SavePIReport')
     }
+    const backAction = () => {
+
+      navigation.goBack(null)
+      return true;
+    };
     useEffect(() => {
    
     readData()
@@ -302,6 +307,7 @@ x
         setAuthority(id.PIRAppAuth)
         setCenter_id(id.Cid)
         setCenter_name(id.CenterName)
+        
         var data = new URLSearchParams();
         data.append('Cid',id.Cid);
         _retrieveData(data.toString() ,'GetCenterDetail')
@@ -312,17 +318,21 @@ x
         setSubmit('Submit')
       }   
       var data = new URLSearchParams();
-      //data.append('Role',role);
-      data.append('Role','2');
-     _retrieveData(data.toString() ,'GetAllDistrict')
-     var date = new Date().getDate(); //Current Date
-     var month = new Date().getMonth() + 1; //Current Month
-     var year = new Date().getFullYear(); //Current Year
-     setMaxDate(year + '/' + month + '/' + date )
-    
-     //allowLocationPermission()
+      data.append('Role',role);
+      _retrieveData(data.toString() ,'GetAllDistrict')
+
+      var date = new Date().getDate(); //Current Date
+      var month = new Date().getMonth() + 1; //Current Month
+      var year = new Date().getFullYear(); //Current Year
+      setMaxDate(year + '/' + month + '/' + date )
+      
+      //allowLocationPermission()
     }
-    // dispatch(getDashboardRequest(data.toString()))
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+     //dispatch(getDashboardRequest(data.toString()))
   }, [role]);
 
 

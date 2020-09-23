@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  BackHandler
 
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
@@ -505,10 +506,20 @@ class FormFInvensive extends Component
            
            });
        }
+       componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+      }
+    
+      handleBackButtonClick() {
+        alert('please use back arrow this back press is disabled for security reason')
+        //this.props.navigation.goBack(null);
+        return true;
+      }
         componentDidMount()
         {
           const{ data , name_p ,date_come , age_p} = this.props.route.params;
-       
+          BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
           age = age_p;
          this.setState({'date_of_procedure': date_come , datewomobtained : date_come , on_date : date_come , pre_natal_diagnostic_result: name_p});
         

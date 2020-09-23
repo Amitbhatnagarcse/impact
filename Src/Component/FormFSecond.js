@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  BackHandler
  
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
@@ -46,8 +47,10 @@ var refered_by = [
     {label: 'Any other (specify)', value: '2' }
   ];  
 
-  var  mydata ;
+  var mydata;
   var mydataintent;
+  var maxDateCurrent='';
+  var minDate ='';
 class FormFSecond extends Component
 {
   _handleChange(e) {
@@ -133,6 +136,7 @@ class FormFSecond extends Component
       };
       submit()
       {
+       
         if(this.state.notdptp == '')
         {
           alert('Please Select Procedure peforming doctor');
@@ -209,7 +213,10 @@ class FormFSecond extends Component
           }
          
         }
-        //9 y
+       // 9 y
+
+       
+        mydata = mydataintent;
         mydata.append('NOTDPTP',this.state.notdptp);
         //9 value y
         mydata.append('P_Proc_AttName',this.state.notdptpid);
@@ -236,7 +243,7 @@ class FormFSecond extends Component
         mydata.append('P_AbNorm_Det',this.state.abnormality_value);
 
 
-        console.log(mydata);
+        console.warn(mydata);
         this.cllapiforPostdata('SaveFormF');
       }
       identity_Popup()
@@ -320,13 +327,32 @@ class FormFSecond extends Component
            
            });
        }
+
+       componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+      }
+    
+      handleBackButtonClick() {
+        alert('please use back arrow this back press is disabled for security reason')
+        //this.props.navigation.goBack(null);
+        return true;
+      }
         componentDidMount()
         {
+          BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+
+          var date = new Date().getDate(); //Current Date
+          var month = new Date().getMonth() + 1; //Current Month
+          var year = new Date().getFullYear(); //Current Year
+          maxDateCurrent = year + '/' + month + '/' + date 
+
+          
          const{ data , name_p ,date_come } = this.props.route.params;
        
-         this.setState({'dateprocedurecarriedout': date_come , on_date : date_come , pre_natal_diagnostic: name_p});
-          
-          mydata = data;
+         minDate = date_come
+         this.setState({dateprocedurecarriedout: date_come , on_date : date_come , pre_natal_diagnostic: name_p});
+          this.setState({datewomobtained : date_come})
+          mydataintent = data;
          this.getdataFromSharedPreference();
         }
 
@@ -519,8 +545,8 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate = {this.state.dateprocedurecarriedout}
-        maxDate="2024-06-01"
+        minDate = {minDate}
+        maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -548,8 +574,8 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
-        maxDate="2024-06-01"
+        minDate={minDate}
+        maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -603,8 +629,8 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
-        maxDate="2026-06-01"
+        minDate={minDate}
+        maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Text,Alert ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,FlatList} from 'react-native';
+import { Text,Alert ,SafeAreaView,View ,TextInput,StyleSheet,TouchableOpacity,Image,Modal,Platform,FlatList,BackHandler} from 'react-native';
 import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import backarrow from '../../../assets/img/backnew.png'
+import down from '../../../assets/img/downspinner.png';
+import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
 
  import Item from "./Item";
  import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
@@ -11,14 +12,18 @@ import backarrow from '../../../assets/img/backnew.png'
  import {BASE_URL,Yellowcolour} from '../../../Constants'
 
 
-const PirList = ({navigation }) => {
+const PirList = ({navigation }) => 
+{
 
     const [role ,setrole] = useState('')
     const [district_id ,setDistrict] = useState('')
     const [loading , setloading] = useState(false)
     const [listing ,setListing] = useState([])
     const [permisssion, setPermission] = useState(RESULTS.DENIED)
+    const [district_list  ,setDistrictListing] = useState([])
+    const [visiblesingle ,setSingleVisible] = useState([])
 
+    const [district_name, setDistrict_name] = useState("")  
 
     const allowStoragePermission =  () => {
     
@@ -45,7 +50,11 @@ const PirList = ({navigation }) => {
         openSettings().catch(() => console.log('cannot open settings'));
       }
       }
-    
+      const identity_Popup = () => {  
+       
+          setSingleVisible(true)
+          setListing(district_list)
+        }
 
     const readData = async () => {
         
@@ -91,7 +100,7 @@ const PirList = ({navigation }) => {
       }
 
 
-  const _retrieveData = async (data ,front,p_id) => {
+      const _retrieveData = async (data ,front,p_id) => {
 
   
     setloading(true)
@@ -110,7 +119,7 @@ const PirList = ({navigation }) => {
           setloading(false)
           if(responseJson.Status)
           {
-              console.log(responseJson)
+           
             if(front == 'GetPIReportByDID')
             {
               setListing(responseJson.ResponseData)
@@ -122,6 +131,9 @@ const PirList = ({navigation }) => {
               const filteredData = listing.filter(item => item.PirId !== p_id);
               setListing(filteredData)
             }
+
+            if(front == 'GetAllDistrict')
+            setDistrictListing(responseJson.ResponseData)   
             }
           else{
             alert(responseJson.Message)
@@ -133,63 +145,114 @@ const PirList = ({navigation }) => {
         
         });
     
-   }
+       }
 
-   const _headerBar = () => {
-    return (
-      <View style={Styles.headerView}>
-      
-          <View style={{ width: 50, height: 40,   zIndex: 1,alignContent:'center' ,justifyContent:'center'}}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-               <Image
-              style={{ width: 35, height: 35,paddingLeft:10,padding:5}}
-              source={backarrow}
-            />
-            </TouchableOpacity>
-          </View>
-
-          <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report List</Text> 
-      </View>    
-      )
-     };
-
-   const  _renderItem = (item , index,navigation_) => 
-     {
+    const _headerBar = () => {
       return (
-       <Item item = {item}  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata} role ={role}/>  
-      )
-    }
+        <View style={Styles.headerView}>
+        
+            <View style={{ width: 50, height: 40,   zIndex: 1,alignContent:'center' ,justifyContent:'center'}}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                style={{ width: 35, height: 35,paddingLeft:10,padding:5}}
+                source={backarrow}
+              />
+              </TouchableOpacity>
+            </View>
 
-    useEffect(() => {
-   
-        readData()
-        if(district_id != '' && role != '')
-        {
-          var data = new URLSearchParams();
-          data.append('Year','2020');
-          data.append('Did',district_id);
-          data.append('Role',role);
-          
+            <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report List</Text> 
+        </View>    
+        )
+      };
 
-         _retrieveData(data ,'GetPIReportByDID')
-         var date = new Date().getDate(); //Current Date
-         var month = new Date().getMonth() + 1; //Current Month
-         var year = new Date().getFullYear(); //Current Year
-         const unsubscribe = navigation.addListener('focus', () => {
-          _retrieveData(data ,'GetPIReportByDID')
-         });
-     
-         // Return the function to unsubscribe from the event so it gets removed on unmount
-         return unsubscribe;
-          allowStoragePermission()
-         //allowLocationPermission()
-        }
-        // dispatch(getDashboardRequest(data.toString()))
-      }, [district_id,role]);
+    const  _renderItem = (item , index,navigation_) => 
+      {
+        return (
+        <Item item = {item}  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata} role ={role}/>  
+        )
+      }
+
+      const backAction = () => {
+
+        navigation.goBack(null)
+        return true;
+      };
+
+
+
+      useEffect(() => {
+    
+          readData()
+          if(district_id != '' && role != '')
+          {
+            if(role =='3')
+            {
+              var data = new URLSearchParams();
+              data.append('Year','2020');
+              data.append('Did',district_id);
+              data.append('Role',role);
+              _retrieveData(data ,'GetPIReportByDID')
+            }
+          else
+            {
+              var data = new URLSearchParams();
+              data.append('Role',role);
+              _retrieveData(data.toString() ,'GetAllDistrict')
+            }
+        
+          var date = new Date().getDate(); //Current Date
+          var month = new Date().getMonth() + 1; //Current Month
+          var year = new Date().getFullYear(); //Current Year
+          const unsubscribe = navigation.addListener('focus', () => {
+
+            _retrieveData(data ,'GetPIReportByDID')
+
+            BackHandler.addEventListener("hardwareBackPress", backAction);
+
+            return () =>
+              BackHandler.removeEventListener("hardwareBackPress", backAction);
+          });
+      
+          // Return the function to unsubscribe from the event so it gets removed on unmount
+          return unsubscribe;
+            allowStoragePermission()
+          //allowLocationPermission()
+          }
+          // dispatch(getDashboardRequest(data.toString()))
+        }, [district_id,role]);
 
       return (
         <SafeAreaView style={{flex: 1, backgroundColor: Yellowcolour}} >
-            
+             <SinglePickerMaterialDialog
+         title={'Pick Value '}
+         scrolled
+         items={listing.map((row, index) =>
+           ( { value: row.Code, label: row.CodeText })) }
+          visible={visiblesingle}
+          selectedItem=  {district_id}
+          onCancel={() => setSingleVisible(false)}
+          onOk={result => {   
+          if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
+          setSingleVisible(false)
+       
+          setDistrict(result.selectedItem.value)
+          setDistrict_name(result.selectedItem.label) 
+          var data = new URLSearchParams();
+          var year = new Date().getFullYear(); //Current Year
+          data.append('Year',year);
+          data.append('Did',result.selectedItem.value);
+          data.append('Role','3');
+          console.warn(data.toString())
+          _retrieveData(data ,'GetPIReportByDID')
+
+      
+      } else {
+              alert('please select value');
+      }
+
+    }}
+    />
+          
           <View style={Styles.container}>
           <OrientationLoadingOverlay visible={loading}>
           <View>
@@ -202,6 +265,20 @@ const PirList = ({navigation }) => {
         </OrientationLoadingOverlay>
           {_headerBar()}
 
+          { role != '3' &&
+          <View style={Styles.inputboxview} >
+         <Text style={Styles.inputtextbig}> District </Text>
+          <TouchableOpacity style={{width:'50%',flexDirection:'row',
+           justifyContent: 'center',
+           alignItems: 'center',}} onPress = {() => identity_Popup()}>
+            <Text style={Styles.inputliketext}
+                  >{district_name}</Text>
+                  <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
+            marginBottom:3,alignItems: 'center',}}/>
+              </TouchableOpacity>
+           </View>
+
+          }
           <FlatList
               style={{
                flex:1,
@@ -216,10 +293,12 @@ const PirList = ({navigation }) => {
       
            
           </View>
+          {role =='3' &&
           <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
              <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',paddingTop:15,height:60,fontSize:18,
 		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
         </TouchableOpacity>
+}
           </SafeAreaView> 
       )
 

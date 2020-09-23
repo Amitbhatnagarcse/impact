@@ -14,10 +14,10 @@ import {Yellowcolour,Gradientcolour} from '../../Constants'
 import FooterComponent from '../CommonComponent/Footer'
 
 const arrayEarnReward = [
-  {
-    name: 'DASHBOARD',
-    img: require('../../assets/img/dashboard.png')
-  },
+  // {
+  //   name: 'DASHBOARD',
+  //   img: require('../../assets/img/dashboard.png')
+  // },
   // {
   //   name: 'Report',
   //   img: require('../../assets/img/renewal.png')
@@ -31,12 +31,12 @@ const arrayEarnReward = [
     img: require('../../assets/img/formf.png')
   },
   {
-    name: 'FEEDBACK',
-    img: require('../../assets/img/feedback.png')
-  },
-  {
     name: 'FORMF REPORT',
     img: require('../../assets/img/formfreport.png')
+  },
+  {
+    name: 'FEEDBACK',
+    img: require('../../assets/img/feedback.png')
   },
 ]
 const rollthree = [
@@ -157,6 +157,10 @@ class Dashboard extends React.Component {
               else if(item.name == 'FORMF REPORT')
               {
                 this.props.navigation.navigate('FormfReport')
+              }
+              else if(item.name == 'FEEDBACK')
+              {
+                this.props.navigation.navigate('Feedback')
               }
               else
               {

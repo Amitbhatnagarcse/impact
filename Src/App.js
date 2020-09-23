@@ -21,12 +21,17 @@ import {
   ActivityIndicator
 } from 'react-native';
 import {BASE_URL} from '../Constants'
+import AsyncStorage from '@react-native-community/async-storage'
 
-import GetBusinessReward from './Component/GetBusinessReward';
+
+import DayEndSummaryList from './Component/DayEndSummaryList';
 import {getBusinessRequest,getPregnancyRequest} from './actions'
 import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
 import backarrow from '../assets/img/backnew.png';
+import { ro } from 'date-fns/locale';
+
+
 
 class App extends Component {
  
@@ -43,8 +48,9 @@ class App extends Component {
   }
 
   handleBackButtonClick() {
-    
-    //this.props.navigation.goBack()
+    alert('please use back arrow this back press is disabled for security reason')
+    //mynavigation.goBack(null);
+   // this.props.navigation.goBack()
   }
 
   onChangeText(key, value) {
@@ -129,25 +135,46 @@ class App extends Component {
        });
    }
  
-  componentDidMount(){
+  async _retrieveData  () {
+  
+   
+    try {
+      const value = await AsyncStorage.getItem('centreid');
+      const role = await AsyncStorage.getItem('role')
 
+      //mynavigation = this.props.navigation
+     
+
+      console.warn(value)
+      if (value !== null && value !== '') {
+        var data = new URLSearchParams();
+        data.append('cid', value);
+        data.append('role',role)
+        var month = new Date().getMonth() + 1
+        data.append('month',month);
+        var year = new Date().getFullYear()
+        data.append('year', year);
+        console.warn(data.toString())
+        this.props.getPregnancyRequest(
+          data.toString())
+      }else{
+
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+  componentDidMount(){
+ 
+    this._retrieveData()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
-    var data = new URLSearchParams();
-    data.append('cid', '3289');
-    data.append('month', '3');
-    data.append('year', '2020');
-
-
-    this.props.getPregnancyRequest(
-      data.toString()
-       )
+  
   }
 
   handleClick( name ,wom , dat){
-    console.warn(name + wom + dat);
+  //  console.warn(name + wom + dat);
       this.setState({ total_sono: name ,women_sono : wom , date : dat});
-    //alert('mohit');
  }
   
   render() {
@@ -225,7 +252,7 @@ class App extends Component {
           <Text style={styles.button}>Submit</Text>
         </TouchableOpacity>
         
-        {this.props.loading ==false && <GetBusinessReward
+        {this.props.loading ==false && <DayEndSummaryList
          data={this.props.pregnancyArray}
          func={this.handleClick.bind(this)}
        
