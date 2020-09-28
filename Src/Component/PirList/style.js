@@ -1,4 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native';
+import { Gradientcolourbluew } from '../../../Constants';
 
 
 export default StyleSheet.create({
@@ -45,7 +46,7 @@ input: {
     flexDirection: 'row',
   },
   headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
 	},
 	inputboxview :{

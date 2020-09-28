@@ -22,7 +22,7 @@ import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import MultiSelect from 'react-native-multiple-select';
 import ThumbImpressionFormF from './ThumbimpressionFormF';
-import {BASE_URL} from '../../Constants'
+import {BASE_URL, BlueColor, Gradientcolour, Gradientcolourbluew, Gradientcolourlight, Gradientcolouryellow} from '../../Constants'
 
 var current_dialogue = '';
 var current_list ='';
@@ -32,6 +32,10 @@ var sext = '';
 var relationt ='';
 var addresst = '';
 var age = 0;
+var maxDateCurrent='';
+var minDate ='';
+
+
 
 
 var refered_by = [
@@ -135,7 +139,6 @@ class FormFInvensive extends Component
   submit()
   {
   
-
     if(this.state.notdptp == '')
     {
       alert('Please Select Procedure peforming doctor');
@@ -152,7 +155,6 @@ class FormFInvensive extends Component
       return;
     }
    if(this.state.history ==1 && this.state.hisdesvalue == '')
-  
    {
  alert('Please Enter history Genetic Disease Name in family');
  return
@@ -321,7 +323,7 @@ class FormFInvensive extends Component
         if(responseJson.Status)
         {
           alert(JSON.stringify(responseJson.Message));
-          this.props.navigation.navigate('PDFExample' , {id_pdf : responseJson.Message.substring(65) })
+          this.props.navigation.navigate('PDFExample' , {id_pdf : responseJson.Message.substring(65) , back_id : 'Dashboard'})
          
         }
         else
@@ -518,12 +520,19 @@ class FormFInvensive extends Component
         componentDidMount()
         {
           const{ data , name_p ,date_come , age_p} = this.props.route.params;
+          
+          minDate = date_come;
+
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
           age = age_p;
          this.setState({'date_of_procedure': date_come , datewomobtained : date_come , on_date : date_come , pre_natal_diagnostic_result: name_p});
         
           mydataintent = data;
+          var date = new Date().getDate(); //Current Date
+          var month = new Date().getMonth() + 1; //Current Month
+          var year = new Date().getFullYear(); //Current Year
+          maxDateCurrent = year + '/' + month + '/' + date 
           
           this.getdataFromSharedPreference();
         }
@@ -578,7 +587,7 @@ class FormFInvensive extends Component
         }
         getNormalHeader(){
             return(
-            <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Invansive</Text>
+            <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Invansive</Text>
             )
         }
   render() {
@@ -587,9 +596,10 @@ class FormFInvensive extends Component
 
     return (
     
-     <SafeAreaView style={styles.container}>
+     <SafeAreaView style={styles.containersafe}>
         {this._headerBar()}
         <ScrollView 
+        style={styles.container}
          //ref={ref => {this.scrollView = ref}}
          //onContentSizeChange={(width,height) => this.scrollView.scrollToEnd({animated: true})}
          >
@@ -859,8 +869,8 @@ this.state.prv_child_other ?
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
-        maxDate="2024-06-01"
+        minDate={minDate}
+        maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -1013,8 +1023,8 @@ onChangeText={value => this.onChangeText("comp_value", value)}  /> : null
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
-        maxDate="2026-06-01"
+        minDate={minDate}
+        maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -1055,8 +1065,8 @@ onChangeText={value => this.onChangeText("comp_value", value)}  /> : null
         mode="date"
         placeholder="select date"
         format="YYYY/MM/DD"
-        minDate="2018-05-01"
-        maxDate="2026-06-01"
+        minDate={minDate}
+        maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -1153,7 +1163,11 @@ onChangeText={value => this.onChangeText("abnormality_detected_value", value)}  
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-     
+      backgroundColor:Gradientcolourlight
+    },
+    containersafe: {
+      flex: 1,
+     backgroundColor:Gradientcolourbluew
     },
     labelInput: {
       color: '#673AB7',
@@ -1248,15 +1262,15 @@ const styles = StyleSheet.create({
       width:'50%',
       fontSize:13,
       flex:1, 
-      
+      color:'#000'
     },
     inputtextheader: {
       padding:10,
       width:'100%',
       fontSize:12,
       flex:1, 
-      backgroundColor : '#e6ac00',
-      color : '#000'
+      backgroundColor : BlueColor,
+      color : '#fff'
     },
     inputtextunder: {
       padding:5,
@@ -1268,17 +1282,16 @@ const styles = StyleSheet.create({
     },
   
     headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
     },
     button: {
-      backgroundColor: 'blue',
+      backgroundColor: BlueColor,
       borderColor: 'white',
       borderWidth: 1,
       borderRadius: 12,
       color: 'white',
-     marginLeft:50,
-     marginRight:50,
+    
       fontSize: 14,
       fontWeight: 'bold',
       overflow: 'hidden',

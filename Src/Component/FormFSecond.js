@@ -19,7 +19,7 @@ import ThumbImpressionFormF from './ThumbimpressionFormF';
 import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { centrename } from '../String';
-import {BASE_URL} from '../../Constants'
+import {BASE_URL, BlueColor, Gradientcolourbluew, Gradientcolourlight} from '../../Constants'
 import AsyncStorage from '@react-native-community/async-storage';
 
 var current_dialogue = '';
@@ -270,7 +270,7 @@ class FormFSecond extends Component
             if(responseJson.Status)
             {
               alert(JSON.stringify(responseJson.Message));
-              this.props.navigation.navigate('PDFExample' , {id_pdf : responseJson.Message.substring(65) })
+              this.props.navigation.navigate('PDFExample' , {id_pdf : responseJson.Message.substring(65) , back_id : 'Dashboard' })
             }
             else
             {
@@ -405,7 +405,7 @@ class FormFSecond extends Component
         }
         getNormalHeader(){
             return(
-            <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Non Invansive</Text>
+            <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Non Invansive</Text>
             )
         }
   render() {
@@ -413,9 +413,9 @@ class FormFSecond extends Component
    
     return (
     
-     <SafeAreaView style={styles.container}>
+     <SafeAreaView style={styles.containersafe}>
         {this._headerBar()}
-        <ScrollView style={{flex:1}}>
+        <ScrollView style={styles.container}>
         <MultiPickerMaterialDialog
           title={"Pick one or more options"}
           scrolled
@@ -719,6 +719,11 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor:Gradientcolourlight
+    },
+    containersafe: {
+      flex: 1,
+      backgroundColor:Gradientcolourbluew
     },
     labelInput: {
       color: '#673AB7',
@@ -739,7 +744,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      backgroundColor:'#FFEFD5'
+      backgroundColor:'white'
     },
     inputinside: {
         backgroundColor:'#fff',
@@ -791,7 +796,7 @@ const styles = StyleSheet.create({
     },
   
     headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
     },
     inputtextheader: {
@@ -799,11 +804,11 @@ const styles = StyleSheet.create({
       width:'100%',
       fontSize:12,
       flex:1, 
-      backgroundColor : '#e6ac00',
-      color : '#000'
+      backgroundColor : BlueColor,
+      color : '#fff'
     },
     button: {
-      backgroundColor: 'brown',
+      backgroundColor: BlueColor,
       borderColor: 'white',
       borderWidth: 0,
       borderRadius: 2,

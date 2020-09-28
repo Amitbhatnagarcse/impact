@@ -5,6 +5,8 @@ import ReactNativePinView from "react-native-pin-view"
 import backarrow from '../../assets/img/delete.png';
 import background from '../../assets/img/backpinview.jpg';
 import AsyncStorage from '@react-native-community/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
+import {Gradientcolourbluew,Gradientcolouryellow} from '../../Constants'
 
 var pin_code = '';
 const PinScren = ({navigation}) => {
@@ -20,8 +22,7 @@ const PinScren = ({navigation}) => {
       pin_code = result;
     })
     if (enteredPin.length === 4) {
-      //console.warn(enteredPin);
-
+  
       pinView.current.clearAll();
       if(enteredPin == '0000' || enteredPin == pin_code)
       navigation.navigate('Dashboard');
@@ -32,11 +33,13 @@ const PinScren = ({navigation}) => {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <ImageBackground
+      {/* <ImageBackground
           source={background}
           resizeMode ={"cover"}
           backgroundColor = {'#e1e1e1'}
-          style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}>
+          style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}> */}
+                  <LinearGradient colors={[Gradientcolourbluew, Gradientcolouryellow]} style={{flex:1}}>
+
         <SafeAreaView
           style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.2)", justifyContent: "center", alignItems: "center" }}>
           
@@ -104,7 +107,8 @@ const PinScren = ({navigation}) => {
           />
           
         </SafeAreaView>
-        </ImageBackground>
+        </LinearGradient>
+        {/* </ImageBackground> */}
     </>
   )
 }

@@ -1,14 +1,18 @@
 import React ,{Component} from 'react'
-import {StyleSheet,Text,View,ImageBackground} from 'react-native'
+import {StyleSheet,Text,View,ImageBackground,Dimensions} from 'react-native'
+import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
+
 import splash from '../../assets/img/splash.jpg'
 export default class Splash extends Component{
     constructor(props){
         super(props)
+      
         setInterval(()=>{
             this.state = ({timer:this.state+1})
         },3000)
     }
     render(){
+
         return(
             <View style={styles.container}>
             <ImageBackground   source={splash} style={styles.image} ></ImageBackground>
@@ -16,20 +20,21 @@ export default class Splash extends Component{
         )
     }
 }
-
+const window = Dimensions.get('window');
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:'white',
-        flex:1,
+        backgroundColor:Gradientcolourbluew,
+        width:window.width,
+        height:window.height,
         justifyContent:'center',
         alignItems: 'center',
       
     },
     image: {
-        width: '100%',
-        height:'100%',
+        width:window.width-3,
+        flex:1,
      
-    resizeMode: 'stretch', // or 'stretch',
+    resizeMode: "contain", // or 'stretch',
     justifyContent: 'center',
       },
     title:{

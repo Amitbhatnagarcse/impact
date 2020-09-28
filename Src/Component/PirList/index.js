@@ -9,7 +9,7 @@ import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
  import Item from "./Item";
  import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
  import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
- import {BASE_URL,Yellowcolour} from '../../../Constants'
+ import {BASE_URL,BlueColor,Gradientcolourbluew,Yellowcolour} from '../../../Constants'
 
 
 const PirList = ({navigation }) => 
@@ -22,7 +22,6 @@ const PirList = ({navigation }) =>
     const [permisssion, setPermission] = useState(RESULTS.DENIED)
     const [district_list  ,setDistrictListing] = useState([])
     const [visiblesingle ,setSingleVisible] = useState([])
-
     const [district_name, setDistrict_name] = useState("")  
 
     const allowStoragePermission =  () => {
@@ -60,11 +59,15 @@ const PirList = ({navigation }) =>
         
           const role_id = await AsyncStorage.getItem("role")
           if (role_id !== null) {
-            setrole(role_id)                         
+            setrole(role_id)   
+                                  
           }
           var  district_i = await AsyncStorage.getItem('districtid')
           setDistrict(district_i)
       
+          var  district_name = await AsyncStorage.getItem('districtname')
+          setDistrict_name(district_name)
+
       }
  
       const deletecnfrm = async (id) =>
@@ -160,7 +163,7 @@ const PirList = ({navigation }) =>
               </TouchableOpacity>
             </View>
 
-            <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report List</Text> 
+            <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Inspection Report List</Text> 
         </View>    
         )
       };
@@ -185,6 +188,7 @@ const PirList = ({navigation }) =>
           readData()
           if(district_id != '' && role != '')
           {
+            
             if(role =='3')
             {
               var data = new URLSearchParams();
@@ -222,7 +226,7 @@ const PirList = ({navigation }) =>
         }, [district_id,role]);
 
       return (
-        <SafeAreaView style={{flex: 1, backgroundColor: Yellowcolour}} >
+        <SafeAreaView style={{flex: 1, backgroundColor: Gradientcolourbluew}} >
              <SinglePickerMaterialDialog
          title={'Pick Value '}
          scrolled
@@ -295,7 +299,7 @@ const PirList = ({navigation }) =>
           </View>
           {role =='3' &&
           <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
-             <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',paddingTop:15,height:60,fontSize:18,
+             <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',paddingTop:12,height:50,fontSize:18,
 		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
         </TouchableOpacity>
 }

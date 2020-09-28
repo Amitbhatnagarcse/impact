@@ -8,6 +8,7 @@ import {
   Image,
   Text,
 } from 'react-native';
+import {BASE_URL,BlueColor} from '../../Constants'
 
 
 const window = Dimensions.get('window');
@@ -18,7 +19,8 @@ const styles = StyleSheet.create({
     width: window.width,
     height: window.height,
     padding: 20,
-    marginTop:40
+    paddingTop:60,
+    backgroundColor :BlueColor
   },
   avatarContainer: {
     marginBottom: 20,
@@ -39,14 +41,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-ExtraBold'
   },
   item1: {
-    fontSize: 14,
+    fontSize: 22,
     fontWeight: '300',
+    color:'#fff',
     paddingTop: 15,
   },
   item: {
-    fontSize: 14,
+    fontSize: 22,
     fontWeight: '300',
     paddingTop: 40,
+    color:'#fff',
+
   },
 });
 
@@ -84,7 +89,7 @@ export default function Menu({ onItemSelected ,type,navigation }) {
         navigation.navigate('Notification')}}
         style={styles.item}
       >
-        Notification
+        
       </Text>
       </>
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList ,Image ,TouchableWithoutFeedback,StyleSheet} from 'react-native';
+import {Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradientcolourlight,BlueColor} from '../../Constants'
 
 import leftarrow from '../../assets/img/edit.png';
 
@@ -21,12 +22,15 @@ export default class DayEndSummaryList extends Component
   {
    
     return (
+    
       <TouchableWithoutFeedback onPress={() => this.onPresss(''+item.TotalPatientCount,''+item.TotalPragnentWomen,item.EntryDate) }>
       <View style={{ flexDirection: 'row',
       height: 50,
       marginTop: 0,
       margin:5,
-      backgroundColor:'#FBDCA7',
+      backgroundColor:'white',
+      elevation:10,
+      shadowColor:Gradientcolourbluew,
       justifyContent:'space-evenly'
       }}>
         < View style = {{flex: 2,height: 50,justifyContent:'space-around'}} >
@@ -55,7 +59,6 @@ export default class DayEndSummaryList extends Component
      
       <View style={{flex:1,flexDirection:'column',justifyContent: 'flex-start'}}>
         
-      
       <View style = {
    {
     width: '100%',
@@ -63,7 +66,7 @@ export default class DayEndSummaryList extends Component
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop:5,
-    backgroundColor: '#cc8800'
+    backgroundColor: Gradientcolourbluew
    }
   } >
 

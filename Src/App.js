@@ -20,7 +20,7 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
-import {BASE_URL} from '../Constants'
+import {BASE_URL,Gradientcolourlight,Gradientcolourbluew,Gradientcolouryellow, BlueColor} from '../Constants'
 import AsyncStorage from '@react-native-community/async-storage'
 
 
@@ -30,7 +30,6 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
 import backarrow from '../assets/img/backnew.png';
 import { ro } from 'date-fns/locale';
-
 
 
 class App extends Component {
@@ -102,6 +101,7 @@ class App extends Component {
   }
 
   async cllapiforPregnancy() {
+
     this.setState({ load: true });
  
    var data = new URLSearchParams();
@@ -126,7 +126,7 @@ class App extends Component {
         
          this.setState({ load: false ,date : '',total_sono:'',women_sono:''});
          //console.warn(JSON.stringify(responseJson.ResposeData));
-         console.warn(JSON.stringify(responseJson.Message));
+         alert(JSON.stringify(responseJson.Message))
          //this.setState({logindata : responseJson.ResposeData[0],loginui:false})
        })
        .catch(error => {
@@ -144,7 +144,6 @@ class App extends Component {
 
       //mynavigation = this.props.navigation
      
-
       console.warn(value)
       if (value !== null && value !== '') {
         var data = new URLSearchParams();
@@ -181,13 +180,13 @@ class App extends Component {
      return (
       <SafeAreaView style={styles.container}>
           {this._headerBar()}
-    <View style={{flex:1,height:'100%',margin:5}}>  
+    <View style={{flex:1,height:'100%',margin:2,backgroundColor:Gradientcolourlight}}>  
   
 
     <View style={{flexDirection: 'row',height:50}}>
         <View style={{height:50,
     alignItems: 'center',flexDirection:'row',flex:1}} >
-        <Text style={{flex:1,padding:10,fontSize:16}}>Date</Text>
+        <Text style={{flex:1,padding:10,fontSize:14}}>Date</Text>
         <DatePicker
         style={{width: '40%',borderColor:'#000',borderWidth:1}}
         date={this.state.date}
@@ -221,10 +220,10 @@ class App extends Component {
     <View style={{flexDirection: 'row',height:50,marginTop:-8}}>
         <View style={{height:50,
     alignItems: 'center',flexDirection:'row',flex:1}} >
-        <Text style={{flex:1,padding:10,fontSize:12}}>Total No. of Registered for Sonography</Text>
+        <Text style={{flex:1,padding:10,fontSize:14}}>Total No. of Registered for Sonography</Text>
         <TextInput
                         style={styles.input}
-                       
+                        maxLength={5}
                         placeholderTextColor="#adb4bc"
                         returnKeyType="go"
                         autoCapitalize="none"
@@ -237,9 +236,11 @@ class App extends Component {
       <View style={{flexDirection: 'row',height:50,marginTop:-8}}>
         <View style={{height:50,
     alignItems: 'center',flexDirection:'row',flex:1}} >
-        <Text style={{flex:1,padding:10,fontSize:12}}>No. of pregnant Women Registered for Sonography</Text>
+        <Text style={{flex:1,padding:10,fontSize:14}}>No. of pregnant Women Registered for Sonography</Text>
         <TextInput
                         style={styles.input}
+                        maxLength={5}
+
                         value = {this.state.women_sono}
                         returnKeyType="go"
                         autoCapitalize="none"
@@ -285,6 +286,7 @@ const mapDispatchToProps = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:Gradientcolourbluew
   },
   labelInput: {
     color: '#673AB7',
@@ -301,15 +303,15 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     padding:5,
-    width:'30%',
+    width:'15%',
     fontSize:14,
   },
   headerView: {
-  backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+  backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
     justifyContent: 'flex-start',elevation:5
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: BlueColor,
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 12,

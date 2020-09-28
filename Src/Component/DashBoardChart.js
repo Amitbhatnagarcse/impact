@@ -23,7 +23,7 @@ import {
   View,
 } from 'react-native';
 
-import {BASE_URL} from '../../Constants'
+import {BASE_URL,Gradientcolourbluew, Gradientcolourlight} from '../../Constants'
 import AsyncStorage from '@react-native-community/async-storage';
 
 import backarrow from '../../assets/img/backnew.png';
@@ -125,7 +125,7 @@ const backAction = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Impact Dashboard</Text>
+          <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Impact Dashboard</Text>
         
       </View>)
   };
@@ -206,7 +206,7 @@ const backAction = () => {
 
  
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.containersafe}>
         <OrientationLoadingOverlay visible={loading}>
           <View>
             <Image
@@ -222,46 +222,48 @@ const backAction = () => {
      
 
       <View style={styles.container}>
+
+      <View>
+       <View style ={{
+        marginTop : 15,
+        backgroundColor:'#ffffff',
+        width:'100%',
+         shadowColor: '#cc8800',
+         shadowOffset: { width: 0, height: 1 },
+         shadowOpacity: 0.9,
+         shadowRadius: 2,
+         padding:10,
+         elevation: 2}}> 
+      
+      <Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center',alignContent:'center' ,justifyContent:'center',paddingLeft :40,paddingRight:40 }}>Registration Application Received</Text>
+           
+         </View>
+       <View style ={{
+        marginTop : 15,
+        backgroundColor:'#ffffff',
+         shadowColor: '#cc8800',
+         shadowOffset: { width: 10, height: 1 },
+         shadowOpacity: 0.9,
+         shadowRadius: 2,
+         elevation: 2}}>
+      
+      <PieChart
+        data={datapie}
+        width={screenWidth-2}
+        height={245}
+        showLegend = {false}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="5"
+      
+        absolute
+      />
+      </View>
+      </View>
+      
      
-
-<View style ={{
-  marginTop : 15,
-  backgroundColor:'#ffffff',
-  width:'100%',
-   shadowColor: '#cc8800',
-   shadowOffset: { width: 0, height: 1 },
-   shadowOpacity: 0.9,
-   shadowRadius: 2,
-   padding:10,
-   elevation: 2}}> 
-
-<Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center',alignContent:'center' ,justifyContent:'center',paddingLeft :40,paddingRight:40 }}>Registration Application Received</Text>
-     
-   </View>
-<View style ={{
-  marginTop : 15,
-  backgroundColor:'#ffffff',
-   shadowColor: '#cc8800',
-   shadowOffset: { width: 10, height: 1 },
-   shadowOpacity: 0.9,
-   shadowRadius: 2,
-   elevation: 2}}>
-
-<PieChart
-  data={datapie}
-  width={screenWidth-2}
-  height={245}
-  showLegend = {false}
-  chartConfig={chartConfig}
-  accessor="population"
-  backgroundColor="transparent"
-  paddingLeft="5"
-
-  absolute
-/>
-</View>
-
-<View style ={{
+      <View style ={{
   marginTop : 15,
   width:'100%',
   backgroundColor:'#ffffff',
@@ -276,7 +278,7 @@ const backAction = () => {
 <Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center',paddingLeft :40,paddingRight:40 }}>Form F Received</Text>
      
    </View>
-<View style ={{
+      <View style ={{
   marginTop : 15,
   backgroundColor:'#cc8800',
    shadowColor: '#cc8800',
@@ -310,9 +312,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-   
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: Gradientcolourlight,
+  },
+  containersafe: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: Gradientcolourbluew,
   },
   textInput: {
     borderBottomColor: '#151313',
@@ -341,7 +347,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
     },
 });

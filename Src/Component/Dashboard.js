@@ -9,7 +9,7 @@ import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
 import { Col } from 'native-base';
 import background from '../../assets/img/backpinview.jpg';
-import {Yellowcolour,Gradientcolour} from '../../Constants'
+import {Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradientcolourlight,BlueColor} from '../../Constants'
 //import footer from '../../assets/img/footer.jpg'
 import FooterComponent from '../CommonComponent/Footer'
 
@@ -48,10 +48,10 @@ const rollthree = [
     name: 'PIR UPLOAD',
     img: require('../../assets/img/renewal.png')
   },
-  {
-    name: 'DAY \n END \nSUMMARY',
-    img: require('../../assets/img/dayendsummary.png')
-  },
+  // {
+  //   name: 'DAY \n END \nSUMMARY',
+  //   img: require('../../assets/img/dayendsummary.png')
+  // },
   {
     name: 'FEEDBACK',
     img: require('../../assets/img/feedback.png')
@@ -127,7 +127,7 @@ class Dashboard extends React.Component {
 
   _renderItem(item) {
     return (
-      <Col style={{ padding: 2, paddingLeft: 0}}>
+      <Col style={{ padding: 5, paddingLeft: 5}}>
 
         <ImageBackground
           source={item.img}
@@ -185,10 +185,11 @@ class Dashboard extends React.Component {
     return (
       <View style={styles.headerView}>
         <TouchableWithoutFeedback onPress={() => this.toggleDrawer()}>
-          <View style={{ width: 50, height: 60,   backgroundColor: '#cc8800', zIndex: 1 }}>
+          <View style={{ width: 50, height: 60,   backgroundColor: Gradientcolourbluew, zIndex: 1 }}>
             <Image
-              style={{ width: 30, height: 30, marginTop: 15 }}
-              source={{ uri: 'https://cdn4.iconfinder.com/data/icons/yellow-commerce/100/.svg-19-512.png' }}
+            tintColor='white'
+            style={{ width: 30, height: 30, marginTop: 15 ,marginLeft:10}}
+            source={require("../../assets/img/drawer.png")}
             />
           </View>
         </TouchableWithoutFeedback>
@@ -197,7 +198,7 @@ class Dashboard extends React.Component {
   }
   getNormalHeader(){
     return(
-      <Text style={{ color: 'black',  fontFamily: 'Cochin', fontWeight: 'bold',fontSize: 28,marginLeft:-50,  textAlign: 'center', width: '100%' }}>{this.state.title}</Text>
+      <Text style={{ color: 'white',  fontFamily: 'Cochin', fontWeight: 'bold',fontSize: 28,marginLeft:-50,  textAlign: 'center', width: '100%' }}>{this.state.title}</Text>
 
     )
   }
@@ -265,16 +266,18 @@ class Dashboard extends React.Component {
        isOpen={this.state.isOpen}
        onChange={isOpen => this.updateMenuState(isOpen)}
     >
-      <SafeAreaView style={{ flex: 1, backgroundColor: Yellowcolour }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Gradientcolourbluew }}>
 
         <View style={styles.container}>
-        <ImageBackground
+        <LinearGradient colors={[Gradientcolourlight, Gradientcolourlight]} style={{flex:1}}>
+
+        {/* <ImageBackground
           source={background}
           resizeMode ={"cover"}
           backgroundColor = {'#e1e1e1'}
-          style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}>
+          style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}> */}
           {this._headerBar()}
-          <LinearGradient colors={[Gradientcolour, Yellowcolour]} style={styles.containertabwhite}>
+          <LinearGradient colors={[BlueColor, BlueColor]} style={styles.containertabwhite}>
           <Text style={styles.tabtitledata}> Welcome</Text>
           <View style={styles.line}></View>
     <Text style={styles.tabtitledata}> {this.state.username }</Text>
@@ -283,7 +286,7 @@ class Dashboard extends React.Component {
           {this.props.loading && <MaterialIndicator color="#5B5A5F" size={30} trackWidth={2} />}
           {!this.props.loading && (this.state.pageType === "HomeScreen" ) &&
             <FlatList
-              style={{ flex: 1 }}
+              style={{ flex: 1 ,marginTop:70}}
               renderItem={(item, index) => this.getItemByType(this.state.pageType, item)}
               key={this.state.pageType}
               data={this.getArrayByType(this.state.pageType)}
@@ -292,8 +295,8 @@ class Dashboard extends React.Component {
             />}
 
 
-
-         </ImageBackground>
+          </LinearGradient>
+         {/* </ImageBackground> */}
         </View>
     
       <FooterComponent/>
@@ -319,7 +322,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   headerView: {
-     backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+     backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
     justifyContent: 'flex-start',elevation:10
   },
   title_center :{
@@ -344,7 +347,7 @@ const styles = StyleSheet.create({
 			backgroundColor:'#000',
 	  },
     tabtitledata :{
-      flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#000'
+      flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#fff'
       },
  
    button: {

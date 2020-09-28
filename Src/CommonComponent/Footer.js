@@ -13,7 +13,7 @@ export default function Footer()
         flex:0.08,
         resizeMode: 'stretch', // or 'stretch',
          justifyContent: 'center',}} 
-     source={footer_img}
+         source={footer_img}
      />
       )
 }

@@ -3,7 +3,7 @@ import { View, Text ,Image ,TouchableOpacity ,SafeAreaView,FlatList,BackHandler}
 import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 import pngIcons  from '../../../assets/img/images';
-import {BASE_URL,Yellowcolour} from '../../../Constants'
+import {BASE_URL,Yellowcolour,Gradientcolourbluew,Gradientcolourlight,Gradientcolouryellow} from '../../../Constants'
 import FooterComponent from '../../CommonComponent/Footer'
 import { useSelector, useDispatch } from 'react-redux';
 import { getFORMFREPORTRequest } from '../../actions';
@@ -26,7 +26,6 @@ const FormfReport = ( {navigation} ) => {
     const dispatch = useDispatch()
     const loading = useSelector((state) => state.loading);
     const foflisting = useSelector((state) => state.formfreport);
-
     const [dates , setDate] = useState('')
     const [maxdate , setMaxDate] = useState('')
     const [role ,setrole] = useState('')
@@ -58,7 +57,7 @@ const FormfReport = ( {navigation} ) => {
                 </TouchableOpacity>
               </View>
     
-              <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>FORM F REPORT</Text> 
+              <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>FORM F REPORT</Text> 
           </View>    
           )
          };
@@ -127,7 +126,7 @@ const backAction = () => {
 
           
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: Yellowcolour}} > 
+    <SafeAreaView style={{flex: 1, backgroundColor: Gradientcolourbluew}} > 
     <View style={Styles.container}>
     {_headerBar()}  
     <DatePicker

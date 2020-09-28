@@ -1,4 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native';
+import { BlueColor, Gradientcolourbluew, Gradientcolourlight } from '../../../Constants';
 
 
 export default StyleSheet.create({
@@ -10,10 +11,15 @@ body:{
   button: {
     marginBottom: 10,
   },
+  containersafe: {
+	flex: 1,
+    alignItems: 'center',
+    backgroundColor: Gradientcolourbluew,
+  },
   container: {
 	flex: 1,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: Gradientcolourlight,
   },
   textInput: {
     borderBottomColor: '#151313',
@@ -37,7 +43,7 @@ body:{
     flexDirection: 'row',
   },
   headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
 	},
 	inputboxview :{
@@ -48,7 +54,7 @@ body:{
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderWidth: 1,
-		backgroundColor:'#FFEFD5'
+		backgroundColor:'#fff'
 	  },  
 	  input: {
 	   backgroundColor:'#fff',
@@ -83,7 +89,7 @@ body:{
 	   inputlikefile: {
 		backgroundColor:'#fff',
 		 borderWidth: 1,
-		 borderColor:'#e1e1e1',
+		 borderColor:BlueColor,
 		 padding:5,
 		 flex:1,
 		 fontSize:12,

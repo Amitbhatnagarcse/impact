@@ -11,7 +11,8 @@ const TabFive = ( {navigation} ) => {
             <Text style={Styles.tabtitle}>FormF ID </Text>
             <View style={Styles.line} />
             <Text style={Styles.tabtitle}>Name</Text>
-          
+            < View style = {{flex: 0.3,height: 50,justifyContent:'space-around',alignItems:'center'}} />
+
         </View>
       );
 }

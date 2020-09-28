@@ -19,6 +19,15 @@ export const KEY_VALUE = 'value';
 export const KEY_IS_CHECKED = 'is_checked';
 export const Yellowcolour = '#cc8800';
 export const Gradientcolour = '#66d9ff'
+// export const Gradientcolourbluew = '#66d9ff'
+// export const Gradientcolouryellow = '#ffc34d'
+
+export const Gradientcolourbluew = '#AB326E'
+export const Gradientcolouryellow = '#f7c8e0'
+export const Gradientcolourlight = '#f7dae9'
+export const BlueColor= '#1f497d'
+
+
 
 export const KEY_CLICK_ACTION = 'click_action';
 export const KEY_USER_DATA = 'user_data';

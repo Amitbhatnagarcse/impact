@@ -15,7 +15,7 @@ import ImagePicker from 'react-native-image-picker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
-import {BASE_URL} from '../../../Constants'
+import {BASE_URL, BlueColor} from '../../../Constants'
 
 var pid_id = ''
 
@@ -81,7 +81,7 @@ const InspectionReport = ({navigation ,route}) => {
     }
 
     const readData = async () => {
-      try {
+   
         const role_id = await AsyncStorage.getItem("role")
         if (role_id !== null) {
         setrole(role_id)
@@ -89,13 +89,16 @@ const InspectionReport = ({navigation ,route}) => {
         block_id = await AsyncStorage.getItem('blockid')
         _unit = await AsyncStorage.getItem('unitid')
         setUnitId(_unit)
-      } catch (e) {
-      }
+        var districtnamev = await AsyncStorage.getItem('districtname')
+        setDistrict_name(districtnamev)
+        var districtidv = await AsyncStorage.getItem('districtid')
+        setDistrict(districtidv)
+     
     }
     const identity_Popup = () => {  
-    setCurrentDialog('district')
-      setSingleVisible(true)
-      setListing(district_list)
+    // setCurrentDialog('district')
+    //   setSingleVisible(true)
+    //   setListing(district_list)
     }
     const identity_Popup_center = () => {  
       setCurrentDialog('center')
@@ -289,12 +292,15 @@ x
       navigation.goBack(null)
       return true;
     };
+
+   
     useEffect(() => {
    
     readData()
-    if(role != '')
+    if(role != '' && district_id !='')
     {
 
+      debugger
       try{
         setSubmit('Update')
         const{ id } = route.params; 
@@ -317,9 +323,18 @@ x
       {
         setSubmit('Submit')
       }   
-      var data = new URLSearchParams();
+      if(role == '1')
+      {
+     var data = new URLSearchParams();
       data.append('Role',role);
       _retrieveData(data.toString() ,'GetAllDistrict')
+      }
+      else
+      {
+        var data = new URLSearchParams();
+        data.append('Did',district_id);
+        _retrieveData(data.toString() ,'GetCentersByDID')
+      }
 
       var date = new Date().getDate(); //Current Date
       var month = new Date().getMonth() + 1; //Current Month
@@ -333,7 +348,7 @@ x
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backAction);
      //dispatch(getDashboardRequest(data.toString()))
-  }, [role]);
+  }, [role,district_id]);
 
 
   const _retrieveData = async (data ,front) => {
@@ -351,7 +366,7 @@ x
           setloading(false)
           if(responseJson.Status)
           {
-
+                  console.log(JSON.stringify(responseJson.ResponseData))
             if(front == 'GetAllDistrict')
             setDistrictListing(responseJson.ResponseData)
              if(front =='GetCentersByDID')
@@ -409,7 +424,7 @@ x
       )
    };
     return (
-      <SafeAreaView style={Styles.container} >
+      <SafeAreaView style={Styles.containersafe} >
           
         <View style={Styles.container}>
         {_headerBar()}
@@ -506,7 +521,7 @@ x
           </View>
 
           <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>Center Reg No. Valid Thru Date</Text>
+        <Text style={Styles.inputtext}>Center Reg No. Validity Date</Text>
         <Text style={Styles.input}  > { center_reg_no } </Text>
           </View>
 
@@ -610,7 +625,7 @@ x
           </View>
 
         <TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
-             <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',
+             <Text style={{	height:40 ,backgroundColor:BlueColor,padding:5,color:'white',marginBottom:10,paddingTop:10,
 		borderColor: 'white',width:'100%',textAlign:'center'}} >{submit}</Text>
         </TouchableOpacity>
        </SafeAreaView>

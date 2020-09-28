@@ -28,7 +28,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { connect } from 'react-redux';
-
+import {Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradientcolourlight,BlueColor} from '../../Constants'
 import DatePicker from 'react-native-datepicker';    
 import backarrow from '../../assets/img/backnew.png';
 import down from '../../assets/img/downspinner.png';
@@ -204,7 +204,7 @@ class FormF extends Component {
   }
   getNormalHeader(){
     return(
-      <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Form F</Text>
+      <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Form F</Text>
     )
   }
    conditionMessage(message)
@@ -593,7 +593,7 @@ class FormF extends Component {
   render() {
      return (
      
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.containersafe}>
          {this._headerBar()}
          <OrientationLoadingOverlay visible={this.state.load}>
           <View>
@@ -604,7 +604,7 @@ class FormF extends Component {
            
           </View>
         </OrientationLoadingOverlay>
-         <ScrollView style={{flex:1}}>
+         <ScrollView style={styles.container}>
          <MultiPickerMaterialDialog
           title={"Pick one or more elements!"}
           scrolled
@@ -973,7 +973,7 @@ class FormF extends Component {
                         style={{width:'30%', borderRightWidth: 1,
                         fontSize:14,
                         height:35,
-                        borderColor:'#1133ee',}}
+                        borderColor:Gradientcolourlight,}}
                         placeholderTextColor="#adb4bc"
                         returnKeyType="next"
                         maxLength = {5}
@@ -1012,7 +1012,7 @@ class FormF extends Component {
           <View style={{alignItems: "center",marginRight:2,marginLeft:2}}>
     <View style={{flexDirection: "row", borderWidth: 1,alignContent:'center',alignItems:'center',
    
-    backgroundColor:'#FFEFD5'}}>
+    backgroundColor:'white'}}>
         <Text style={styles.inputtext}>Refered By *</Text>
          
         <RadioForm style={{width:'60%',marginTop:4}}
@@ -1260,8 +1260,14 @@ const mapDispatchToProps = {
 };
 
 const styles = StyleSheet.create({
+  containersafe: {
+    flex: 1,
+    backgroundColor:Gradientcolourbluew
+
+  },
   container: {
     flex: 1,
+    backgroundColor:Gradientcolourlight
   },
   labelInput: {
     color: '#673AB7',
@@ -1293,13 +1299,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    backgroundColor:'#FFEFD5'
+    backgroundColor:'white'
   },  
   input: {
     backgroundColor:'#fff',
      borderWidth: 1,
      paddingStart:5,
-     borderColor:'#1133ee',
+     borderColor:BlueColor,
      padding:0,
      width:'50%',
      fontSize:14,
@@ -1311,7 +1317,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
      borderWidth: 1,
      paddingStart:5,
-     borderColor:'#1133ee',
+     borderColor:Gradientcolourlight,
      width:'50%',
      fontSize:14,
      marginRight:0.5,
@@ -1321,7 +1327,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
      borderWidth: 1,
      paddingStart:5,
-     borderColor:'#1133ee',
+     borderColor:Gradientcolourlight,
      width:'50%',
      fontSize:14,
      marginRight:0.5,
@@ -1331,7 +1337,7 @@ const styles = StyleSheet.create({
   inputliketext: {
     backgroundColor:'#fff',
      borderWidth: 1,
-     borderColor:'#1133ee',
+     borderColor:BlueColor,
      padding:5,
      flex:1,
      fontSize:12,
@@ -1356,16 +1362,16 @@ const styles = StyleSheet.create({
     width:'100%',
     fontSize:12,
     flex:1, 
-    backgroundColor : '#e6ac00',
-    color : '#000'
+    backgroundColor : BlueColor,
+    color : '#fff'
   },
 
   headerView: {
-  backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+  backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
     justifyContent: 'flex-start',elevation:5,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: BlueColor,
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 12,

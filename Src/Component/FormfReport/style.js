@@ -1,5 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native';
-import {BASE_URL,Yellowcolour} from '../../../Constants'
+import {BASE_URL,Gradientcolourbluew,Yellowcolour} from '../../../Constants'
 
 
 export default StyleSheet.create({
@@ -9,7 +9,7 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: Yellowcolour,
+		backgroundColor: Gradientcolourbluew,
 		borderRadius:1,
 		borderWidth: 1,
 		borderColor: '#000'
@@ -19,7 +19,7 @@ export default StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: Yellowcolour,
+		backgroundColor: Gradientcolourbluew,
 		borderRadius:0.5,
 		borderWidth: 0.5,
 		borderColor: Yellowcolour
@@ -84,7 +84,7 @@ body:{
     flexDirection: 'row',
   },
   headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
 	},
 	inputboxview :{
@@ -163,7 +163,7 @@ body:{
 		borderRadius:17,
 	},
 	dialogCamera:{
-		color:'#cc8800',
+		color:Gradientcolourbluew,
 		fontSize:22,
 		marginTop:15,
 		marginBottom:15,

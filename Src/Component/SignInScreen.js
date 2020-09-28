@@ -3,7 +3,8 @@ import OrientationLoadingOverlay from "react-native-orientation-loading-overlay"
 import backarrow from "../../assets/img/blackback_arrow.png";
 //import background from '../../assets/img/backpinview.jpg';
 import LinearGradient from 'react-native-linear-gradient';
-import {BASE_URL} from '../../Constants'
+import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
+import FooterComponent from '../CommonComponent/Footer'
 
 import {
   StyleSheet,
@@ -22,6 +23,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Alert,
+  
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -112,7 +114,7 @@ export default class SignInScreen extends React.Component {
           
         }
         setTimeout(()=>{
-          alert(JSON.stringify(responseJson));
+          alert(JSON.stringify(responseJson.ResponseData[0].OTP));
      }, 300);
         
         
@@ -147,7 +149,7 @@ export default class SignInScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => {
       
-       alert(JSON.stringify(responseJson));
+        alert(JSON.stringify(responseJson.ResponseData[0].OTP));
         this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
         //this.props.navigation.navigate("Category", responseJson);
         console.log(JSON.stringify(responseJson));
@@ -210,9 +212,22 @@ export default class SignInScreen extends React.Component {
    
 
     return (
-      <SafeAreaView style={styles.container}>
-      
-     
+    
+      <SafeAreaView style={styles.safecontainer}>
+        <LinearGradient colors={[Gradientcolourbluew, Gradientcolouryellow]} style={styles.container}>
+
+        {!this.state.loginui &&
+        <View style={{alignContent:'flex-start',width:'100%',height:40}}>
+           <TouchableHighlight
+           onPress={() => this.setState({ loginui: true })}
+         >
+           <Image
+             source={backarrow}
+             style={{ width: 25, height: 25, marginLeft: 10,marginTop:10 }}
+           />
+         </TouchableHighlight>
+         </View>
+          }
         <OrientationLoadingOverlay visible={this.state.load}>
           <View>
             <Image
@@ -222,53 +237,45 @@ export default class SignInScreen extends React.Component {
            
           </View>
         </OrientationLoadingOverlay>
-        <StatusBar />
 
+        <KeyboardAvoidingView 
+      enabled
+      style = {styles.container}
+     >
         <TouchableWithoutFeedback
           style={styles.container}
           onPress={Keyboard.dismiss}
         >
-          <View style={styles.container} behavior="padding">
+
+         
+          <View style={styles.container} >
+           
             {this.state.loginui && (
-              
-              <View style={styles.container}>
-                  <View style={styles.container}>
-                  <LinearGradient colors={['#66d9ff', '#ffc34d']} style={styles.container}>
-                  <Text
-            style={{
-              paddingTop: 18,
-              paddingBottom: 18,
-              color: "#ffffff",
-              textAlign : 'center',
-              fontSize: 68,
-              textShadowColor: 'rgba(0, 0, 0, 0.75)',
-              textShadowOffset: {width: -1, height: 1},
-              textShadowRadius: 10
-            }}>
-            PCPNDT
-          </Text>
-          <View style={{ flexDirection: "column" }}>
-                  <Text
-                    style={{
-                      fontSize: 30,
-                      margin: 10,
-                      marginBottom:30,
-                      textAlign : 'center',
-                      color: "#ffffff",
-                      textShadowColor: 'rgba(0, 0, 0, 0.55)',
-                      textShadowOffset: {width: -1, height: 1},
-                      textShadowRadius: 5
-                    }}
-                  >
-                    {" "}
-                    sign in to your account{" "}
-                  </Text>
-                </View>
-                    <Text style={styles.itemText}>enter your mobile number</Text>
                      
+              <View style={styles.container}>
+                 
+                  {/* <ImageBackground 
+                   source={loginback}
+                   resizeMode ={"stretch"}
+                  style={styles.container}> */}
+                  <View style={styles.container}>
+             
+                         <Image
+                            resizeMode="contain"
+                            source={require("../../assets/img/tiger.png")}
+                          style={{ width: 100,height:80, marginTop:5 ,marginBottom:20}}
+                         />
+                          <Text style={styles.buttonText}>चिकिस्ता , स्वस्थ्य अवं परिवार कल्याण विभाग </Text>
+                          <Text style={styles.buttonText}>राजस्थान सरकार </Text>
+
+                        <Image
+                          resizeMode ={"contain"}
+                          source={require("../../assets/img/logintop.png")}
+                          style={{ width: 200 ,height:170,marginTop:20,marginBottom:20 }}
+                         />
                        <TextInput
                         style={styles.input}
-                        placeholder="type here"
+                        placeholder="enter your mobile number"
                         placeholderTextColor="#a6a6a6"
                         returnKeyType="go"
                         autoCapitalize="none"
@@ -278,48 +285,39 @@ export default class SignInScreen extends React.Component {
                         keyboardType={"numeric"}
                         onChangeText={value => this.onChangeText("username", value)}  />
 
-                  
-
-                  
+                     
                     <TouchableOpacity
                       onPress={() => this.signIn()}
                       style={styles.buttonStyle}
                     >
                       <Text style={styles.buttonText}>sign in</Text>
                     </TouchableOpacity>
+                  
                     <View style={{flex: 1, justifyContent: 'space-between',
-    alignItems: 'flex-start',flexDirection: 'row',marginTop:20}}>
+                    alignItems: 'flex-start',flexDirection: 'row',marginTop:20}}>
 
 
 
       
-      </View>
-       </LinearGradient>
                   </View>
+                  </View>
+                  {/* </ImageBackground> */}
                
               </View>
-             
+        
             )}
 
             {!this.state.loginui && (
               <View style={styles.container}>
-                <TouchableHighlight
-                  onPress={() => this.setState({ loginui: true })}
-                >
-                  <Image
-                    source={backarrow}
-                    style={{ width: 25, height: 25, marginLeft: 10 }}
-                  />
-                </TouchableHighlight>
-
+              
                
-                  <View style={styles.container}>
-                    <View style={{ flexDirection: "column" }}>
+                  <View style={styles.containerotp}>
+                    <View style={{ flexDirection: "column",marginTop:-45 }}>
                       <Text
                         style={{
-                          fontSize: 22,
+                          fontSize: 32,
                           margin: 10,
-                          color: '#000'
+                          color: '#fff'
                         }}
                       >
                         {" "}
@@ -374,8 +372,9 @@ export default class SignInScreen extends React.Component {
             )}
           </View>
         </TouchableWithoutFeedback>
-   
-       
+        </KeyboardAvoidingView>
+        <FooterComponent/>
+        </LinearGradient>
       </SafeAreaView>
     );
   }
@@ -384,16 +383,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 0,
-    
-    backgroundColor: "#ffc34d",
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection: "column"
+  },
+  containerotp: {
+    flex: 1,
+    marginTop: 0,
+    alignItems:'center',
+    flexDirection: "column"
+  },
+  safecontainer: {
+    flex: 1,
+    marginTop: 0,
+    backgroundColor:BlueColor,
     flexDirection: "column"
   },
   input: {
     height: 60,
+    paddingStart:30,
+    paddingEnd:30,
     borderWidth: 1,
-    borderColor: '#ff9933',
-    marginLeft:40,
-    marginRight:40,
+    borderColor: Gradientcolourbluew,
+    minWidth:280,
+    width:'100%',
     margin: 10,
     fontSize: 17,
     textAlign :'center',
@@ -414,8 +427,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginStart: 14,
     fontSize:24,
-    color : '#ffffff'
-   
+    color : '#ffffff',
+    width :'80%',
   },
   iconStyle: {
     color: "#fff",
@@ -424,11 +437,16 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     alignItems: "center",
-    backgroundColor: "#0099ff",
+    backgroundColor: Gradientcolourbluew,
     padding: 14,
+    elevation :15,
+    paddingStart:60,
+    paddingEnd:60,
+    minWidth:280,
+    shadowColor:BlueColor,
     marginStart:80,
     borderRadius : 3,
-    borderColor : '#fff',
+    borderColor : BlueColor,
     marginEnd:80,
     margin: 14,
     borderWidth: 1,
@@ -454,6 +472,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: "#fff",
+    elevation:10,
 
   },
 

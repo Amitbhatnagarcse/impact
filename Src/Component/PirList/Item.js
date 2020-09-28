@@ -5,13 +5,13 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity
+  TouchableOpacity, YellowBox
 } from "react-native";  
 import Styles from './style';
 import file_upload from '../../../assets/img/file_download.png';
 import RNFetchBlob from 'rn-fetch-blob'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
-import { BASE_URL } from '../../../Constants';
+import { BASE_URL, BlueColor, Yellowcolour } from '../../../Constants';
 
 
 export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
@@ -122,11 +122,11 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
 
           <View style={Styles.inputboxview} >
           <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item)  }>
-        <Text style={{	backgroundColor:'#cc8800',padding:5,color:'white',
+        <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',
 		borderColor: 'white',width:'100%',textAlign:'center'}} >Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={Styles.buttonsubmit} onPress={() => actionPer(item.PirId)}>
-        <Text style={{	backgroundColor:'red',padding:5,color:'white',
+        <Text style={{	backgroundColor:Yellowcolour,padding:5,color:'white',
 		borderColor: 'white',width:'100%',textAlign:'center'}}>Delete</Text>
         </TouchableOpacity>
         <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
