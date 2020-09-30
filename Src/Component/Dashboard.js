@@ -76,7 +76,7 @@ class Dashboard extends React.Component {
               data: [],
               token: '',
               pageType: "HomeScreen",
-              title : 'Impact',
+              title : 'IMPACT',
               arrayEarnRewards:[], 
               username :''        
             }
@@ -160,7 +160,7 @@ class Dashboard extends React.Component {
               }
               else if(item.name == 'FEEDBACK')
               {
-                this.props.navigation.navigate('Feedback')
+                //this.props.navigation.navigate('Feedback')
               }
               else
               {
@@ -184,29 +184,48 @@ class Dashboard extends React.Component {
   _headerBar = () => {
     return (
       <View style={styles.headerView}>
+   
+        <View style = {{width:'90%'}}>
+        {this.getNormalHeader()}
+        {this.getsubNormalHeader()}
+        </View>
         <TouchableWithoutFeedback onPress={() => this.toggleDrawer()}>
-          <View style={{ width: 50, height: 60,   backgroundColor: Gradientcolourbluew, zIndex: 1 }}>
+          <View style={{ width: 50, height: 60 }}>
             <Image
             tintColor='white'
-            style={{ width: 30, height: 30, marginTop: 15 ,marginLeft:10}}
-            source={require("../../assets/img/drawer.png")}
+            style={{ width: 30, height: 30, marginTop: 15 ,marginRight:4}}
+            source={require("../../assets/img/logout.png")}
             />
           </View>
         </TouchableWithoutFeedback>
-        {this.getNormalHeader()}
       </View>)
   }
   getNormalHeader(){
     return(
-      <Text style={{ color: 'white',  fontFamily: 'Cochin', fontWeight: 'bold',fontSize: 28,marginLeft:-50,  textAlign: 'center', width: '100%' }}>{this.state.title}</Text>
+      <Text style={{ color: 'white',  fontFamily: 'Cochin', fontWeight: 'bold',fontSize: 28,marginLeft:20,  textAlign: 'center', width: '100%', textShadowColor:BlueColor,
+      textShadowOffset:{width: 2, height: 2},
+      textShadowRadius:10 }}>{this.state.title}</Text>
+      
+
+    )
+  }
+  getsubNormalHeader(){
+    return(
+      <Text style={{ color: 'white',  fontFamily: 'Cochin', fontWeight: 'bold',fontSize: 14,marginLeft:10,  textAlign: 'center', width: '100%', textShadowColor:BlueColor,
+      textShadowOffset:{width: 2, height: 2},
+      textShadowRadius:10 }}>Integrated System For Monitoring of PCPNDT ACT</Text>
+      
 
     )
   }
 
   toggleDrawer() {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
+
+    this.props.navigation.navigate('SignIn')
+
+    // this.setState({
+    //   isOpen: !this.state.isOpen,
+    // });
   }
   _openDialogue()
   {
@@ -277,6 +296,7 @@ class Dashboard extends React.Component {
           backgroundColor = {'#e1e1e1'}
           style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}> */}
           {this._headerBar()}
+
           <LinearGradient colors={[BlueColor, BlueColor]} style={styles.containertabwhite}>
           <Text style={styles.tabtitledata}> Welcome</Text>
           <View style={styles.line}></View>

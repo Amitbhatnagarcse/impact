@@ -6,7 +6,7 @@ import Pdf from 'react-native-pdf';
 import images from '../../assets/img/imgBase64.js';
 import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
 
-import {BASE_URL} from '../../Constants'
+import {BASE_URL,Gradientcolourbluew,BlueColor} from '../../Constants'
 
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
@@ -221,9 +221,12 @@ export default class PDFExample extends React.Component {
         )}
 
         {Platform.OS === 'ios' && (
-          <View style={styles.button}>
-            <Button onPress={ () => this.shareToFiles() } title="Share To Files" />
-          </View>
+         
+
+<TouchableOpacity style = {styles.button} onPress={() => this.shareToFiles()}>
+          <Text style={styles.button}> Share  File </Text>
+        </TouchableOpacity>
+      
         )}
 
            
@@ -244,14 +247,17 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        backgroundColor: Gradientcolourbluew
        
     },
     button: {
         width : '100%',
-        backgroundColor: 'brown',
+        backgroundColor: BlueColor,
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 5,
+        paddingTop:4,
+        paddingBottom:4,
         color: 'white',
        marginLeft:0,
        marginRight:0,
@@ -266,7 +272,7 @@ const styles = StyleSheet.create({
         height:Dimensions.get('window').height,
     },
     headerView: {
-        backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+        backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
           justifyContent: 'flex-start',elevation:5,
         },
 });

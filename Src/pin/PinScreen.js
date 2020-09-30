@@ -1,13 +1,13 @@
 
 import React, { useEffect, useRef, useState } from "react"
-import { Image, SafeAreaView, StatusBar, Text ,ImageBackground,BackHandler} from "react-native"
+import { Image, SafeAreaView ,StatusBar, Text,View ,ImageBackground,BackHandler} from "react-native"
 import ReactNativePinView from "react-native-pin-view"
 import backarrow from '../../assets/img/delete.png';
 import background from '../../assets/img/backpinview.jpg';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
+import Footer from '../CommonComponent/Footer'
 import {Gradientcolourbluew,Gradientcolouryellow} from '../../Constants'
-
 var pin_code = '';
 const PinScren = ({navigation}) => {
 
@@ -38,20 +38,18 @@ const PinScren = ({navigation}) => {
           resizeMode ={"cover"}
           backgroundColor = {'#e1e1e1'}
           style={{margin:1, width:'100%', height:'100%',resizeMode: 'contain' }}> */}
-                  <LinearGradient colors={[Gradientcolourbluew, Gradientcolouryellow]} style={{flex:1}}>
 
         <SafeAreaView
-          style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.2)", justifyContent: "center", alignItems: "center" }}>
-          
-          <Text
-            style={{
-              paddingTop: 18,
-              paddingBottom: 18,
-              color: "rgba(255,255,255,0.9)",
-              fontSize: 48,
-            }}>
-            Register Pin 
-          </Text>
+          style={{ flex: 1, backgroundColor: Gradientcolourbluew}}>
+                            <LinearGradient colors={[Gradientcolourbluew, Gradientcolouryellow]} style={{flex:1, justifyContent: "center", alignItems: "center" }}>
+
+          <View>
+            <Image
+                          source={require("../../assets/img/logintop.png")}
+                          style={{ width: 180, height: 180 }}
+            />
+           
+          </View>
           <Text
             style={{
               paddingTop: 18,
@@ -105,9 +103,11 @@ const PinScren = ({navigation}) => {
             source={backarrow} size={36} color={"#FFF"} /> }
             customRightButton={showCompletedButton ? <Image source={backarrow} size={36} color={"#FFF"} /> : undefined}
           />
-          
-        </SafeAreaView>
+        
         </LinearGradient>
+        <Footer/>
+        </SafeAreaView>
+
         {/* </ImageBackground> */}
     </>
   )

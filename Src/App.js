@@ -95,7 +95,7 @@ class App extends Component {
   }
   getNormalHeader(){
     return(
-      <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Day end Summary</Text>
+      <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Day end Summary</Text>
 
     )
   }
@@ -186,9 +186,9 @@ class App extends Component {
     <View style={{flexDirection: 'row',height:50}}>
         <View style={{height:50,
     alignItems: 'center',flexDirection:'row',flex:1}} >
-        <Text style={{flex:1,padding:10,fontSize:14}}>Date</Text>
+        <Text style={{flex:1,padding:10,fontSize:14, fontWeight: "bold"}}>Date</Text>
         <DatePicker
-        style={{width: '40%',borderColor:'#000',borderWidth:1}}
+        style={{width: '40%',borderColor:'#000',borderWidth:1,marginEnd:3}}
         date={this.state.date}
         mode="date"
         placeholder="select date"
@@ -217,10 +217,10 @@ class App extends Component {
 
 
 
-    <View style={{flexDirection: 'row',height:50,marginTop:-8}}>
-        <View style={{height:50,
+    <View style={{flexDirection: 'row',marginTop:-8}}>
+        <View style={{
     alignItems: 'center',flexDirection:'row',flex:1}} >
-        <Text style={{flex:1,padding:10,fontSize:14}}>Total No. of Registered for Sonography</Text>
+        <Text style={{flex:1,padding:10,fontSize:14,   fontWeight: "bold"}}>Total No. of Registered for Sonography</Text>
         <TextInput
                         style={styles.input}
                         maxLength={5}
@@ -233,10 +233,10 @@ class App extends Component {
           </View>
       </View>
 
-      <View style={{flexDirection: 'row',height:50,marginTop:-8}}>
-        <View style={{height:50,
+      <View style={{flexDirection: 'row',marginTop:-8}}>
+        <View style={{
     alignItems: 'center',flexDirection:'row',flex:1}} >
-        <Text style={{flex:1,padding:10,fontSize:14}}>No. of pregnant Women Registered for Sonography</Text>
+        <Text style={{flex:1,padding:10,fontSize:14,   fontWeight: "bold"}}>No. of pregnant Women Registered for Sonography</Text>
         <TextInput
                         style={styles.input}
                         maxLength={5}
@@ -303,8 +303,10 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     padding:5,
-    width:'15%',
+    width:'40%',
     fontSize:14,
+    marginEnd:3,
+    
   },
   headerView: {
   backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,

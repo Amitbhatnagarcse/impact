@@ -104,6 +104,9 @@ export default class SignInScreen extends React.Component {
         if(responseJson.Status)
         {
           this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
+          setTimeout(()=>{
+            alert(JSON.stringify(responseJson.ResponseData[0].OTP));
+       }, 300);
         }
         else
         {
@@ -113,9 +116,7 @@ export default class SignInScreen extends React.Component {
        }, 300);
           
         }
-        setTimeout(()=>{
-          alert(JSON.stringify(responseJson.ResponseData[0].OTP));
-     }, 300);
+       
         
         
           //this.setState({ load: false ,dataSource : responseJson.IdentityProofType});
@@ -265,7 +266,7 @@ export default class SignInScreen extends React.Component {
                             source={require("../../assets/img/tiger.png")}
                           style={{ width: 100,height:80, marginTop:5 ,marginBottom:20}}
                          />
-                          <Text style={styles.buttonText}>चिकिस्ता , स्वस्थ्य अवं परिवार कल्याण विभाग </Text>
+                          <Text style={styles.buttonText}>चिकित्सा एवं स्वास्थ्य, परिवार कल्याण विभाग </Text>
                           <Text style={styles.buttonText}>राजस्थान सरकार </Text>
 
                         <Image
@@ -275,7 +276,7 @@ export default class SignInScreen extends React.Component {
                          />
                        <TextInput
                         style={styles.input}
-                        placeholder="enter your mobile number"
+                        placeholder="Enter your mobile number"
                         placeholderTextColor="#a6a6a6"
                         returnKeyType="go"
                         autoCapitalize="none"
@@ -321,10 +322,15 @@ export default class SignInScreen extends React.Component {
                         }}
                       >
                         {" "}
-                        confirm sign in{" "}
+                        {" "}
                       </Text>
+                      <Image
+                          resizeMode ={"contain"}
+                          source={require("../../assets/img/logintop.png")}
+                          style={{ width: 200 ,height:170,marginTop:20,marginBottom:20 }}
+                         />
                     </View>
-                    <Text style={styles.itemText}>enter your otp  code</Text>
+                    <Text style={styles.itemText}>Set your otp(4) digit</Text>
                    
                       <TextInput
                         style={styles.input}
