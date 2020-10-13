@@ -42,7 +42,20 @@ const DashBoardChart = ({navigation}) => {
   const [unitid , setunitid] = useState(['']); 
 
   const loadings = useSelector((state) => state.loading);
-  const [listing ,setListing] = useState([{"TotFormFInYear":0,"TotFormFInMonth":0,"TotFormFInDate":0,"NewCentresInMonth":0,"NewCentresInYear":0,"TotFormAPending":0}])
+  const [listing ,setListing] = useState([{ "TotFormFInYear": 0,
+  "TotFormFInMonth": 0,
+  "TotFormFInDate": 0,
+  "NewCentresInMonth": 0,
+  "NewCentresInYear": 0,
+  "TotFormAPending": 0,
+  "NewCentresApprovedInYear": 0,
+  "NewCentresRejectedInYear": 0,
+  "NewCentresPendingInYear": 0,
+  "TotFormAReceivedInyear": 0,
+  "NewCentresApprovedAllYears": 0,
+  "NewCentresRejectedInYearAllYears": 0,
+  "NewCentresPendingInYearAllYears": 0,
+  "TotFormAReceivedInyearAllYears": 0}])
   const dispatch = useDispatch();
 
   const readData = async () => {
@@ -50,7 +63,6 @@ const DashBoardChart = ({navigation}) => {
     const role_id = await AsyncStorage.getItem("role")
     setrole(role_id) 
     const unit_id = await AsyncStorage.getItem('unitid')
-
      setunitid(unit_id) 
   
 }
@@ -94,14 +106,17 @@ const backAction = () => {
       })
         .then(response => response.json())
         .then(responseJson => {
+          console.log(JSON.stringify(responseJson));
           setloading(false)
           if(responseJson.Status)
           {
-            setListing(responseJson.ResponseData)
-          console.warn(JSON.stringify(responseJson));
+            setTimeout(()=>{
+              setListing(responseJson.ResponseData)}, 300);
           }
           else{
-            alert(responseJson.Message)
+            setTimeout(()=>{
+              alert(responseJson.Message)    },300);
+           
           }
         })
         .catch(error => {
@@ -134,46 +149,46 @@ const backAction = () => {
 
   const datapie = [
     {
-      name: "Current Year",
-      population: listing[0].NewCentresInYear,
-      color: "rgba(126, 99, 7, 0.7)",
-      legendFontColor: "#000",
+      name: "Approved",
+      population: listing[0].NewCentresApprovedAllYears,
+      color: "green",
+      legendFontColor: "green",
       legendFontSize: 18,
       
     },
     {
-      name: "Current Month",
-      population: listing[0].NewCentresInMonth,
-      color: "brown",
+      name: "In Process",
+      population: listing[0].NewCentresPendingInYearAllYears,
+      color: "#cc8800",
       legendFontColor: "#cc8800",
       legendFontSize: 18
     },
     {
-      name: "Approval Pending ",
-      population: listing[0].TotFormAPending,
+      name: "Rejected",
+      population: listing[0].NewCentresRejectedInYearAllYears,
       color: "red",
-      legendFontColor: "#cc8800",
+      legendFontColor: "red",
       legendFontSize: 18
     },
    
   ];
   const datapie2 = [
     {
-      name: "Tot In Year",
+      name: " In Year",
       population: listing[0].TotFormFInYear,
       color: "rgba(74, 96, 232, 0.8)",
       legendFontColor: "#fff",
       legendFontSize: 18
     },
     {
-      name: "Tot In Month",
+      name: " In Month",
       population: listing[0].TotFormFInMonth,
       color: "brown",
       legendFontColor: "#fff",
       legendFontSize: 18
     },
     {
-      name: "Tot In Date",
+      name: "Today",
       population: listing[0].TotFormFInDate,
       color: "red",
       legendFontColor: "#fff",
@@ -235,7 +250,7 @@ const backAction = () => {
          padding:10,
          elevation: 2}}> 
       
-      <Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center',alignContent:'center' ,justifyContent:'center',paddingLeft :40,paddingRight:40 }}>Registration Application Received</Text>
+      <Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center',alignContent:'center' ,justifyContent:'center',paddingLeft :10,paddingRight:10 }}>Registration Application Received Online</Text>
            
          </View>
        <View style ={{
@@ -256,7 +271,6 @@ const backAction = () => {
         accessor="population"
         backgroundColor="transparent"
         paddingLeft="5"
-      
         absolute
       />
       </View>

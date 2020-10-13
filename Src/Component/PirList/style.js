@@ -1,5 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native';
-import { Gradientcolourbluew } from '../../../Constants';
+import { Gradientcolourbluew ,Gradientcolourlight} from '../../../Constants';
 
 
 export default StyleSheet.create({
@@ -22,7 +22,7 @@ input: {
   },
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: Gradientcolourlight,
   },
   textInput: {
     borderBottomColor: '#151313',
@@ -49,14 +49,25 @@ input: {
     backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
 	},
-	inputboxview :{
-		margin : 0.5, 
+
+	inputboxviewmain :{
+		margin : 2, 
 		padding :1,
-		width:'100%',
+		width:'99%',
 		flexDirection:'row',
 		alignItems: 'center',
 		borderWidth: 0.3,
-		backgroundColor:'#FFEFD5',
+		backgroundColor:Gradientcolourlight,
+		justifyContent:'space-evenly'
+	  },  
+	inputboxview :{
+		margin : 2, 
+		padding :1,
+		width:'99%',
+		flexDirection:'row',
+		alignItems: 'center',
+		borderWidth: 0.3,
+		backgroundColor:'white',
 		justifyContent:'space-evenly'
 	  },  
 	

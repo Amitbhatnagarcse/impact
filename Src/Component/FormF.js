@@ -32,7 +32,8 @@ import {Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradientcolour
 import DatePicker from 'react-native-datepicker';    
 import backarrow from '../../assets/img/backnew.png';
 import down from '../../assets/img/downspinner.png';
-import { SinglePickerMaterialDialog , MultiPickerMaterialDialog } from 'react-native-material-dialog';
+import { SinglePickerMaterialDialog ,MultiPickerMaterialDialog } from 'react-native-material-dialog';
+//import {MultiPickerMaterialDialog} from '../CommonComponent/MultiPickerMaterialDialog'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {getBusinessRequest,getPregnancyRequest} from '../actions'
 import { centrename , districtid , blockid , centreid , blockname ,districtname}  from '../String'
@@ -175,6 +176,11 @@ class FormF extends Component {
   }
  district_Popup()
   {
+    if(this.state.state_id == '0')
+    {
+      alert('please select state first')
+      return
+    }
     current_dialogue = 'district';
     this.setState({ singlePickerVisible: true ,dataSource : district_list.ResponseData})
   }
@@ -183,6 +189,11 @@ class FormF extends Component {
       [key]: value
     });
   }
+  onChangedNumeric (key, value) {
+    this.setState({
+      [key]: value.replace(/[^0-9]/g, ''),
+    });
+}
   toggleDrawer() {
     this.props.navigation.goBack()
   }
@@ -254,7 +265,7 @@ class FormF extends Component {
        });
    }
    async cllapiforgetingDistrictlist(id) {
-   // this.setState({ load: true });
+    this.setState({ load: true });
    var data = new URLSearchParams();
    data.append('stateid',id)
      fetch(BASE_URL+"GetDistrict", {
@@ -267,7 +278,15 @@ class FormF extends Component {
      })
        .then(response => response.json())
        .then(responseJson => {
-        this.setState({ load: false });
+       
+        setTimeout(
+          function() {
+            this.setState( {load : false })
+          }
+          .bind(this),
+          500
+        );
+          
         district_list = responseJson;
         
          //this.setState({ load: false ,dataSource : responseJson.IdentityProofType});
@@ -328,8 +347,16 @@ class FormF extends Component {
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
  
+    this.setState({
+      date:
+        year + '-' + month + '-' + date ,
+    })
       this.setState({
         maxDate:
+          year + '-' + month + '-' + date ,
+      })
+      this.setState({
+        lmp:
           year + '-' + month + '-' + date ,
       })
   }
@@ -372,11 +399,12 @@ class FormF extends Component {
       this.conditionMessage('Age');
       return;
     }
-    if(this.state.age > 45)
-    {
-      this.conditionMessage(' Age Can not be greater then 45')
-      return;
-    }
+  
+    // if(this.state.age > 45)
+    // {
+    //   this.conditionMessage(' Age Can not be greater then 45')
+    //   return;
+    // }
      if(this.state.number_child_boy == '-1')
     {
       this.conditionMessage('Total Child Boy');
@@ -510,7 +538,7 @@ class FormF extends Component {
       this.conditionMessage('Genetic Center Address');
       return;
     }
-     if(this.state.lmp == '' && this.state.weeksofpregnancy == '')
+     if(this.state.lmp == '' || this.state.weeksofpregnancy == '')
     {
       this.conditionMessage('lmp Date or Weeks of pregnancy');
       return;
@@ -571,20 +599,21 @@ class FormF extends Component {
     data.append('LMPKnownOrNot',this.state.lmpnotknown);     
     data.append('LMPDate',this.state.lmp);
     data.append('PPregWeeks',this.state.weeksofpregnancy);  
-    data.append('NonInvasiveListCount',total_non_invansive); 
-    data.append('NonInvasiveList',all_value_non_invansive); 
+ 
     
     //this.props.navigation.navigate('FormFSecond' , {data : data})
      if(this.state.invans == 1)
      {
+      data.append('NonInvasiveListCount',total_non_invansive); 
+      data.append('NonInvasiveList',all_value_non_invansive); 
       data.append('P_Inv_NonInv',false);
-      this.props.navigation.navigate('FormFSecond' , {data : data ,name_p :this.state.patient_name,date_come : this.state.date})
+      this.props.navigation.navigate('FormFSecond' , {data : data ,name_p :this.state.patient_name,date_come : this.state.date,cid : center_id})
      }
   
     else
     {
       data.append('P_Inv_NonInv',true);
-      this.props.navigation.navigate('FormFInvansive' , {data : data ,name_p :this.state.patient_name,date_come : this.state.date , age_p : this.state.age})
+      this.props.navigation.navigate('FormFInvansive' , {data : data ,name_p :this.state.patient_name,date_come : this.state.date , age_p : this.state.age , cid : center_id})
     }
    
     
@@ -691,13 +720,13 @@ class FormF extends Component {
   
 
     <View style={styles.inputboxview} >
-        <Text style={styles.inputtextunder}>center Name  :   {this.state.centername}</Text>
+        <Text style={styles.inputtextunder}>Center Name  :   {this.state.centername}</Text>
        
           </View>
 
 
           <View style={styles.inputboxview} >
-  <Text style={styles.inputtext}>center Reg No. : {this.state.centerreg_no}</Text>
+  <Text style={styles.inputtext}>Center Reg No. : {this.state.centerreg_no}</Text>
   <Text style={styles.inputtext}> Date : {this.state.centerregdate}</Text>
           </View>
 
@@ -760,7 +789,7 @@ class FormF extends Component {
                         value = {this.state.pcts_id}
                         autoCorrect={false}
                         keyboardType="numeric"
-                        onChangeText={value => this.onChangeText("pcts_id", value)}  />
+                        onChangeText={value => this.onChangedNumeric("pcts_id", value)}  />
           </View>
      
         <View style={styles.inputboxview} >
@@ -788,7 +817,7 @@ class FormF extends Component {
           </View>
      
         <View style={styles.inputboxview} >
-        <Text style={styles.inputtext}>* Patient Name</Text>
+        <Text style={styles.inputtext}> Patient Name</Text>
         <TextInput
                         style={styles.input}
                         placeholderTextColor="#adb4bc"
@@ -818,20 +847,20 @@ class FormF extends Component {
         <Text style={styles.inputtext}>Number of children male</Text>
         <TextInput
                         style={styles.input}
-                        placeholderTextColor="#adb4bc"
+                        placeholderTextColor="#000"
                         maxLength = {1}
                         keyboardType= "numeric"
                         returnKeyType='next'
                         autoCapitalize="none"
                         value = {this.state.number_child_boy}
                         autoCorrect={false}
-                        onChangeText={value => this.onChangeText("number_child_boy", value)}  />
+                        onChangeText={value => this.onChangedNumeric("number_child_boy", value)}  />
           </View>
           <View style={styles.inputboxview} >
         <Text style={styles.inputtext}>Number of children male age</Text>
         <TextInput
                         style={styles.input}
-                        placeholderTextColor="#adb4bc"
+                        placeholderTextColor="#000"
                         placeholder = {'2,3,4 (years)'}
                         returnKeyType="next"
                         keyboardType= "numeric"
@@ -844,21 +873,21 @@ class FormF extends Component {
         <Text style={styles.inputtext}>Number of children female</Text>
         <TextInput
                         style={styles.input}
-                        placeholderTextColor="#adb4bc"
+                        placeholderTextColor="#000"
                         maxLength = {1}
                         keyboardType= "numeric"
                         returnKeyType="next"
                         autoCapitalize="none"
                         value = {this.state.number_child_girl}
                         autoCorrect={false}
-                        onChangeText={value => this.onChangeText("number_child_girl", value)}  />
+                        onChangeText={value => this.onChangedNumeric("number_child_girl", value)}  />
           </View>
 
           <View style={styles.inputboxview} >
         <Text style={styles.inputtext}>Number of children female age</Text>
         <TextInput
                         style={styles.input}
-                        placeholderTextColor="#adb4bc"
+                        placeholderTextColor="#000"
                         placeholder = {'2,3,4 (years)'}
                         returnKeyType="next"
                         keyboardType= "numeric"
@@ -935,7 +964,7 @@ class FormF extends Component {
                         onChangeText={value => this.onChangeText("fullAdress", value)}  />
           </View>
           <View style={styles.inputboxview} >
-        <Text style={styles.inputtext}>Urban / Rural *</Text>
+        <Text style={styles.inputtext}>Urban / Rural </Text>
          
         <RadioForm style={{width:'50%',marginTop:4}}
   radio_props={radio_props}
@@ -963,7 +992,7 @@ class FormF extends Component {
                         value = {this.state.mobileno}
                         autoCorrect={false}
                         keyboardType="numeric"
-                        onChangeText={value => this.onChangeText("mobileno", value)}  />
+                        onChangeText={value => this.onChangedNumeric("mobileno", value)}  />
           </View>
 
           <View style={styles.inputboxview} >
@@ -973,7 +1002,7 @@ class FormF extends Component {
                         style={{width:'30%', borderRightWidth: 1,
                         fontSize:14,
                         height:35,
-                        borderColor:Gradientcolourlight,}}
+                        borderColor:BlueColor,}}
                         placeholderTextColor="#adb4bc"
                         returnKeyType="next"
                         maxLength = {5}
@@ -981,7 +1010,7 @@ class FormF extends Component {
                         value = {this.state.telephonr_prefix}
                         autoCorrect={false}
                         keyboardType="numeric"
-                        onChangeText={value => this.onChangeText("telephonr_prefix", value)}  />
+                        onChangeText={value => this.onChangedNumeric("telephonr_prefix", value)}  />
         <TextInput
                         style={{width:'70%', fontSize:14,marginLeft:5,
                         height:35,}}
@@ -992,7 +1021,7 @@ class FormF extends Component {
                         value = {this.state.telephone_no}
                         autoCorrect={false}
                         keyboardType="numeric"
-                        onChangeText={value => this.onChangeText("telephone_no", value)}  />
+                        onChangeText={value => this.onChangedNumeric("telephone_no", value)}  />
                         </View>
           </View>
      
@@ -1013,7 +1042,7 @@ class FormF extends Component {
     <View style={{flexDirection: "row", borderWidth: 1,alignContent:'center',alignItems:'center',
    
     backgroundColor:'white'}}>
-        <Text style={styles.inputtext}>Refered By *</Text>
+        <Text style={styles.inputtext}>Refered By </Text>
          
         <RadioForm style={{width:'60%',marginTop:4}}
   radio_props={refered_by}
@@ -1187,16 +1216,17 @@ class FormF extends Component {
           </View>
   }
           <View style={styles.inputboxview} >
-        <Text style={styles.inputtext}>Weeks of Pregnancy *</Text>
+        <Text style={styles.inputtext}>Weeks of Pregnancy </Text>
         <TextInput
                         style={styles.input}
                         placeholderTextColor="#adb4bc"
                         returnKeyType="next"
                         autoCapitalize="none"
                         keyboardType = "numeric"
+                        maxLength = {2}
                         value = {this.state.weeksofpregnancy}
                         autoCorrect={false}
-                        onChangeText={value => this.onChangeText("weeksofpregnancy", value)}  />
+                        onChangeText={value => this.onChangedNumeric("weeksofpregnancy", value)}  />
           </View>
 
           <View style={styles.inputboxview} >
@@ -1225,10 +1255,12 @@ class FormF extends Component {
         <FlatList  
                     data={this.state.nonprocedurelist}  
                     renderItem={({item}) =>  
-                    <Text style={styles.item} >{item.label}</Text>}  
+                   
+                    <Text style={styles.item} >{item.label}</Text>
+                  
+                    }  
                     
                 />  
-
         }
        
 

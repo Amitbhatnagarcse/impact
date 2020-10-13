@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
    alignItems: 'center',
    borderWidth: 1,
-   backgroundColor:'#FFEFD5'
+   backgroundColor:'white'
  },
  input: {
   backgroundColor:'#fff',
@@ -171,3 +171,5 @@ const styles = StyleSheet.create({
    flex:1, 
  },
 });
+
+8553

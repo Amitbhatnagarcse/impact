@@ -7,13 +7,14 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 
 
-
 export default class AuthLoadingScreen extends React.Component {
   state = {
     userToken: false
   }
    componentDidMount () {
    this._retrieveData('role')
+   var pkg = require('../../package.json');
+    console.warn(pkg.version);
      
   }
 

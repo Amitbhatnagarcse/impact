@@ -160,7 +160,7 @@ class Dashboard extends React.Component {
               }
               else if(item.name == 'FEEDBACK')
               {
-                //this.props.navigation.navigate('Feedback')
+                this.props.navigation.navigate('Feedback')
               }
               else
               {
@@ -190,10 +190,10 @@ class Dashboard extends React.Component {
         {this.getsubNormalHeader()}
         </View>
         <TouchableWithoutFeedback onPress={() => this.toggleDrawer()}>
-          <View style={{ width: 50, height: 60 }}>
+          <View style={{ width: 50, height: 55 }}>
             <Image
             tintColor='white'
-            style={{ width: 30, height: 30, marginTop: 15 ,marginRight:4}}
+            style={{ width: 35, height: 40, marginTop: 15 ,marginRight:4}}
             source={require("../../assets/img/logout.png")}
             />
           </View>
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   headerView: {
-     backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+     backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 70,
     justifyContent: 'flex-start',elevation:10
   },
   title_center :{
@@ -352,7 +352,6 @@ const styles = StyleSheet.create({
     fontFamily: ''
   },
   containertabwhite: {
-		
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -388,8 +387,3 @@ const styles = StyleSheet.create({
   },
 
 });
-
-
-
-
-

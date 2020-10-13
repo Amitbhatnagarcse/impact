@@ -133,6 +133,7 @@ const prvchildarray = [{
 
 var  mydata ;
 var mydataintent ;
+var cidi  = '';
 class FormFInvensive extends Component
 {
 
@@ -156,8 +157,8 @@ class FormFInvensive extends Component
     }
    if(this.state.history ==1 && this.state.hisdesvalue == '')
    {
- alert('Please Enter history Genetic Disease Name in family');
- return
+      alert('Please Enter history Genetic Disease Name in family');
+      return
    }
     else if(this.state.selectedItems.length <= 0)
     {
@@ -461,6 +462,11 @@ class FormFInvensive extends Component
       };
       identity_Popup()
       {
+        if(this.state.select_proc == '')
+        {
+          alert('Please select name of the procedure of performing the procedure')
+          return
+        }
         current_dialogue = 'name_proc';
         this.setState({ singlePickerVisible: true ,dataSource : current_list.ResponseData})
       }
@@ -470,8 +476,8 @@ class FormFInvensive extends Component
        var data = new URLSearchParams();
 
        data.append('MasterCode',MasterCode);
-       data.append('cid','3297');
-
+       data.append('cid',cidi);
+        console.log(cidi)
          fetch(BASE_URL+front, {
            method: "POST",
            headers: {
@@ -514,15 +520,14 @@ class FormFInvensive extends Component
     
       handleBackButtonClick() {
         alert('please use back arrow this back press is disabled for security reason')
-        //this.props.navigation.goBack(null);
         return true;
       }
         componentDidMount()
         {
-          const{ data , name_p ,date_come , age_p} = this.props.route.params;
+          const{ data , name_p ,date_come , age_p ,cid} = this.props.route.params;
           
           minDate = date_come;
-
+          cidi = cid;
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
           age = age_p;
@@ -628,16 +633,25 @@ class FormFInvensive extends Component
     visible={this.state.singlePickerVisible}
     selectedItem={-1}
     onCancel={() => this.setState({ singlePickerVisible: false })}
-    onOk={result => {      
-      this.setState({ singlePickerVisible: false });
+    onOk={result => {    
+      if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
+        this.setState({ singlePickerVisible: false });
         console.warn(result);
         if(current_dialogue == 'name_proc')                    
         {
           var valu  = current_list.ResponseData.findIndex(obj => obj.Code === result.selectedItem.value);
 
           this.setState({ 'procedure': result.selectedItem.label ,'notdptpid' : result.selectedItem.value, reg_no : current_list.ResponseData[valu].RegNo })
-        }    
-    }}
+        } 
+      }
+      else
+      alert('Please Select value')
+     
+        
+      
+  }
+      }
+     
     />
      <Text style={styles.inputtextheader}>Section C : To be filled for performing invasive Procedures / Tests Only</Text>
 
@@ -730,19 +744,19 @@ class FormFInvensive extends Component
           ref={(component) => { this.multiSelect = component }}
           onSelectedItemsChange={this.onSelectedItemsChange}
           selectedItems={selectedItems}
-          selectText="Basics of diagnosis"
+          selectText="Basis of diagnosis"
           searchInputPlaceholderText="Basics of diagnosis"
           onChangeInput={ (text)=> console.log(text)}
           tagRemoveIconColor="#e6ac00"
           tagBorderColor="#e6ac00"
           tagTextColor="#e6ac00"       
           fontSize  = {13}
-          selectedItemTextColor="#e6ac00"
-          selectedItemIconColor="#e6ac00"
+          selectedItemTextColor={Gradientcolourbluew}
+          selectedItemIconColor={Gradientcolourbluew}
           itemTextColor="#000"
           displayKey="name"
           searchInputStyle={{ color: '#e6ac00' }}
-          submitButtonColor="#996600"
+          submitButtonColor={Gradientcolourbluew}
           submitButtonText="select"
           hideSubmitButton = {false}
         />
@@ -780,12 +794,12 @@ this.state.other_daignosis ?
           tagBorderColor="#e6ac00"
           tagTextColor="#e6ac00"       
           fontSize  = {13}
-          selectedItemTextColor="#e6ac00"
-          selectedItemIconColor="#e6ac00"
+          selectedItemTextColor={Gradientcolourbluew}
+          selectedItemIconColor={Gradientcolourbluew}
           itemTextColor="#000"
           displayKey="name"
           searchInputStyle={{ color: '#e6ac00' }}
-          submitButtonColor="#996600"
+          submitButtonColor={Gradientcolourbluew}
           submitButtonText="select"
           hideSubmitButton = {false}
         />
@@ -906,12 +920,12 @@ this.state.prv_child_other ?
           tagBorderColor="#e6ac00"
           tagTextColor="#e6ac00"       
           fontSize  = {13}
-          selectedItemTextColor="#e6ac00"
-          selectedItemIconColor="#e6ac00"
+          selectedItemTextColor={Gradientcolourbluew}
+          selectedItemIconColor={Gradientcolourbluew}
           itemTextColor="#000"
           displayKey="name"
           searchInputStyle={{ color: '#e6ac00' }}
-          submitButtonColor="#996600"
+          submitButtonColor={Gradientcolourbluew}
           submitButtonText="select"
           hideSubmitButton = {false}
         />
@@ -989,12 +1003,12 @@ onChangeText={value => this.onChangeText("comp_value", value)}  /> : null
           tagBorderColor="#e6ac00"
           tagTextColor="#e6ac00"       
           fontSize  = {13}
-          selectedItemTextColor="#e6ac00"
-          selectedItemIconColor="#e6ac00"
+          selectedItemTextColor={Gradientcolourbluew}
+          selectedItemIconColor={Gradientcolourbluew}
           itemTextColor="#000"
           displayKey="name"
           searchInputStyle={{ color: '#e6ac00' }}
-          submitButtonColor="#996600"
+          submitButtonColor={Gradientcolourbluew}
           submitButtonText="select"
           hideSubmitButton = {false}
         />
@@ -1189,7 +1203,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      backgroundColor:'#FFEFD5'
+      backgroundColor:'white'
     },
     inputboxviewwithoutborder :{
      
@@ -1198,7 +1212,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
      
-      backgroundColor:'#FFEFD5'
+      backgroundColor:'white'
     },
     inputboxviewcolumn :{
       margin : 2, 
@@ -1208,7 +1222,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      backgroundColor:'#FFEFD5'
+      backgroundColor:'white'
     },
  
     inputinside: {
@@ -1231,6 +1245,7 @@ const styles = StyleSheet.create({
       borderColor:'#1133ee',
       padding:0,
       width:'50%',
+      paddingStart:5,
       fontSize:14,
       height:30,
       marginRight:0.5,
@@ -1244,6 +1259,7 @@ const styles = StyleSheet.create({
        paddingStart: 5,
        width:'100%',
        fontSize:14,
+
        height:30,
        marginRight:0.5,
        flexDirection:'row',

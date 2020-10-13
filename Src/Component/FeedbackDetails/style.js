@@ -1,28 +1,17 @@
 import { StyleSheet,Dimensions } from 'react-native';
-import {BASE_URL,Gradientcolourbluew,Yellowcolour} from '../../../Constants'
+import {Gradientcolourbluew,Yellowcolour,BlueColor} from '../../../Constants'
 
 
 export default StyleSheet.create({
 
 	containertab: {
-		
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: Gradientcolourbluew,
+		backgroundColor: Yellowcolour,
 		borderRadius:1,
 		borderWidth: 1,
 		borderColor: '#000'
-	  },
-	  containertabcolumn: {
-		
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: Gradientcolourbluew,
-		borderRadius:0.5,
-		borderWidth: 0.5,
-		borderColor: Yellowcolour
 	  },
 	  containertabwhite: {
 		flex:1,
@@ -35,27 +24,32 @@ export default StyleSheet.create({
 		borderColor: '#000'
 	  },
 	  tabtitledata :{
-		flex:1,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#000'
-	  },
-	  tabtitledatahalf :{
-		flex:0.5,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#000'
+		flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#000'
 	  },
 	  tabtitle :{
-		flex:1,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#fff'
-	  },
-	  tabtitlehlaf :{
-		flex:0.45,textAlign:'left',paddingTop:10,paddingBottom:10,paddingStart:10,color:'#fff'
+		flex:1,textAlign:'center',paddingTop:10,paddingBottom:10,color:'#fff'
 	  },
 	  line :{
 			width:1,
-			height:50,
+			height:40,
 			backgroundColor:'#000',
 	  },
 body:{
 	flex:1, 
 },
-  button: {
-    marginBottom: 10,
+button: {
+    backgroundColor: BlueColor,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 12,
+    color: 'white',
+   paddingRight:100,
+   paddingLeft:100,
+    fontSize: 14,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 12,
+    textAlign:'center',
   },
   container: {
 	flex: 1,
@@ -96,17 +90,66 @@ body:{
 		alignItems: 'center',
 		borderWidth: 1,
 		backgroundColor:'#FFEFD5'
+	  }, 
+	  inputboxviewplain :{
+		width:'100%',
+		flexDirection:'row',
+		justifyContent: 'center',
+		alignItems: 'center'
+	  }, 
+	  inputboxviewmarginbottom :{
+		marginBottom : 48, 
+		padding :1,
+		width:'99%',
+		flexDirection:'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		backgroundColor:'#FFEFD5'
 	  },  
 	  input: {
 	   backgroundColor:'#fff',
 		borderWidth: 1,
-		paddingStart:5,
+		padding:5,
+		minHeight:30,
 		borderColor:'#1133ee',
-		width:'50%',
+		width:'60%',
 		fontSize:14,
 		marginRight:0.5,
-		
 	  },
+	  inputblue: {
+		backgroundColor:'#fff',
+		 borderWidth: 2,
+		 padding:5,
+		 minHeight:30,
+		 borderColor:'#83D809',
+		 width:'100%',
+		 color : '#83D809',
+		 fontSize:14,
+		 marginRight:0.5,
+	   },
+	   inputorange: {
+		backgroundColor:'#fff',
+		 borderWidth: 2,
+		 padding:5,
+		 minHeight:30,
+		 color : 'black',
+		 borderColor:'#FFA500',
+		 width:'60%',
+		 fontSize:14,
+		 marginRight:0.5,
+	   },
+	  textinputmain: {
+		backgroundColor:'#fff',
+		 borderWidth: 2,
+		 padding:5,
+		 minHeight:30,
+		 borderColor:Gradientcolourbluew,
+		 width:'50%',
+		 fontSize:14,
+		 marginRight:0.5,
+		 
+	   },
 	  inputfixheight: {
 		backgroundColor:'#fff',
 		 borderWidth: 1,
@@ -138,7 +181,7 @@ body:{
 	   },
 	  inputtext: {
 		padding:5,
-		width:'50%',
+		width:'40%',
 		fontSize:13,
 		flex:1, 
 	  },
@@ -152,46 +195,46 @@ body:{
 	width:'100%',
 	},
 	dialogueContainer:{
-		width:280,
+		width:300,
+		paddingTop:8,
 		alignItems: 'center',
 		backgroundColor : '#ffffff',
 		borderWidth: 1,
 		alignSelf:'center',
-		height:234,
 		flexWrap: "wrap",
 		borderColor:'#e1e1e1',
 		borderRadius:17,
 	},
 	dialogCamera:{
-		color:Gradientcolourbluew,
+		color:'#cc8800',
 		fontSize:22,
 		marginTop:15,
 		marginBottom:15,
 	},
 	dialogueCancel:{
-		width:280,
-		backgroundColor:'#b6b6b655',
+		width:289,
+		backgroundColor:Gradientcolourbluew,
 		textAlign:'center',
 		fontSize:20,
+		color:'white',
 		borderRadius:17,
 		height:40,
 		paddingTop:5,
 		alignItems:'center',
 		position:'absolute',
-		bottom:0
+		bottom:5
 	},
 	buttonsubmit: {
-		backgroundColor: 'brown',
 		borderColor: 'white',
 		borderWidth: 1,
-		borderRadius: 12,
+		borderRadius: 2,
 		color: 'white',
-		width:'100%',
+		width:'45%',
 	    marginLeft:0,
 	    marginRight:0,
 		fontSize: 14,
 		fontWeight: 'bold',
-		padding: 12,
+		padding: 2,
 		textAlign:'center',
 	  }
 

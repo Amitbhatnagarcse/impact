@@ -36,6 +36,7 @@ import InspectionReport from '../Component/InspectionReport';
 import PirList from '../Component/PirList';
 import FormfReport from '../Component/FormfReport';
 import Feedback from '../Component/Feedback';
+import FeedbackDetails from '../Component/FeedbackDetails';
 
 
 import {
@@ -93,6 +94,7 @@ function App() {
       <Stack.Screen name="PirList" component={PirList} />
       <Stack.Screen name="FormfReport" component={FormfReport} />
       <Stack.Screen name="Feedback" component={Feedback} />
+      <Stack.Screen name="FeedbackDetail" component={FeedbackDetails} />
       
       </Stack.Navigator>
     </NavigationContainer>

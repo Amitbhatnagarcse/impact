@@ -31,7 +31,7 @@ var aget = '';
 var sext = '';
 var relationt ='';
 var addresst = '';
-
+var cidi = '';
 
 
 var refered_by = [
@@ -136,7 +136,7 @@ class FormFSecond extends Component
       };
       submit()
       {
-       
+      
         if(this.state.notdptp == '')
         {
           alert('Please Select Procedure peforming doctor');
@@ -215,8 +215,9 @@ class FormFSecond extends Component
         }
        // 9 y
 
-       
+       debugger
         mydata = mydataintent;
+        debugger
         mydata.append('NOTDPTP',this.state.notdptp);
         //9 value y
         mydata.append('P_Proc_AttName',this.state.notdptpid);
@@ -242,12 +243,16 @@ class FormFSecond extends Component
         // 16 y
         mydata.append('P_AbNorm_Det',this.state.abnormality_value);
 
-
         console.warn(mydata);
         this.cllapiforPostdata('SaveFormF');
       }
       identity_Popup()
       {
+        if(this.state.select_proc == '')
+        {
+          alert('Please select name of the procedure of performing the procedure')
+          return
+        }
         current_dialogue = 'name_proc';
         this.setState({ singlePickerVisible: true ,dataSource : current_list.ResponseData})
       }
@@ -289,7 +294,7 @@ class FormFSecond extends Component
        var data = new URLSearchParams();
 
        data.append('MasterCode',MasterCode);
-       data.append('cid','3297');
+       data.append('cid',cidi);
 
          fetch(BASE_URL+front, {
            method: "POST",
@@ -304,9 +309,9 @@ class FormFSecond extends Component
            
             if(responseJson.Status)
             {
-            
-            this.setState({ load: false  });
-             if(front == 'GetDocTypeList')
+             this.setState({ load: false  });
+             
+            if(front == 'GetDocTypeList')
              { 
               current_list = responseJson;
               this.setState({ singlePickerVisible: true ,dataSource : responseJson.ResponseData});
@@ -347,11 +352,14 @@ class FormFSecond extends Component
           maxDateCurrent = year + '/' + month + '/' + date 
 
           
-         const{ data , name_p ,date_come } = this.props.route.params;
-       
+         const{ data , name_p ,date_come  ,cid } = this.props.route.params;
+         cidi = cid;
          minDate = date_come
          this.setState({dateprocedurecarriedout: date_come , on_date : date_come , pre_natal_diagnostic: name_p});
           this.setState({datewomobtained : date_come})
+          mydataintent = ""
+          
+          if(mydataintent == "")
           mydataintent = data;
          this.getdataFromSharedPreference();
         }
@@ -440,7 +448,10 @@ class FormFSecond extends Component
     visible={this.state.singlePickerVisible}
     selectedItem={-1}
     onCancel={() => this.setState({ singlePickerVisible: false })}
-    onOk={result => {      
+    onOk={result => {  
+      if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) 
+      {
+    
       this.setState({ singlePickerVisible: false });
         if(current_dialogue == 'name_proc')                    
         {
@@ -449,7 +460,9 @@ class FormFSecond extends Component
           this.setState({ 'procedure': result.selectedItem.label  , 'notdptpid' : result.selectedItem.value , reg_no : current_list.ResponseData[valu].RegNo  })
           // var position = this.getIndex_Search(result.selectedItem.value)
         }    
-    }}
+      }
+    }
+  }
     />
 
     <Text style={styles.inputtextheader}>Section B : To be filled in for performing non-invasive diagnostic Procedures / Tests Only</Text>

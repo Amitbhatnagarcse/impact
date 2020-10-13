@@ -32,13 +32,15 @@ import backarrow from '../assets/img/backnew.png';
 import { ro } from 'date-fns/locale';
 
 
+var cid__my = '' 
+
 class App extends Component {
  
   state = {
     load : false,
     date: '',
     total_sono: '',
-    women_sono: ''
+    women_sono: '',
   };
 
 
@@ -59,7 +61,9 @@ class App extends Component {
   }
   async onSubmit()
   {
-   if(this.state.date == '')
+ 
+
+    if(this.state.date == '')
    {
      Alert.alert('please select date');
    }
@@ -108,9 +112,9 @@ class App extends Component {
    data.append('Totalpatientcount', this.state.total_sono);
    data.append('Totalpragnentwomen', this.state.women_sono);
    data.append('Entrydate', this.state.date);
-   data.append('cid', '3289');
-   data.append('Month', '2');
-   data.append('Year', '2020');
+   data.append('cid', cid__my);
+   data.append('Month', this.state.date.substring(5,7));
+   data.append('Year', this.state.date.substring(0, 4));
    
     
      fetch(BASE_URL+"DayEndSummary", {
@@ -141,7 +145,7 @@ class App extends Component {
     try {
       const value = await AsyncStorage.getItem('centreid');
       const role = await AsyncStorage.getItem('role')
-
+       cid__my = value;
       //mynavigation = this.props.navigation
      
       console.warn(value)
@@ -167,7 +171,14 @@ class App extends Component {
  
     this._retrieveData()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+ 
+    this.setState({
+      date:
+        year + '-' + month + '-' + date ,
+    })
   
   }
 
@@ -183,7 +194,7 @@ class App extends Component {
     <View style={{flex:1,height:'100%',margin:2,backgroundColor:Gradientcolourlight}}>  
   
 
-    <View style={{flexDirection: 'row',height:50}}>
+    <View style={{flexDirection: 'row',height:50,marginEnd:5}}>
         <View style={{height:50,
     alignItems: 'center',flexDirection:'row',flex:1}} >
         <Text style={{flex:1,padding:10,fontSize:14, fontWeight: "bold"}}>Date</Text>
@@ -206,8 +217,12 @@ class App extends Component {
             borderColor:'#000'
           },
           dateInput: {
-            marginLeft: 36
-          }
+            marginLeft: 36,
+            
+          },
+          placeholderText: {  
+            color: '#000'
+        }
           // ... You can check the source to find the other keys.
         }}
         onDateChange={(date) => {this.setState({date: date})}}
@@ -217,7 +232,7 @@ class App extends Component {
 
 
 
-    <View style={{flexDirection: 'row',marginTop:-8}}>
+    <View style={{flexDirection: 'row',marginTop:-8,marginEnd:5}}>
         <View style={{
     alignItems: 'center',flexDirection:'row',flex:1}} >
         <Text style={{flex:1,padding:10,fontSize:14,   fontWeight: "bold"}}>Total No. of Registered for Sonography</Text>
@@ -233,7 +248,7 @@ class App extends Component {
           </View>
       </View>
 
-      <View style={{flexDirection: 'row',marginTop:-8}}>
+      <View style={{flexDirection: 'row',marginTop:-8,marginEnd:5}}>
         <View style={{
     alignItems: 'center',flexDirection:'row',flex:1}} >
         <Text style={{flex:1,padding:10,fontSize:14,   fontWeight: "bold"}}>No. of pregnant Women Registered for Sonography</Text>
@@ -327,6 +342,5 @@ const styles = StyleSheet.create({
     textAlign:'center',
   }
 });
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

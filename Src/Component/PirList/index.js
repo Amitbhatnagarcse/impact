@@ -14,7 +14,6 @@ import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
 
 const PirList = ({navigation }) => 
 {
-
     const [role ,setrole] = useState('')
     const [district_id ,setDistrict] = useState('')
     const [loading , setloading] = useState(false)
@@ -22,7 +21,7 @@ const PirList = ({navigation }) =>
     const [permisssion, setPermission] = useState(RESULTS.DENIED)
     const [district_list  ,setDistrictListing] = useState([])
     const [visiblesingle ,setSingleVisible] = useState([])
-    const [district_name, setDistrict_name] = useState("")  
+    const [district_name, setDistrict_name] = useState('')  
 
     const allowStoragePermission =  () => {
     
@@ -59,14 +58,17 @@ const PirList = ({navigation }) =>
         
           const role_id = await AsyncStorage.getItem("role")
           if (role_id !== null) {
-            setrole(role_id)   
-                                  
+            setrole(role_id)                       
           }
           var  district_i = await AsyncStorage.getItem('districtid')
-          setDistrict(district_i)
-      
+          if (district_i !== null) {
+            setDistrict(district_i)                     
+          }
           var  district_name = await AsyncStorage.getItem('districtname')
-          setDistrict_name(district_name)
+
+          if (district_name !== null) {
+            setDistrict_name(district_name)
+          }
 
       }
  
@@ -79,6 +81,11 @@ const PirList = ({navigation }) =>
       }
       const deleteItemById = async (id) => {
         
+        if(role == '3')
+        {
+          alert('You are not authorized to delete')
+          return
+        }
         // const filteredData = listing.filter(item => item.PirId !== id);
         Alert.alert(
           '',
@@ -97,8 +104,8 @@ const PirList = ({navigation }) =>
    
       }
       const editdata = async(item) => {
-
-        navigation.navigate('InspectionReport' , { id : item } )
+      
+         navigation.navigate('InspectionReport' , { id : item } )
 
       }
 
@@ -106,7 +113,7 @@ const PirList = ({navigation }) =>
       const _retrieveData = async (data ,front,p_id) => {
 
   
-    setloading(true)
+      setloading(true)
   
       fetch(BASE_URL+front, {
         method: "POST",
@@ -192,10 +199,12 @@ const PirList = ({navigation }) =>
             if(role =='3')
             {
               var data = new URLSearchParams();
-              data.append('Year','2020');
+              var year = new Date().getFullYear(); //Current Year
+              data.append('Year',year);
               data.append('Did',district_id);
               data.append('Role',role);
               _retrieveData(data ,'GetPIReportByDID')
+              
             }
           else
             {
@@ -207,9 +216,16 @@ const PirList = ({navigation }) =>
           var date = new Date().getDate(); //Current Date
           var month = new Date().getMonth() + 1; //Current Month
           var year = new Date().getFullYear(); //Current Year
+          
           const unsubscribe = navigation.addListener('focus', () => {
 
-            _retrieveData(data ,'GetPIReportByDID')
+            console.warn(district_id)
+            
+            // var mydata = new URLSearchParams();
+            // mydata.append('Year',year);
+            // mydata.append('Did',district_id);
+            // mydata.append('Role','3');
+            // _retrieveData(mydata ,'GetPIReportByDID')
 
             BackHandler.addEventListener("hardwareBackPress", backAction);
 
@@ -258,6 +274,7 @@ const PirList = ({navigation }) =>
     />
           
           <View style={Styles.container}>
+          
           <OrientationLoadingOverlay visible={loading}>
           <View>
             <Image
@@ -286,18 +303,21 @@ const PirList = ({navigation }) =>
           <FlatList
               style={{
                flex:1,
-              backgroundColor:'#fff',width:'100%'}}
+              width:'100%'}}
               renderItem={(item, index) => _renderItem(item.item , index,navigation)}
               data={listing}
               numColumns={1}
               bounces={false}
             />
-            
-          
-      
-           
+
           </View>
           {role =='3' &&
+          <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
+             <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',paddingTop:12,height:50,fontSize:18,
+		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
+        </TouchableOpacity>
+}
+{role =='1' &&
           <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
              <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',paddingTop:12,height:50,fontSize:18,
 		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>

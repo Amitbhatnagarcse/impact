@@ -45,19 +45,6 @@ export const OS_TYPE_IOS = 'ios';
 export const LIST_THRESHOLD = 0.5;
 
 
-
-export const MAX_LENGTH_OF_PHONE_NUMBER = 10;
-export const MIN_LENGTH_OF_PHONE_NUMBER = 10;
-
-export const MAX_LENGTH_OF_PASSWORD = 20;
-export const MIN_LENGTH_OF_PASSWORD = 8;
-export const MAX_LENGTH_OF_ZIPCODE = 6;
-export const MIN_LENGTH_OF_ZIPCODE = 6;
-
-
-export const KEY_COUNTRY_CODE_VALUE = '91';
-export const KEY_COUNTRY_NAME_VALUE = 'India';
-
 export const USER_TYPE_PATIENT_ID = 3;
 export const USER_TYPE_DOCTOR_ID = 4;
 
@@ -67,22 +54,8 @@ export const KEY_MINIMUMLENGTHOFNAME = 3;
 export const KEY_MAXLENGTHOFNAME = 20;
 
 
-
 export const MIN_LENGTH_OF_HOSPITIAL_NAME = 3;
 export const MAX_LENGTH_OF_HOSPITIAL_NAME = 30;
-
-
-
-export const KEY_MOBILE_NUMBER = 'mobile';
-export const KEY_AGREE_FOR_TERMS_CONDITIONS = 'agree_for_terms_conditions';
-
-export const KEY_COUNTRY_CODE = 'countrycode';
-export const KEY_RATING = 'rating';
-export const KEY_COUNTRY = 'country';
-export const KEY_OTP = 'otp';
-export const KEY_DESCRIPTION = 'description';
-export const KEY_IMAGE = 'image';
-
 export const SHOW_AFTER = 300;
 
 
@@ -94,7 +67,8 @@ export const METHOD_TYPE_PUT = 'PUT';
 /////////////////////////////////////// API NAMES ////////////////////////////////////
 
 //export const BASE_URL = 'http://18.188.100.196:3000/';
-export const BASE_URL = 'http://164.100.153.176/pcpndtdemo/api/User/';
+//export const BASE_URL = 'http://164.100.153.176/pcpndtdemo/api/User/';
+export const BASE_URL = 'http://164.100.153.176/PcpndtApp/api/User/';
 
 
 
@@ -103,5 +77,3 @@ export const API_GET_PGREGNANCY_LIST = BASE_URL+'Dayendsummarylist';
 export const API_GET_DASHBOARD_CHART = BASE_URL+'DashboardData';
 export const API_GET_FORMF_REPORT_CHART = BASE_URL+'FormFReport';
 //export const API_GET_FORMF_REPORT_CHART = BASE_URL+'Dayendsummarylist';
-
-

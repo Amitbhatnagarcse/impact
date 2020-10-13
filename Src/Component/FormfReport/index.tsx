@@ -41,7 +41,7 @@ const FormfReport = ( {navigation} ) => {
   
     const setFunctionDate = async(dat) =>
     {
-      console.warn('call api')
+      
      await setDate(dat)
     }
     const _headerBar = () => {
@@ -68,8 +68,10 @@ const FormfReport = ( {navigation} ) => {
           var year = new Date().getFullYear(); //Current Year
          
           var yesterday = new Date(Date.now() - 864e5);
-           setDate(''+format(new Date(yesterday), 'yyyy/MM/dd'))  
-           setMaxDate(year + '-' + month + '-' + date)
+           //setDate(''+format(new Date(yesterday), 'yyyy/MM/dd'))  
+           
+           setMaxDate(year + '/' + month + '/' + date)
+           setDate(year + '/' + month + '/' + date)
          }
          const readData = async () => {
         

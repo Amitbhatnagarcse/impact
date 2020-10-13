@@ -108,10 +108,6 @@ export function* getDashboardList(action) {
     }
 }
 
-
-
-
-
 export function* actionWatcher() {
     yield takeLatest(Types.GET_BUSINESS_REWARDS_REQUEST, getBusinessRequest)
     yield takeLatest(Types.GET_PREGNANCY_LIST_REQUEST, getPregnancyList)

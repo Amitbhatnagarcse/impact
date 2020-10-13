@@ -6,9 +6,6 @@ import MultiSelect from 'react-native-multiple-select';
  
 class MultiSelectExample extends Component {
  
-
-
-
   state = {
     selectedItems : []
   };

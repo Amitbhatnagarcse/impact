@@ -150,6 +150,8 @@ export default class PDFExample extends React.Component {
             .then(response => response.json())
             .then(responseJson => {
              this.setState({ load: false });
+             
+             console.log('server'+responseJson)
              if(responseJson.Status)
              {
                 this.setState({pdfs : responseJson.ResponseData}) 
@@ -159,6 +161,7 @@ export default class PDFExample extends React.Component {
              
             })
             .catch(error => {
+              
               this.setState({ load: false });
             
             });
@@ -182,7 +185,7 @@ export default class PDFExample extends React.Component {
           }
           getNormalHeader(){
             return(
-              <Text style={{ color: 'black',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Pdf View</Text>
+              <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Form F Pdf</Text>
             )
           }
     render() {

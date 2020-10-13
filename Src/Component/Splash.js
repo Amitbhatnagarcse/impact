@@ -1,5 +1,5 @@
 import React ,{Component} from 'react'
-import {StyleSheet,Text,View,ImageBackground,Dimensions} from 'react-native'
+import {StyleSheet,Text,View,Image,Dimensions,SafeAreaView} from 'react-native'
 import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
 
 import splash from '../../assets/img/splash.jpg'
@@ -14,31 +14,30 @@ export default class Splash extends Component{
     render(){
 
         return(
-            <View style={styles.container}>
-            <ImageBackground   source={splash} style={styles.image} ></ImageBackground>
-          </View>
+       
+            <SafeAreaView style= {styles.container}>
+            <Image   
+            source={splash} style={styles.image} ></Image>
+        </SafeAreaView>
         )
     }
 }
 const window = Dimensions.get('window');
 const styles = StyleSheet.create({
-    container:{
+
+    container: {
         backgroundColor:Gradientcolourbluew,
-        width:window.width,
-        height:window.height,
-        justifyContent:'center',
-        alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
       
-    },
-    image: {
-        width:window.width-3,
-        flex:1,
-     
-    resizeMode: "contain", // or 'stretch',
-    justifyContent: 'center',
       },
-    title:{
-        fontWeight:'bold',
-        fontSize:18
-    }
+    image: {
+        width:window.width,
+        flex:1,
+        resizeMode: "contain", // or 'stretch',
+        justifyContent: 'center',
+      }
 })  

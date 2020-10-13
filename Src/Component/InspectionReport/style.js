@@ -1,13 +1,11 @@
-import { StyleSheet,Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { BlueColor, Gradientcolourbluew, Gradientcolourlight } from '../../../Constants';
 
 
 export default StyleSheet.create({
-body:{
-	flex:1, 
-},
-
-
+	body:{
+		flex:1, 
+	},
   button: {
     marginBottom: 10,
   },

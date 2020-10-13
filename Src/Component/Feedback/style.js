@@ -1,11 +1,10 @@
 import { StyleSheet,Dimensions } from 'react-native';
-import {BASE_URL,Yellowcolour} from '../../../Constants'
+import {Gradientcolourbluew,Yellowcolour,BlueColor} from '../../../Constants'
 
 
 export default StyleSheet.create({
 
 	containertab: {
-		
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -38,8 +37,19 @@ export default StyleSheet.create({
 body:{
 	flex:1, 
 },
-  button: {
-    marginBottom: 10,
+button: {
+    backgroundColor: BlueColor,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 12,
+    color: 'white',
+   paddingRight:100,
+   paddingLeft:100,
+    fontSize: 14,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    padding: 12,
+    textAlign:'center',
   },
   container: {
 	flex: 1,
@@ -68,7 +78,7 @@ body:{
     flexDirection: 'row',
   },
   headerView: {
-    backgroundColor: '#cc8800', alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
+    backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 60,
       justifyContent: 'flex-start',elevation:5,
 	},
 	inputboxview :{
@@ -80,17 +90,66 @@ body:{
 		alignItems: 'center',
 		borderWidth: 1,
 		backgroundColor:'#FFEFD5'
+	  }, 
+	  inputboxviewplain :{
+		width:'100%',
+		flexDirection:'row',
+		justifyContent: 'center',
+		alignItems: 'center'
+	  }, 
+	  inputboxviewmarginbottom :{
+		marginBottom : 48, 
+		padding :1,
+		width:'99%',
+		flexDirection:'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		backgroundColor:'#FFEFD5'
 	  },  
 	  input: {
 	   backgroundColor:'#fff',
 		borderWidth: 1,
-		paddingStart:5,
+		padding:5,
+		minHeight:30,
 		borderColor:'#1133ee',
 		width:'50%',
 		fontSize:14,
 		marginRight:0.5,
-		
 	  },
+	  inputblue: {
+		backgroundColor:'#fff',
+		 borderWidth: 2,
+		 padding:5,
+		 minHeight:30,
+		 borderColor:'#006400',
+		 width:'100%',
+		 color : '#000',
+		 fontSize:14,
+		 marginRight:0.5,
+	   },
+	   inputorange: {
+		backgroundColor:'#fff',
+		 borderWidth: 2,
+		 padding:5,
+		 minHeight:30,
+		 color : '#000',
+		 borderColor:'#FF0000',
+		 width:'100%',
+		 fontSize:14,
+		 marginRight:0.5,
+	   },
+	  textinputmain: {
+		backgroundColor:'#fff',
+		 borderWidth: 2,
+		 padding:5,
+		 minHeight:30,
+		 borderColor:Gradientcolourbluew,
+		 width:'50%',
+		 fontSize:14,
+		 marginRight:0.5,
+		 
+	   },
 	  inputfixheight: {
 		backgroundColor:'#fff',
 		 borderWidth: 1,
@@ -136,12 +195,12 @@ body:{
 	width:'100%',
 	},
 	dialogueContainer:{
-		width:280,
+		width:300,
+		paddingTop:8,
 		alignItems: 'center',
 		backgroundColor : '#ffffff',
 		borderWidth: 1,
 		alignSelf:'center',
-		height:234,
 		flexWrap: "wrap",
 		borderColor:'#e1e1e1',
 		borderRadius:17,
@@ -153,29 +212,29 @@ body:{
 		marginBottom:15,
 	},
 	dialogueCancel:{
-		width:280,
-		backgroundColor:'#b6b6b655',
+		width:289,
+		backgroundColor:Gradientcolourbluew,
 		textAlign:'center',
 		fontSize:20,
+		color:'white',
 		borderRadius:17,
 		height:40,
 		paddingTop:5,
 		alignItems:'center',
 		position:'absolute',
-		bottom:0
+		bottom:5
 	},
 	buttonsubmit: {
-		backgroundColor: 'brown',
 		borderColor: 'white',
 		borderWidth: 1,
-		borderRadius: 12,
+		borderRadius: 2,
 		color: 'white',
-		width:'100%',
+		width:'45%',
 	    marginLeft:0,
 	    marginRight:0,
 		fontSize: 14,
 		fontWeight: 'bold',
-		padding: 12,
+		padding: 2,
 		textAlign:'center',
 	  }
 

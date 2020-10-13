@@ -11,9 +11,9 @@ const TabZero = ( {navigation} ) => {
         <View style={Styles.containertab}>
             <Text style={Styles.tabtitle}>District Name</Text>
             <View style={Styles.line} />
-            <Text style={Styles.tabtitle}> Center Count</Text>
+            <Text style={Styles.tabtitle}> Center </Text>
             <View style={Styles.line} />
-            <Text style={Styles.tabtitle}>FormF Count</Text>
+            <Text style={Styles.tabtitle}>FormF </Text>
         </View>
           <View style={Styles.containertab}>
           <Text style={Styles.tabtitle}></Text>

@@ -3,22 +3,37 @@ import React, { useEffect, useReducer, useState } from 'react'
 import {
   View,
   Text,
-  StyleSheet,
   Image,
-  TouchableOpacity, YellowBox
+  TouchableOpacity, 
+  TextInput,
+  Modal
+ 
 } from "react-native";  
 import Styles from './style';
 import file_upload from '../../../assets/img/file_download.png';
 import RNFetchBlob from 'rn-fetch-blob'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
-import { BASE_URL, BlueColor, Yellowcolour } from '../../../Constants';
+import { BASE_URL, BlueColor, Gradientcolourbluew, Gradientcolouryellow, Yellowcolour  } from '../../../Constants';
+import RadioForm from 'react-native-simple-radio-button';
 
+var current_number = 0;
 
-export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
+export default function Item( { item  , index ,navigation ,role, actiondel} )
 {
- 
 
   const [loading , setloading] = useState(false)
+  const [typevalue, settypevalue] = useState(-1);
+  const [feedback, setFeedback] = useState('');
+
+  const [editvar , setEditvar] = useState(false)
+
+  const radio_props = [
+    {label: 'Suggestion', value: 'S' },
+    {label: 'Query', value: 'Q' }
+  ];
+  const launchCamera = () => {
+    
+  }
 
   const _retrieveData = async (front,pir_id) => {
 
@@ -39,7 +54,6 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         .then(response => response.json())
         .then(responseJson => {
           setloading(false)
-          debugger
           if(responseJson.Status)
           {
             const image = responseJson.ResponseData[0].AttachedFile
@@ -86,6 +100,14 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
     // else
     // alert('File Not Uploaded')
      }
+
+   const getTextStyle  = (type) => {
+     
+      if(type == 'A')
+        return(Styles.inputblue)
+      else
+        return(Styles.inputorange)
+   }  
   
     return (
       <View style = {{margin:5 ,borderRadius: 5, shadowColor: '#cc8800', borderColor:'#e1e1e1' ,elevation : 5,backgroundColor: 'rgba(52, 52, 52, 0.4)'}}>
@@ -99,45 +121,65 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
           </View>
         </OrientationLoadingOverlay>
 
-  
-         <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>Center Name</Text>
-        <Text style={Styles.input}  >{item.CenterName} </Text>
-          </View> 
+        {editvar && (
+        <View>
+          <Modal style={Styles.dialogue}
+            isVisible={editvar}
+            transparent={true}
+            animationType={"fade"}
+            onRequestClose={() => setEditvar(false)}
+          >
+            <View style={Styles.dialogue}>
+              <View style={Styles.dialogueContainer}>
+              <View style={Styles.inputboxview} >
+        <Text style={Styles.inputtext}>Feedback Type</Text>
+        <RadioForm style={{width:'50%',marginTop:4}}
+          radio_props={radio_props}
+          initial={typevalue}
+          formHorizontal={false}
+          labelHorizontal={true}
+          buttonColor={'#2196f3'}
+          animation={true}
+          buttonStyle={{margin:4}}
+          labelStyle={{fontSize: 12, color: '#000',marginRight:10}}
+          onPress={(value) => {settypevalue(value)}}
+          buttonSize={10}
+          buttonOuterSize={20}
+/>
+          </View>
+          <View style={Styles.inputboxviewmarginbottom} >
+        <Text style={Styles.inputtext}>FeedBack</Text>
+        <TextInput
+                        style={Styles.input}
+                        placeholderTextColor="#adb4bc"
+                        returnKeyType="next"
+                        maxLength = {200}
+                        multiline={true}
+                        autoCapitalize="none"
+                        value = {feedback}
+                        autoCorrect={false}
+                        keyboardType={'default'}
+                        onChangeText={value => setFeedback(value)}  />
+          </View>
 
-          <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>PIR No.</Text>
-        <Text style={Styles.input}  >{item.PIRNo} </Text>
-          </View> 
+                <Text style={Styles.dialogueCancel}
+                  onPress={() => setEditvar(false)}
+                >Update</Text>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      )}
 
-          <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>PIR Date Time</Text>
-        <Text style={Styles.input}  >{item.PIRDate} {item.PIRTime} </Text>
-          </View> 
+          <TouchableOpacity style={Styles.inputboxviewplain} >
+        <Text 
+        onPress={() => navigation.navigate('FeedbackDetail', {item : item})}
+        style={getTextStyle(item.status)}  > {  item.username} </Text>
+          </TouchableOpacity> 
 
       
-          <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>PIR Appropirate Authority</Text>
-        <Text style={Styles.input}  >{item.PIRAppAuth} </Text>
-          </View> 
-
-          <View style={Styles.inputboxview} >
-          <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item)  }>
-        <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',
-		borderColor: 'white',width:'100%',textAlign:'center'}} >Edit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={Styles.buttonsubmit} onPress={() => actionPer(item.PirId)}>
-        <Text style={{	backgroundColor:Yellowcolour,padding:5,color:'white',
-		borderColor: 'white',width:'100%',textAlign:'center'}}>Delete</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
-          _retrieveData('GetPIReportDetail',item.PirId)
-          }>
-        <Image source={file_upload} style={{ bottom: 0, right: 2,height:30,width:30,  justifyContent: 'center',
-        marginBottom:2,alignItems: 'center'}}/>
-        </TouchableOpacity>
-          </View> 
-
+       
+      
        </View>
       )
 }

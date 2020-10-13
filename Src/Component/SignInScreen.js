@@ -5,6 +5,7 @@ import backarrow from "../../assets/img/blackback_arrow.png";
 import LinearGradient from 'react-native-linear-gradient';
 import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
 import FooterComponent from '../CommonComponent/Footer'
+import { CommonActions } from '@react-navigation/native';
 
 import {
   StyleSheet,
@@ -63,6 +64,7 @@ export default class SignInScreen extends React.Component {
       this.handleBackButtonClick
     );
     this.storeItem('role','')
+    this.setState({ loginui: true });
 
   }
   
@@ -100,13 +102,13 @@ export default class SignInScreen extends React.Component {
       })
         .then(response => response.json())
         .then(responseJson => {
-         //this.setState({ load: false });
-        if(responseJson.Status)
+        console.warn(JSON.stringify(responseJson))
+          if(responseJson.Status)
         {
           this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
           setTimeout(()=>{
             alert(JSON.stringify(responseJson.ResponseData[0].OTP));
-       }, 300);
+        }, 300);
         }
         else
         {
@@ -185,6 +187,7 @@ export default class SignInScreen extends React.Component {
        }
      else if(this.state.logindata.OTP == this.state.code)
       {
+
         this.storeItem("centrename", this.state.logindata.CentreName);
         this.storeItem("districtid", this.state.logindata.DistrictId.toString());
         this.storeItem("blockid", this.state.logindata.BlockId.toString());
@@ -199,7 +202,22 @@ export default class SignInScreen extends React.Component {
         this.storeItem("username",this.state.logindata.UserName);        
         this.storeItem("role",this.state.logindata.Role.toString());
 
-        this.props.navigation.navigate('PinScreen');
+      
+        this.props.navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              { name: 'PinScreen' },
+              {
+                name: 'PinScreen',
+                params: { user: '' },
+              },
+            ],
+          })
+        );
+
+
+        //this.props.navigation.navigate('PinScreen');
       }
       else
       {
@@ -266,7 +284,7 @@ export default class SignInScreen extends React.Component {
                             source={require("../../assets/img/tiger.png")}
                           style={{ width: 100,height:80, marginTop:5 ,marginBottom:20}}
                          />
-                          <Text style={styles.buttonText}>चिकित्सा एवं स्वास्थ्य, परिवार कल्याण विभाग </Text>
+                          <Text style={styles.buttonText}>चिकित्सा , स्वास्थ्य एवं परिवार कल्याण विभाग </Text>
                           <Text style={styles.buttonText}>राजस्थान सरकार </Text>
 
                         <Image
@@ -280,7 +298,7 @@ export default class SignInScreen extends React.Component {
                         placeholderTextColor="#a6a6a6"
                         returnKeyType="go"
                         autoCapitalize="none"
-                        maxLength={12}
+                        maxLength={10}
                         value = {this.state.pre_natal_diagnostic}
                         autoCorrect={false}
                         keyboardType={"numeric"}
