@@ -71,7 +71,6 @@ export default class PDFExample extends React.Component {
       title: 'Share file',
       failOnCancel: false,
       saveToFiles: true,
-     
       urls: [images.pdf1], // base64 with mimeType or path to local file
     };
 

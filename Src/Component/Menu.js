@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '300',
     color:'#fff',
-    paddingTop: 15,
+    paddingTop: 1,
   },
   item: {
     fontSize: 22,
     fontWeight: '300',
-    paddingTop: 40,
+    paddingTop: 10,
     color:'#fff',
 
   },
@@ -69,6 +69,19 @@ export default function Menu({ onItemSelected ,type,navigation }) {
       >
         Home
       </Text>
+        <View style ={{width:'100%',height:1,backgroundColor:'white'}}/>
+
+        <Text
+        onPress={() => {
+          onItemSelected()
+          navigation.navigate('DistrrictOwnerProfile')
+        }}
+        style={styles.item}
+      >
+       Owner Profile
+      </Text>
+        <View style ={{width:'100%',height:1,backgroundColor:'white'}}/>
+
 
       <Text
         onPress={() =>
@@ -78,6 +91,8 @@ export default function Menu({ onItemSelected ,type,navigation }) {
         style={styles.item}
       >Logout
       </Text>
+      <View style ={{width:'100%',height:1,backgroundColor:'white'}}/>
+
      
      
 {(type !='category') &&

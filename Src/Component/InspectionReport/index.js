@@ -89,7 +89,6 @@ const InspectionReport = ({navigation ,route}) => {
        {
         var districtidv = await AsyncStorage.getItem('districtid')
         if (districtidv !== null) {
-          debugger
           setDistrict(districtidv)
         }
         var districtnamev = await AsyncStorage.getItem('districtname')

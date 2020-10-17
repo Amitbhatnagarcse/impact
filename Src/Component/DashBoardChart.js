@@ -40,6 +40,7 @@ const DashBoardChart = ({navigation}) => {
   const [loading , setloading] = useState([false]); 
   const [role , setrole] = useState(['']); 
   const [unitid , setunitid] = useState(['']); 
+  const [did , setDid] = useState(['']); 
 
   const loadings = useSelector((state) => state.loading);
   const [listing ,setListing] = useState([{ "TotFormFInYear": 0,
@@ -56,6 +57,14 @@ const DashBoardChart = ({navigation}) => {
   "NewCentresRejectedInYearAllYears": 0,
   "NewCentresPendingInYearAllYears": 0,
   "TotFormAReceivedInyearAllYears": 0}])
+
+  const [listingtwo ,setListingtwo] = useState([{ 
+  "FormAPending": 0,
+  "FormAGranted": 0,
+  "FormARejected": 0,
+ }])
+
+
   const dispatch = useDispatch();
 
   const readData = async () => {
@@ -64,6 +73,9 @@ const DashBoardChart = ({navigation}) => {
     setrole(role_id) 
     const unit_id = await AsyncStorage.getItem('unitid')
      setunitid(unit_id) 
+     const d_id = await AsyncStorage.getItem('districtid')
+     setDid(d_id) 
+
   
 }
 
@@ -81,6 +93,21 @@ const backAction = () => {
     {
       _retrieveData()
     }
+    if(role == '3')
+    {
+      if(role != '' && unitid !='')
+      {
+        _retrieveDataform()
+      }
+    }
+    else
+    {
+      if(role != '' )
+      {
+        _retrieveDataform()
+      }
+    }
+   
     BackHandler.addEventListener("hardwareBackPress", backAction);
 
     return () =>
@@ -123,6 +150,37 @@ const backAction = () => {
           //this.setState({ load: false });
           setloading(false)
         
+        });
+    
+   }
+
+   const _retrieveDataform = async () => {
+ 
+    var data = new URLSearchParams();
+    data.append('Role',role);
+    if(role =='3')
+    data.append('Did',did);
+      fetch(BASE_URL+"RenewalReport", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data.toString(),
+        json: true,
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          if(responseJson.Status)
+          {
+            setTimeout(()=>{
+              setListingtwo(responseJson.ResponseData)}, 300);
+          }
+          else{
+            // setTimeout(()=>{
+            //   alert(responseJson.Message)    },300);
+          }
+        })
+        .catch(error => {  
         });
     
    }
@@ -174,24 +232,24 @@ const backAction = () => {
   ];
   const datapie2 = [
     {
-      name: " In Year",
-      population: listing[0].TotFormFInYear,
-      color: "rgba(74, 96, 232, 0.8)",
-      legendFontColor: "#fff",
+      name: "Approved",
+      population: listingtwo[0].FormAGranted,
+      color: "blue",
+      legendFontColor: "blue",
       legendFontSize: 18
     },
     {
-      name: " In Month",
-      population: listing[0].TotFormFInMonth,
+      name: " In Process",
+      population: listingtwo[0].FormAPending,
       color: "brown",
       legendFontColor: "#fff",
       legendFontSize: 18
     },
     {
-      name: "Today",
-      population: listing[0].TotFormFInDate,
+      name: "Rejected",
+      population: listingtwo[0].FormARejected,
       color: "red",
-      legendFontColor: "#fff",
+      legendFontColor: "red",
       legendFontSize: 18
     },
    
@@ -289,7 +347,7 @@ const backAction = () => {
    padding:10,
    elevation: 2}}>
 
-<Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center',paddingLeft :40,paddingRight:40 }}>Form F Received</Text>
+<Text style={{ color: 'black',  fontSize: 20,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center',paddingLeft :40,paddingRight:40 }}>Renewal  Application Received Online</Text>
      
    </View>
       <View style ={{

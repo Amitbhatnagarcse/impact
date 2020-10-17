@@ -37,6 +37,7 @@ import PirList from '../Component/PirList';
 import FormfReport from '../Component/FormfReport';
 import Feedback from '../Component/Feedback';
 import FeedbackDetails from '../Component/FeedbackDetails';
+import DistrrictOwnerProfile from '../Component/DistrrictOwnerProfile';
 
 
 import {
@@ -95,6 +96,7 @@ function App() {
       <Stack.Screen name="FormfReport" component={FormfReport} />
       <Stack.Screen name="Feedback" component={Feedback} />
       <Stack.Screen name="FeedbackDetail" component={FeedbackDetails} />
+      <Stack.Screen name="DistrrictOwnerProfile" component={DistrrictOwnerProfile} />
       
       </Stack.Navigator>
     </NavigationContainer>

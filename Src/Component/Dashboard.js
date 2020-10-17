@@ -9,9 +9,10 @@ import Menu from './Menu';
 import SideMenu from 'react-native-side-menu';
 import { Col } from 'native-base';
 import background from '../../assets/img/backpinview.jpg';
-import {Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradientcolourlight,BlueColor} from '../../Constants'
+import {BASE_URL,Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradientcolourlight,BlueColor} from '../../Constants'
 //import footer from '../../assets/img/footer.jpg'
 import FooterComponent from '../CommonComponent/Footer'
+import { format, parse } from "date-fns";
 
 const arrayEarnReward = [
   // {
@@ -53,12 +54,12 @@ const rollthree = [
   //   img: require('../../assets/img/dayendsummary.png')
   // },
   {
-    name: 'FEEDBACK',
-    img: require('../../assets/img/feedback.png')
-  },
-  {
     name: 'FORMF REPORT',
     img: require('../../assets/img/formfreport.png')
+  },
+  {
+    name: 'FEEDBACK',
+    img: require('../../assets/img/feedback.png')
   }
 ]
 
@@ -78,16 +79,60 @@ class Dashboard extends React.Component {
               pageType: "HomeScreen",
               title : 'IMPACT',
               arrayEarnRewards:[], 
-              username :''        
+              username :'',
+              load : false        
             }
    }
+
+   async getcenterdetails(id_)
+   { 
+      this.setState({ load: true });
+     var data = new URLSearchParams();
+     data.append('Cid',id_)
+       fetch(BASE_URL+"GetCenterDetail", {
+         method: "POST",
+         headers: {
+           'Content-Type': 'application/x-www-form-urlencoded'
+         },
+         body: data.toString(),
+         json: true,
+       })
+         .then(response => response.json())
+         .then(responseJson => {
+          this.setState({ load: false });
+           const mydate = responseJson.ResponseData.ValidThrough.substring(14,24)
+           
+           var datee = String(mydate).split('/');
+          
+           var datenew = (datee[2] + '/' + datee[1] + '/' + datee[0] );
+           var date1 = new Date(datenew);
+            console.warn(date1)
+          
+          var datev = new Date().getDate();
+          var month = new Date().getMonth() + 1;
+          var year = new Date().getFullYear();
+          var datecureent = (datev +'/'+ month +'/'+ year); 
+          
+          var date2 = new Date(datecureent); 
+          console.warn(date2)
+          var Difference_In_Time = date1.getTime() - date2.getTime(); 
+          console.warn(JSON.stringify(Difference_In_Time))
+          
+         })
+         .catch(error => {
+           
+           this.setState({ load: false });
+         
+         });
+     }
 
   async getdataFromSharedPreference()
    {
 
+  
+
     await  AsyncStorage.getItem('centrename', (err, result) => {
         this.center_name = result;
-
       });
     await AsyncStorage.getItem('username',(err ,result) => {
       this.setState({username : result})
@@ -101,8 +146,12 @@ class Dashboard extends React.Component {
        }
        else
        {
+          AsyncStorage.getItem('centreid', (err, result) => {
+          this.getcenterdetails(result)
+        });
        this.setState({ arrayEarnRewards : arrayEarnReward})
-       }
+        
+      }
        });
            
   }
@@ -145,10 +194,7 @@ class Dashboard extends React.Component {
               }
               else if(item.name == 'PIR UPLOAD')
               {
-                //this.props.navigation.navigate('InspectionReport')
                 this.props.navigation.navigate('PirList')
-                //this.props.navigation.navigate('PDFExample');
-                //this.props.navigation.navigate('ShareDemo');
               }
               else if(item.name ==  'DASHBOARD')
               {
@@ -184,16 +230,25 @@ class Dashboard extends React.Component {
   _headerBar = () => {
     return (
       <View style={styles.headerView}>
-   
-        <View style = {{width:'90%'}}>
+    <TouchableWithoutFeedback onPress={() => this.toggleDrawer()}>
+          <View style={{ width: 35, height: 65 }}>
+            <Image
+            tintColor='white'
+            style={{ width: 34, height: 37, marginTop: 5 ,marginRight:4}}
+            source={require("../../assets/img/drawer.png")}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        <View style = {{width:'85%',marginLeft:-15}}>
         {this.getNormalHeader()}
         {this.getsubNormalHeader()}
         </View>
-        <TouchableWithoutFeedback onPress={() => this.toggleDrawer()}>
-          <View style={{ width: 50, height: 55 }}>
+        <TouchableWithoutFeedback onPress={() => this.signout()}>
+          <View style={{ width: 50, height: 65 }}>
             <Image
+            resizeMode='contain'
             tintColor='white'
-            style={{ width: 35, height: 40, marginTop: 15 ,marginRight:4}}
+            style={{ width: 35, height: 39, marginTop: 5 ,marginRight:4}}
             source={require("../../assets/img/logout.png")}
             />
           </View>
@@ -221,11 +276,13 @@ class Dashboard extends React.Component {
 
   toggleDrawer() {
 
-    this.props.navigation.navigate('SignIn')
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
+  signout() {
 
-    // this.setState({
-    //   isOpen: !this.state.isOpen,
-    // });
+    this.props.navigation.navigate('SignIn')
   }
   _openDialogue()
   {
@@ -342,7 +399,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   headerView: {
-     backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', height: 70,
+     backgroundColor: Gradientcolourbluew, alignItems: 'center', width: '100%', flexDirection: 'row', 
     justifyContent: 'flex-start',elevation:10
   },
   title_center :{

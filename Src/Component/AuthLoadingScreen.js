@@ -13,9 +13,7 @@ export default class AuthLoadingScreen extends React.Component {
   }
    componentDidMount () {
    this._retrieveData('role')
-   var pkg = require('../../package.json');
-    console.warn(pkg.version);
-     
+   var pkg = require('../../package.json');     
   }
 
   _retrieveData = async (username) => {
