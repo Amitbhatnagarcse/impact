@@ -11,7 +11,7 @@ import Item from "./Item";
 
 
 
-const DistrrictOwnerProfile = ( {navigation} ) => {
+const UserProfile = ( {navigation} ) => {
 
     const [role ,setrole] = useState('')
     const [userid ,setUserid] = useState('')
@@ -211,13 +211,14 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
     {_headerBar()}  
 
       
- <FlatList
+   
+        <FlatList
               style={{
                flex:1,
              width:'100%'}}
               renderItem={(item , index) => _renderItem(item.item , index )}
               data={listing}
-            /> 
+            />
    
       
 
@@ -238,4 +239,4 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
  );
 };
 
-export default DistrrictOwnerProfile;
+export default UserProfile;
