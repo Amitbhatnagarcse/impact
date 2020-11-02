@@ -7,58 +7,39 @@ import { BASE_URL, Gradientcolourbluew } from '../../../Constants'
 import FooterComponent from '../../CommonComponent/Footer'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import RadioForm from 'react-native-simple-radio-button';
-import Item from "./Item";
+import { da } from "date-fns/locale";
+
 const { width } = Dimensions.get('screen')
 
 
-const UserProfile = ({ navigation }) => {
+const UserProfile = ({ navigation , route }) => {
+
+  const {item  , CenterName } = route.params;
+
+  console.warn(JSON.stringify(item))
 
   const [role, setrole] = useState('')
   const [userid, setUserid] = useState('')
   const [unitid, setUnitid] = useState('')
   const [loading, setloading] = useState(false);
   const [typevalue, settypevalue] = useState(-1);
-  const [feedback, setFeedback] = useState('');
+  const [CenterMobileNo, setCenterMobileNo] = useState('');
+
+  const [CenterAddress, setCenterAddress] = useState('');
+  const [RegistrationNo, setRegistrationNo] = useState('');
+  const [Validfrom, setValidfrom] = useState('');
+
+  const [ApplicantName, setApplicantName] = useState('');
+  const [ApplicantAddress, setApplicantAddress] = useState('');
+  const [ApplicantMobile, setApplicantMobileo] = useState('');
+
   const [listing, setListing] = useState('');
   const radio_props = [
     { label: 'Suggestion', value: 'S' },
     { label: 'Query', value: 'Q' }
   ];
+  
 
-
-  const deletecnfrm = async (id) => {
-    var data = new URLSearchParams();
-    data.append('FeedbackId', id);
-    data.append('Role', 'role')
-    _retrieveData(data, 'DeleteFeedback', id)
-  }
-  const deleteItemById = async (id) => {
-
-    // const filteredData = listing.filter(item => item.PirId !== id);
-    Alert.alert(
-      '',
-      'Are You Sure you want to delete',
-      [
-        { text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel' },
-        { text: 'Yes', onPress: () => deletecnfrm(id) },
-
-      ],
-      {
-        cancelable: true
-      }
-    );
-  }
-  const reset_data = () => {
-    settypevalue(-1)
-    setFeedback('')
-  }
-
-
-  const _renderItem = (item, index) => {
-    return (
-      <Item item={item} index={index} navigation={navigation} role={role} actiondel={deleteItemById} />
-    )
-  }
   const _retrieveData = async (data, front, id) => {
 
 
@@ -74,30 +55,17 @@ const UserProfile = ({ navigation }) => {
     })
       .then(response => response.json())
       .then(responseJson => {
+        console.warn(JSON.stringify(responseJson.ResponseData))
+
         setloading(false)
         if (responseJson.Status) {
-          if (front == 'FeedbackList') {
-            setListing(responseJson.ResponseData)
+          if (front == 'OwnerProfile') {
+            setApplicantName(responseJson.ResponseData[0].ApplicantName)
+            setApplicantMobileo(responseJson.ResponseData[0].ApplicantMobile)
+            setApplicantAddress(responseJson.ResponseData[0].ApplicantAddress)
+            setCenterMobileNo(responseJson.ResponseData[0].CenterMobileNo)
           }
-          if (front == 'FeedbackForm') {
-            var data = new URLSearchParams();
-            data.append('userid', userid);
-            data.append('unitid', unitid);
-            data.append('Role', role);
-            console.warn(data.toString())
-            _retrieveData(data, 'FeedbackList')
-            setTimeout(() => {
-              alert(responseJson.Message)
-            }, 500)
-          }
-
-          setTimeout(() => {
-            setFeedback('')
-          }, 1000)
-          if (front == 'DeleteFeedback') {
-            const filteredData = listing.filter(item => item.feedbackId !== id);
-            setListing(filteredData)
-          }
+        
         }
         else {
           alert(responseJson.Message)
@@ -108,25 +76,33 @@ const UserProfile = ({ navigation }) => {
       });
   }
 
+  const _retrieveDataCenter = async (data, front) => {
+    fetch(BASE_URL + front, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: data.toString(),
+      json: true,
+    })
+      .then(response => response.json())
+      .then(responseJson => {
 
-  const submit = () => {
-
-    if (typevalue == -1) {
-      alert('please select feedback type')
-      return
-    }
-    if (feedback == '') {
-      alert('please enter feedback')
-      return
-    }
-    var data = new URLSearchParams();
-    data.append('userid', userid);
-    data.append('qType', typevalue + '');
-    data.append('fquestion', feedback);
-    console.warn(data.toString())
-    _retrieveData(data, 'FeedbackForm')
-
+        if (responseJson.Status) {
+      
+             setCenterAddress(responseJson.ResponseData.CenterAddress)
+             setRegistrationNo(responseJson.ResponseData.RegNo)
+             setValidfrom(responseJson.ResponseData.ValidThrough)
+        }
+        else {
+          alert(responseJson.Message)
+        }
+      })
+      .catch(error => {
+      });
   }
+
+
 
   const _headerBar = () => {
     return (
@@ -135,13 +111,13 @@ const UserProfile = ({ navigation }) => {
         <View style={{ width: 50, height: 40, zIndex: 1, alignContent: 'center', justifyContent: 'center' }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              style={{ width: 35, height: 35, paddingLeft: 10, padding: 5, backgroundColor: 'red' }}
+              style={{ width: 35, height: 35, paddingLeft: 10, padding: 5 }}
               source={pngIcons.backnew}
             />
           </TouchableOpacity>
         </View>
 
-        <Text style={{ color: 'white', marginTop: 20, fontSize: 20, marginLeft: 20, alignContent: 'center', justifyContent: 'center' }}>District Profile</Text>
+        <Text style={{ color: 'white', marginTop: 20, fontSize: 20, marginLeft: 50, alignContent: 'center', justifyContent: 'center' }}>Center Profile</Text>
       </View >
     )
   };
@@ -151,7 +127,7 @@ const UserProfile = ({ navigation }) => {
     const role_id = await AsyncStorage.getItem("role")
     const user_id = await AsyncStorage.getItem("userid")
     const unit_id = await AsyncStorage.getItem("unitid")
-    debugger
+    
     if (role_id !== null) {
       setrole(role_id)
       setUserid(user_id)
@@ -170,29 +146,20 @@ const UserProfile = ({ navigation }) => {
   useEffect(() => {
 
     readData()
-    if (role != '' && userid != '' && unitid != '') {
+    if (role != '') {
       var data = new URLSearchParams();
-      data.append('userid', userid);
-      data.append('unitid', unitid);
-      data.append('Role', role);
-      //console.warn(data.toString())
-      _retrieveData(data, 'FeedbackList')
+      data.append('Unitid', '2805');
+      data.append('Role', '5');
+      _retrieveData(data.toString(), 'OwnerProfile')
+
+      var data = new URLSearchParams();
+      data.append('Cid',item);
+      _retrieveDataCenter(data.toString() ,'GetCenterDetail')
+   
     }
 
-    const unsubscribe = navigation.addListener('focus', () => {
 
-      _retrieveData(data, 'FeedbackList')
-
-      BackHandler.addEventListener("hardwareBackPress", backAction);
-
-      return () =>
-     BackHandler.removeEventListener("hardwareBackPress", backAction);
-    });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-
-  }, [role, userid, unitid]);
+  }, [role]);
 
 
   return (
@@ -210,27 +177,40 @@ const UserProfile = ({ navigation }) => {
         </OrientationLoadingOverlay>
 
 
-        <View style={{ marginLeft: 20, padding: 20, marginRight: 20, marginTop: -50, borderRadius: 10, backgroundColor: '#fff', height: 200 }}>
+        <View style={{ marginLeft: 20, padding: 20, marginRight: 20, marginTop: -50, borderRadius: 10, backgroundColor: '#fff' }}>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>DNI</Text>
-              <Text>33373737</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Applicant Name</Text>
+               <Text>{ApplicantName}</Text>
             </View>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>DRICION</Text>
-              <Text>AV. Drictrio</Text>
+              <Text style={{ color: '#000', opacity: .4 }}>Applicant Mobile</Text>
+              <Text>{ApplicantMobile}</Text>
             </View>
           </View>
 
 
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: '#000', opacity: .3 }}>Address</Text>
+              <Text>{ApplicantAddress}</Text>
+            </View>
+            
+          </View>
+
+
+        </View>
+
+
+        <View style={{ marginLeft: 20, padding: 20, marginRight: 20, marginTop: 20, borderRadius: 10, backgroundColor: '#fff' }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>DNI</Text>
-              <Text>33373737</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Center Name</Text>
+               <Text>{CenterName}</Text>
             </View>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>DRICION</Text>
-              <Text>AV. Drictrio</Text>
+              <Text style={{ color: '#000', opacity: .4 }}>Center Mobile</Text>
+              <Text>{CenterMobileNo}</Text>
             </View>
           </View>
 
@@ -238,13 +218,22 @@ const UserProfile = ({ navigation }) => {
 
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>DNI</Text>
-              <Text>33373737</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Registration No</Text>
+            <Text>{RegistrationNo}</Text>
             </View>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>DRICION</Text>
-              <Text>AV. Drictrio</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Valid Through</Text>
+            <Text>{Validfrom}</Text>
             </View>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: '#000', opacity: .3 }}>Center Address</Text>
+              <Text>{CenterAddress}</Text>
+            </View>
+            
           </View>
 
         </View>

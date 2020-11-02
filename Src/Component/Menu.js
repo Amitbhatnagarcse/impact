@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Menu({ onItemSelected ,type,navigation }) {
+export default function Menu({ onItemSelected , type , navigation , role , item , CenterName }) {
 
   return (
     <ScrollView scrollsToTop={false} style={styles.menu}>
@@ -74,6 +74,11 @@ export default function Menu({ onItemSelected ,type,navigation }) {
         <Text
         onPress={() => {
           onItemSelected()
+          if(role == 5)
+          navigation.navigate('UserProfile', {item : item , CenterName : CenterName})
+          else if(role == 3)
+          navigation.navigate('DistrrictListProfile', {item : item })
+          else
           navigation.navigate('DistrrictOwnerProfile')
         }}
         style={styles.item}

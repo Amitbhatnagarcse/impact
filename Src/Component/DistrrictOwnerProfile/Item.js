@@ -18,22 +18,10 @@ import RadioForm from 'react-native-simple-radio-button';
 
 var current_number = 0;
 
-export default function Item( { item  , index ,navigation ,role, actiondel} )
+export default function Item( { item  , index ,navigation ,role, actiondel , selectv} )
 {
 
   const [loading , setloading] = useState(false)
-  const [typevalue, settypevalue] = useState(-1);
-  const [feedback, setFeedback] = useState('');
-
-  const [editvar , setEditvar] = useState(false)
-
-  const radio_props = [
-    {label: 'Suggestion', value: 'S' },
-    {label: 'Query', value: 'Q' }
-  ];
-  const launchCamera = () => {
-    
-  }
 
   const _retrieveData = async (front,pir_id) => {
 
@@ -118,11 +106,11 @@ export default function Item( { item  , index ,navigation ,role, actiondel} )
           <TouchableOpacity style={Styles.inputboxviewplain} >
             <View style = {Styles.inputboxview}>
         <Text 
-        onPress={() => navigation.navigate('FeedbackDetail', {item : item})}
-        style={Styles.inputtext}  > {  item.username} </Text>
+        onPress={() => navigation.navigate('DistrrictListProfile', {item : item.DID})}
+        style={Styles.inputtext}  > {  item.DistrictName} </Text>
           <Text 
-        onPress={() => navigation.navigate('FeedbackDetail', {item : item})}
-        style={Styles.inputblue}  > 2000</Text>
+        onPress={() => navigation.navigate('DistrrictListProfile', {item : item.DID})}
+    style={Styles.inputblue}  > {selectv == 0 ?  item.FunctionalCenters : item.NonFunctionalCenters}</Text>
           </View>
           </TouchableOpacity> 
 

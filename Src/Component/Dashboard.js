@@ -13,6 +13,7 @@ import {BASE_URL,Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradi
 //import footer from '../../assets/img/footer.jpg'
 import FooterComponent from '../CommonComponent/Footer'
 import { format, parse } from "date-fns";
+import { id } from 'date-fns/locale';
 
 const arrayEarnReward = [
   // {
@@ -65,6 +66,7 @@ const rollthree = [
 
 var role ="";
 var center_name = "";
+var center_id = ""
 class Dashboard extends React.Component {
 
   constructor() 
@@ -140,13 +142,20 @@ class Dashboard extends React.Component {
     await  AsyncStorage.getItem('role', (err, result) => {
         this.role = result; 
         
-       if(result == '0' || result =='3' || result=='1')
+       if(result == '0' || result=='1' || result =='3' )
        {
         this.setState({ arrayEarnRewards : rollthree})
+        AsyncStorage.getItem('districtid', (err, result) => {
+          console.warn('dist'+result)
+          this.center_id = result;
+        });
+
        }
+       
        else
        {
           AsyncStorage.getItem('centreid', (err, result) => {
+          this.center_id = result;
           this.getcenterdetails(result)
         });
        this.setState({ arrayEarnRewards : arrayEarnReward})
@@ -333,8 +342,7 @@ class Dashboard extends React.Component {
   render() {
     const columntype = this.getColumnType(this.state.pageType);
 
-    const menu = <Menu onItemSelected={this.onMenuItemSelected} type='home'  navigation={this.props.navigation}
-    />;
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} type='home'  navigation={this.props.navigation} role = {this.role} item = {this.center_id} CenterName ={this.center_name}  />;
 
     return (
       <SideMenu

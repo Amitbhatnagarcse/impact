@@ -16,6 +16,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import {BASE_URL, BlueColor} from '../../../Constants'
+import Geolocation from '@react-native-community/geolocation';
 
 var pid_id = ''
 
@@ -48,7 +49,18 @@ const InspectionReport = ({navigation ,route}) => {
   const [show,setShow] = useState(false)
   const [file_extension,setFileExtension] = useState('')
   const [submit,setSubmit] = useState('Submit')
-   
+  const [
+    currentLongitude,
+    setCurrentLongitude
+  ] = useState('');
+  const [
+    currentLatitude,
+    setCurrentLatitude
+  ] = useState('');
+  const [
+    locationStatus,
+    setLocationStatus
+  ] = useState('');
   const [locationPermissionStatus, setLocationPermissionStatus] = useState(RESULTS.DENIED)
 
 
@@ -71,7 +83,7 @@ const InspectionReport = ({navigation ,route}) => {
         );
     }
     else {
-        openSettings().catch(() => console.warn('cannot open settings'));
+        //openSettings().catch(() => console.warn('cannot open settings'));
     }
 }
 
@@ -261,6 +273,9 @@ x
     }
     const onSubmit = async () => {
 
+      alert(''+currentLongitude)
+      return
+
       if(role == '3' && submit =='Update')
       {
         alert('You are not authorized to update')
@@ -291,7 +306,6 @@ x
         data.append('FileExtension',file_extension);
       }
     
-   debugger
       _retrieveData(data.toString() ,'SavePIReport')
     }
     const backAction = () => {
@@ -300,6 +314,85 @@ x
       return true;
     };
 
+    useEffect(() => {
+
+      getOneTimeLocation();
+      subscribeLocationLocation();
+      if(locationPermissionStatus == RESULTS.GRANTED)
+      {
+        getOneTimeLocation();
+        subscribeLocationLocation();
+      }
+    }, [locationPermissionStatus]);
+  
+    const getOneTimeLocation = () => {
+      console.warn('start')
+    setLocationStatus('Getting Location ...');
+    Geolocation.getCurrentPosition(
+      
+      //Will give you the current location
+      (position) => {
+        console.warn(''+currentLatitude)
+
+        setLocationStatus('You are Here');
+
+        //getting the Longitude from the location json
+        const currentLongitude = 
+          JSON.stringify(position.coords.longitude);
+
+        //getting the Latitude from the location json
+        const currentLatitude = 
+          JSON.stringify(position.coords.latitude);
+
+        //Setting Longitude state
+        setCurrentLongitude(currentLongitude);
+        
+        //Setting Longitude state
+        setCurrentLatitude(currentLatitude);
+        console.warn(''+currentLatitude)
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 30000,
+        maximumAge: 1000
+      },
+    );
+  };
+
+  const subscribeLocationLocation = () => {
+    watchID = Geolocation.watchPosition(
+      (position) => {
+        //Will give you the location on location change
+        
+        setLocationStatus('You are Here');
+        console.log(position);
+
+        //getting the Longitude from the location json        
+        const currentLongitude =
+          JSON.stringify(position.coords.longitude);
+
+        //getting the Latitude from the location json
+        const currentLatitude = 
+          JSON.stringify(position.coords.latitude);
+
+        //Setting Longitude state
+        setCurrentLongitude(currentLongitude);
+
+        //Setting Latitude state
+        setCurrentLatitude(currentLatitude);
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        maximumAge: 1000
+      },
+    );
+  };
    
     useEffect(() => {
    

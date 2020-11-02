@@ -16,22 +16,24 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
     const [role ,setrole] = useState('')
     const [userid ,setUserid] = useState('')
     const [unitid ,setUnitid] = useState('')
+    const [radiovalue ,setRadioValue] = useState(0)
     const [loading, setloading] = useState(false);
     const [typevalue, settypevalue] = useState(-1);
     const [feedback, setFeedback] = useState('');
     const [listing, setListing] = useState('');
+
     const radio_props = [
-      {label: 'Suggestion', value: 'S' },
-      {label: 'Query', value: 'Q' }
+      {label: 'Functional Centers', value: '0' },
+      {label: 'Non Functional Centers', value: '1' }
     ];
 
 
     const deletecnfrm = async (id) =>
     {
       var data = new URLSearchParams();
-      data.append('FeedbackId',id);
-      data.append('Role','role')
-      _retrieveData(data ,'DeleteFeedback',id)
+      data.append('Unitid','0');
+      data.append('Role','0')
+      _retrieveData(data ,'OwnerProfile',id)
     }
     const deleteItemById = async (id) => {
       
@@ -49,16 +51,13 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
         }
       );
       }
-    const reset_data = () => {
-      settypevalue(-1)
-      setFeedback('')
-    }
+   
    
  
     const  _renderItem = (item , index) => 
     {
       return (
-      <Item item = {item}  index = {index}  navigation = {navigation} role ={role} actiondel={deleteItemById}/>  
+      <Item item = {item}  index = {index}  navigation = {navigation} role ={role} actiondel={deleteItemById} selectv ={radiovalue}/>  
       )
     }
     const _retrieveData = async (data ,front,id) => {
@@ -80,7 +79,7 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
           setloading(false)
           if(responseJson.Status)
           {
-            if(front == 'FeedbackList')
+            if(front == 'OwnerProfile')
             {
               setListing(responseJson.ResponseData)
             }
@@ -181,16 +180,14 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
             if(role != '' && userid != '' && unitid != '')
             { 
               var data = new URLSearchParams();
-              data.append('userid',userid);
-              data.append('unitid',unitid);
-              data.append('Role',role);
-              //console.warn(data.toString())
-              _retrieveData(data ,'FeedbackList')
+              data.append('Unitid','0');
+              data.append('Role','0')
+             _retrieveData(data ,'OwnerProfile')
             }
 
             const unsubscribe = navigation.addListener('focus', () => {
 
-              _retrieveData(data ,'FeedbackList')
+              //_retrieveData(data ,'OwnerProfile')
   
               BackHandler.addEventListener("hardwareBackPress", backAction);
   
@@ -209,7 +206,19 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
     <View style={Styles.container}>
 
     {_headerBar()}  
-
+    <RadioForm style={{width:'60%',marginTop:4}}
+  radio_props={radio_props}
+  initial={radiovalue}
+  formHorizontal={true}
+  labelHorizontal={true}
+  buttonColor={'#2196f3'}
+  animation={true}
+  buttonStyle={{margin:4}}
+  labelStyle={{fontSize: 12, color: '#000',marginRight:10}}
+  onPress={(value) => {setRadioValue(value)}}
+  buttonSize={10}
+  buttonOuterSize={20}
+/>
       
  <FlatList
               style={{

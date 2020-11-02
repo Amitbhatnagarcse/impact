@@ -8,22 +8,30 @@ import FooterComponent from '../../CommonComponent/Footer'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import RadioForm from 'react-native-simple-radio-button';
 import Item from "./Item";
+import { da } from "date-fns/locale";
 
 
 
-const DistrrictOwnerProfile = ( {navigation} ) => {
+const DistrrictListProfile = ( {navigation , route} ) => {
+
+  const { item } = route.params;
+
 
     const [role ,setrole] = useState('')
     const [userid ,setUserid] = useState('')
     const [unitid ,setUnitid] = useState('')
     const [loading, setloading] = useState(false);
-    const [typevalue, settypevalue] = useState(-1);
+    const [flagvalue, setFlagvalue] = useState(0);
     const [feedback, setFeedback] = useState('');
-    const [listing, setListing] = useState('');
+    const [listingfilter, setListingfilter] = useState([]);
+    const [listingall, setListingAll] = useState([]);
+
+    
     const radio_props = [
-      {label: 'Suggestion', value: 'S' },
-      {label: 'Query', value: 'Q' }
+      {label: 'Functional Centers', value: '0' },
+      {label: 'Non Functional Centers', value: '1' }
     ];
+
 
 
     const deletecnfrm = async (id) =>
@@ -49,10 +57,7 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
         }
       );
       }
-    const reset_data = () => {
-      settypevalue(-1)
-      setFeedback('')
-    }
+   
    
  
     const  _renderItem = (item , index) => 
@@ -63,7 +68,6 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
     }
     const _retrieveData = async (data ,front,id) => {
 
-  
       setloading(true)
   
       fetch(BASE_URL+front, {
@@ -80,21 +84,12 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
           setloading(false)
           if(responseJson.Status)
           {
-            if(front == 'FeedbackList')
+            if(front == 'OwnerProfile')
             {
-              setListing(responseJson.ResponseData)
+              setListingAll(responseJson.ResponseData); 
+              const data =  responseJson.ResponseData.filter(data => data.Flag == "2");
+              setListingfilter(data)
             }
-            if(front == 'FeedbackForm')
-            {
-              var data = new URLSearchParams();
-              data.append('userid',userid);
-              data.append('unitid',unitid);
-              data.append('Role',role);
-              console.warn(data.toString())
-              _retrieveData(data ,'FeedbackList')
-              setTimeout(()=>{
-               alert(responseJson.Message)
-            },500)            }
 
             setTimeout(()=>{
             setFeedback('')
@@ -115,26 +110,6 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
        }
 
    
-    const submit  = () =>{
-
-      if(typevalue == -1)
-      {
-        alert('please select feedback type')
-        return
-      }
-      if(feedback == '')
-      {
-        alert('please enter feedback')
-        return
-      }
-      var data = new URLSearchParams();
-      data.append('userid',userid);
-      data.append('qType',typevalue+'');
-      data.append('fquestion',feedback);
-      console.warn(data.toString())
-      _retrieveData(data,'FeedbackForm')
-
-    }
 
     const _headerBar = () => {
         return (
@@ -149,7 +124,7 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
                 </TouchableOpacity>
               </View>
     
-              <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>District Profile</Text> 
+              <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Center List Profile</Text> 
           </View>    
           )
          };
@@ -157,13 +132,10 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
          const readData = async () => {
         
             const role_id = await AsyncStorage.getItem("role")
-            const user_id = await AsyncStorage.getItem("userid")
-            const unit_id = await AsyncStorage.getItem("unitid")
-            debugger
+           
+            
             if (role_id !== null) {
-                setrole(role_id)    
-                setUserid(user_id)
-                setUnitid(unit_id)                     
+                setrole(role_id)                         
               }
         }
 
@@ -174,23 +146,30 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
             return true;
           };
 
+          
+
+          useEffect(() =>  {
+
+            if(flagvalue == 1)
+            var data =  listingall.filter(data => data.Flag == "1");
+            if(flagvalue == 0)
+            var data =  listingall.filter(data => data.Flag == "2");
+            setListingfilter(data)
+
+          },[flagvalue])
 
           useEffect(() => {
    
             readData()
-            if(role != '' && userid != '' && unitid != '')
+            if(role != '')
             { 
               var data = new URLSearchParams();
-              data.append('userid',userid);
-              data.append('unitid',unitid);
-              data.append('Role',role);
-              //console.warn(data.toString())
-              _retrieveData(data ,'FeedbackList')
+              data.append('Unitid',item);
+              data.append('Role','3');
+              _retrieveData(data ,'OwnerProfile')
             }
 
             const unsubscribe = navigation.addListener('focus', () => {
-
-              _retrieveData(data ,'FeedbackList')
   
               BackHandler.addEventListener("hardwareBackPress", backAction);
   
@@ -201,7 +180,7 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
             // Return the function to unsubscribe from the event so it gets removed on unmount
             return unsubscribe;
             
-          }, [role,userid,unitid]);
+          }, [role,unitid]);
 
           
   return (
@@ -210,14 +189,26 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
 
     {_headerBar()}  
 
-      
+    <RadioForm style={{width:'60%',marginTop:4}}
+  radio_props={radio_props}
+  initial={flagvalue}
+  formHorizontal={true}
+  labelHorizontal={true}
+  buttonColor={'#2196f3'}
+  animation={true}
+  buttonStyle={{margin:4}}
+  labelStyle={{fontSize: 12, color: '#000',marginRight:10}}
+  onPress={(value) => {setFlagvalue(value)}}
+  buttonSize={10}
+  buttonOuterSize={20}
+/>
    
         <FlatList
               style={{
                flex:1,
              width:'100%'}}
               renderItem={(item , index) => _renderItem(item.item , index )}
-              data={listing}
+              data={listingfilter}
             />
    
       
@@ -239,4 +230,4 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
  );
 };
 
-export default DistrrictOwnerProfile;
+export default DistrrictListProfile;

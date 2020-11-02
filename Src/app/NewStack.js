@@ -38,6 +38,7 @@ import FormfReport from '../Component/FormfReport';
 import Feedback from '../Component/Feedback';
 import FeedbackDetails from '../Component/FeedbackDetails';
 import DistrrictOwnerProfile from '../Component/DistrrictOwnerProfile';
+import DistrrictListProfile from '../Component/DistrrictListProfile';
 import UserProfile from '../Component/UserProfile';
 
 
@@ -98,6 +99,8 @@ function App() {
       <Stack.Screen name="Feedback" component={Feedback} />
       <Stack.Screen name="FeedbackDetail" component={FeedbackDetails} />
       <Stack.Screen name="DistrrictOwnerProfile" component={DistrrictOwnerProfile} />
+      <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="DistrrictListProfile" component={DistrrictListProfile} />
       
       </Stack.Navigator>
     </NavigationContainer>

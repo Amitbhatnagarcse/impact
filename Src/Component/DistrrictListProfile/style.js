@@ -36,7 +36,7 @@ export default StyleSheet.create({
 		 padding:5,
 		 minHeight:30,
 		 borderColor:'#006400',
-		 width:'15%',
+		 width:'10%',
 		 color : 'white',
 		 fontSize:14,
 		 marginRight:0.5,
