@@ -12,9 +12,9 @@ import { da } from "date-fns/locale";
 const { width } = Dimensions.get('screen')
 
 
-const UserProfile = ({ navigation , route }) => {
+const UserProfile = ({ navigation, route }) => {
 
-  const {item  , CenterName } = route.params;
+  const { item, CenterName } = route.params;
 
   console.warn(JSON.stringify(item))
 
@@ -38,7 +38,7 @@ const UserProfile = ({ navigation , route }) => {
     { label: 'Suggestion', value: 'S' },
     { label: 'Query', value: 'Q' }
   ];
-  
+
 
   const _retrieveData = async (data, front, id) => {
 
@@ -65,7 +65,7 @@ const UserProfile = ({ navigation , route }) => {
             setApplicantAddress(responseJson.ResponseData[0].ApplicantAddress)
             setCenterMobileNo(responseJson.ResponseData[0].CenterMobileNo)
           }
-        
+
         }
         else {
           alert(responseJson.Message)
@@ -89,10 +89,10 @@ const UserProfile = ({ navigation , route }) => {
       .then(responseJson => {
 
         if (responseJson.Status) {
-      
-             setCenterAddress(responseJson.ResponseData.CenterAddress)
-             setRegistrationNo(responseJson.ResponseData.RegNo)
-             setValidfrom(responseJson.ResponseData.ValidThrough)
+
+          setCenterAddress(responseJson.ResponseData.CenterAddress)
+          setRegistrationNo(responseJson.ResponseData.RegNo)
+          setValidfrom(responseJson.ResponseData.ValidThrough)
         }
         else {
           alert(responseJson.Message)
@@ -127,7 +127,7 @@ const UserProfile = ({ navigation , route }) => {
     const role_id = await AsyncStorage.getItem("role")
     const user_id = await AsyncStorage.getItem("userid")
     const unit_id = await AsyncStorage.getItem("unitid")
-    
+
     if (role_id !== null) {
       setrole(role_id)
       setUserid(user_id)
@@ -153,9 +153,9 @@ const UserProfile = ({ navigation , route }) => {
       _retrieveData(data.toString(), 'OwnerProfile')
 
       var data = new URLSearchParams();
-      data.append('Cid',item);
-      _retrieveDataCenter(data.toString() ,'GetCenterDetail')
-   
+      data.append('Cid', item);
+      _retrieveDataCenter(data.toString(), 'GetCenterDetail')
+
     }
 
 
@@ -166,22 +166,30 @@ const UserProfile = ({ navigation , route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Gradientcolourbluew }} >
       <View style={Styles.container}>
 
-        {_headerBar()}
-        <OrientationLoadingOverlay visible={loading}>
-          <View>
-            <Image
-              source={require("../../../assets/img/loadlogo.gif")}
-              style={{ width: 80, height: 80 }}
-            />
-          </View>
-        </OrientationLoadingOverlay>
 
 
-        <View style={{ marginLeft: 20, padding: 20, marginRight: 20, marginTop: -50, borderRadius: 10, backgroundColor: '#fff' }}>
+        <View style={{ zIndex: 0, position: 'absolute', width: '100%' }}>
+
+          {_headerBar()}
+          <OrientationLoadingOverlay visible={loading}>
+            <View>
+              <Image
+                source={require("../../../assets/img/loadlogo.gif")}
+                style={{ width: 80, height: 80 }}
+              />
+            </View>
+          </OrientationLoadingOverlay>
+        </View>
+
+        <View style={{
+          zIndex: 1,
+          marginLeft: 20, padding: 20, marginRight: 20, marginTop: 150, elevation: 3
+          , borderRadius: 10, backgroundColor: '#fff'
+        }}>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: .5 }}>
               <Text style={{ color: '#000', opacity: .3 }}>Applicant Name</Text>
-               <Text>{ApplicantName}</Text>
+              <Text>{ApplicantName}</Text>
             </View>
             <View style={{ flex: .5 }}>
               <Text style={{ color: '#000', opacity: .4 }}>Applicant Mobile</Text>
@@ -195,7 +203,7 @@ const UserProfile = ({ navigation , route }) => {
               <Text style={{ color: '#000', opacity: .3 }}>Address</Text>
               <Text>{ApplicantAddress}</Text>
             </View>
-            
+
           </View>
 
 
@@ -206,7 +214,7 @@ const UserProfile = ({ navigation , route }) => {
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: .5 }}>
               <Text style={{ color: '#000', opacity: .3 }}>Center Name</Text>
-               <Text>{CenterName}</Text>
+              <Text>{CenterName}</Text>
             </View>
             <View style={{ flex: .5 }}>
               <Text style={{ color: '#000', opacity: .4 }}>Center Mobile</Text>
@@ -219,11 +227,11 @@ const UserProfile = ({ navigation , route }) => {
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <View style={{ flex: .5 }}>
               <Text style={{ color: '#000', opacity: .3 }}>Registration No</Text>
-            <Text>{RegistrationNo}</Text>
+              <Text>{RegistrationNo}</Text>
             </View>
             <View style={{ flex: .5 }}>
               <Text style={{ color: '#000', opacity: .3 }}>Valid Through</Text>
-            <Text>{Validfrom}</Text>
+              <Text>{Validfrom}</Text>
             </View>
           </View>
 
@@ -233,7 +241,7 @@ const UserProfile = ({ navigation , route }) => {
               <Text style={{ color: '#000', opacity: .3 }}>Center Address</Text>
               <Text>{CenterAddress}</Text>
             </View>
-            
+
           </View>
 
         </View>
@@ -242,7 +250,7 @@ const UserProfile = ({ navigation , route }) => {
 
       </View>
       <FooterComponent />
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
