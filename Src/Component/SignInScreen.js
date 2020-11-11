@@ -327,6 +327,7 @@ export default class SignInScreen extends React.Component {
             )}
 
             {!this.state.loginui && (
+              
               <View style={styles.container}>
               
                
@@ -345,7 +346,7 @@ export default class SignInScreen extends React.Component {
                       <Image
                           resizeMode ={"contain"}
                           source={require("../../assets/img/logintop.png")}
-                          style={{ width: 200 ,height:170,marginTop:20,marginBottom:20 }}
+                          style={{ width: 200 ,height:170,marginTop:0,marginBottom:20 }}
                          />
                     </View>
                     <Text style={styles.itemText}>Set your otp(4) digit</Text>

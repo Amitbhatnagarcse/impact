@@ -17,6 +17,7 @@ import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import {BASE_URL, BlueColor} from '../../../Constants'
 import Geolocation from '@react-native-community/geolocation';
+import { da } from "date-fns/locale";
 
 var pid_id = ''
 
@@ -273,9 +274,6 @@ x
     }
     const onSubmit = async () => {
 
-      alert(''+currentLongitude)
-      return
-
       if(role == '3' && submit =='Update')
       {
         alert('You are not authorized to update')
@@ -305,6 +303,8 @@ x
         data.append('DocFile',imagedata);
         data.append('FileExtension',file_extension);
       }
+      data.append('longitude',currentLongitude)
+      data.append('latitude',currentLatitude)
     
       _retrieveData(data.toString() ,'SavePIReport')
     }
@@ -315,9 +315,6 @@ x
     };
 
     useEffect(() => {
-
-      getOneTimeLocation();
-      subscribeLocationLocation();
       if(locationPermissionStatus == RESULTS.GRANTED)
       {
         getOneTimeLocation();
@@ -326,7 +323,7 @@ x
     }, [locationPermissionStatus]);
   
     const getOneTimeLocation = () => {
-      console.warn('start')
+     
     setLocationStatus('Getting Location ...');
     Geolocation.getCurrentPosition(
       
