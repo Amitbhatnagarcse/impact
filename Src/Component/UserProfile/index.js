@@ -8,6 +8,7 @@ import FooterComponent from '../../CommonComponent/Footer'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import RadioForm from 'react-native-simple-radio-button';
 import { da } from "date-fns/locale";
+import MyData from "../../helper/MyData";
 
 const { width } = Dimensions.get('screen')
 
@@ -44,7 +45,8 @@ const UserProfile = ({ navigation, route }) => {
 
 
     setloading(true)
-
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
     fetch(BASE_URL + front, {
       method: "POST",
       headers: {

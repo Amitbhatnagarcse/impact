@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import Footer from '../CommonComponent/Footer'
 import {Gradientcolourbluew,Gradientcolouryellow} from '../../Constants'
+import MyData from "../helper/MyData";
 var pin_code = '';
 const PinScren = ({navigation}) => {
 
@@ -21,8 +22,15 @@ const PinScren = ({navigation}) => {
     AsyncStorage.getItem('pin', (err, result) => {
       pin_code = result;
     })
+
+    AsyncStorage.getItem('mobile', (err, result) => {
+       MyData.mobile=result
+    })
+    AsyncStorage.getItem('token', (err, result) => {
+      MyData.token=result
+    })
+
     if (enteredPin.length === 4) {
-  
       pinView.current.clearAll();
       if(enteredPin == '0000' || enteredPin == pin_code)
       navigation.navigate('Dashboard');

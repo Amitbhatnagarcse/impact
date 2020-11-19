@@ -14,6 +14,7 @@ import {BASE_URL,Gradientcolour, Gradientcolourbluew, Gradientcolouryellow,Gradi
 import FooterComponent from '../CommonComponent/Footer'
 import { format, parse } from "date-fns";
 import { id } from 'date-fns/locale';
+import MyData from '../helper/MyData';
 
 const arrayEarnReward = [
   // {
@@ -91,6 +92,8 @@ class Dashboard extends React.Component {
       this.setState({ load: true });
      var data = new URLSearchParams();
      data.append('Cid',id_)
+     data.append('mobile', MyData.mobile);
+     data.append('token', MyData.token);
        fetch(BASE_URL+"GetCenterDetail", {
          method: "POST",
          headers: {

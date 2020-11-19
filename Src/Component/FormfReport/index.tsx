@@ -17,6 +17,7 @@ import OrientationLoadingOverlay from "react-native-orientation-loading-overlay"
 import DatePicker from 'react-native-datepicker';    
 import { compareAsc, format } from 'date-fns'
 import { da } from "date-fns/locale";
+import MyData from "../../helper/MyData";
 
 
 var did = ''
@@ -117,6 +118,8 @@ const backAction = () => {
                 if(role =='3' || role =='5')
                 data.append('did',did);
                 data.append('Role',role);
+                data.append('mobile', MyData.mobile);
+                data.append('token', MyData.token);
                 console.warn(data.toString())
                 dispatch(getFORMFREPORTRequest(data.toString()))
             }

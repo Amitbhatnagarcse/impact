@@ -32,6 +32,7 @@ import {
 } from "react-native-chart-kit";
 import { useSelector, useDispatch } from 'react-redux';
 import {getDashboardRequest} from '../actions'
+import MyData from '../helper/MyData';
 
 
 const DashBoardChart = ({navigation}) => {
@@ -122,6 +123,8 @@ const backAction = () => {
     var data = new URLSearchParams();
     data.append('Role',role);
     data.append('UnitId',unitid);
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
     console.warn(data.toString())
       fetch(BASE_URL+"DashboardData", {
         method: "POST",
@@ -160,6 +163,8 @@ const backAction = () => {
     data.append('Role',role);
     if(role =='3')
     data.append('Did',did);
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
       fetch(BASE_URL+"RenewalReport", {
         method: "POST",
         headers: {

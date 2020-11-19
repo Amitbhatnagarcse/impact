@@ -9,6 +9,7 @@ import OrientationLoadingOverlay from "react-native-orientation-loading-overlay"
 import file_upload from '../../../assets/img/file_download.png';
 import RNFetchBlob from 'rn-fetch-blob'
 import { it, ro, tr } from "date-fns/locale";
+import MyData from "../../helper/MyData";
 
 const FeedbackDetails = ( {navigation , route} ) => {
 
@@ -36,6 +37,8 @@ const FeedbackDetails = ( {navigation , route} ) => {
         data.append('feedbackid',item.feedbackId)
         data.append('fanswer',feedback)
         data.append('answerById',role)
+        data.append('mobile', MyData.mobile);
+        data.append('token', MyData.token);
         console.log(data.toString())
         _retrieveData(data ,'FeedbackForm',item.feedbackId)
       }

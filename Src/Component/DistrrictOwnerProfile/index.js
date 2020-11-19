@@ -8,6 +8,7 @@ import FooterComponent from '../../CommonComponent/Footer'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import RadioForm from 'react-native-simple-radio-button';
 import Item from "./Item";
+import MyData from "../../helper/MyData";
 
 
 
@@ -89,6 +90,8 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
               data.append('userid',userid);
               data.append('unitid',unitid);
               data.append('Role',role);
+              data.append('mobile', MyData.mobile);
+              data.append('token', MyData.token);
               console.warn(data.toString())
               _retrieveData(data ,'FeedbackList')
               setTimeout(()=>{

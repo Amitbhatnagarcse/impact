@@ -23,6 +23,7 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 import MultiSelect from 'react-native-multiple-select';
 import ThumbImpressionFormF from './ThumbimpressionFormF';
 import {BASE_URL, BlueColor, Gradientcolour, Gradientcolourbluew, Gradientcolourlight, Gradientcolouryellow} from '../../Constants'
+import MyData from '../helper/MyData';
 
 var current_dialogue = '';
 var current_list ='';
@@ -293,6 +294,8 @@ class FormFInvensive extends Component
     mydata.append('PResultConveyedTo',this.state.pre_natal_diagnostic_result);
     //(26) P_Result_Date : validate date format, >=PRegDate           Y
     mydata.append('P_Result_Date',this.state.on_date);
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
     // (27) P_Ultra_Norm_AbNorm :                                      Y
     // (27) P_AbNorm_Det : length <= 200                               Y  
     if(this.state.abnormality =='1')
@@ -477,6 +480,8 @@ class FormFInvensive extends Component
 
        data.append('MasterCode',MasterCode);
        data.append('cid',cidi);
+       data.append('mobile', MyData.mobile);
+       data.append('token', MyData.token);
         console.log(cidi)
          fetch(BASE_URL+front, {
            method: "POST",

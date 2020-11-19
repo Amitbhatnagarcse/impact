@@ -18,6 +18,7 @@ import RNFS from 'react-native-fs';
 import {BASE_URL, BlueColor} from '../../../Constants'
 import Geolocation from '@react-native-community/geolocation';
 import { da } from "date-fns/locale";
+import MyData from "../../helper/MyData";
 
 var pid_id = ''
 
@@ -447,6 +448,8 @@ x
 
 
   const _retrieveData = async (data ,front) => {
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
     setloading(true)
       fetch(BASE_URL+front, {
         method: "POST",

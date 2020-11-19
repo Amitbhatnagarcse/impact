@@ -9,6 +9,7 @@ import OrientationLoadingOverlay from "react-native-orientation-loading-overlay"
 import RadioForm from 'react-native-simple-radio-button';
 import Item from "./Item";
 import { da } from "date-fns/locale";
+import MyData from "../../helper/MyData";
 
 
 
@@ -69,7 +70,6 @@ const DistrrictListProfile = ( {navigation , route} ) => {
     const _retrieveData = async (data ,front,id) => {
 
       setloading(true)
-  
       fetch(BASE_URL+front, {
         method: "POST",
         headers: {
@@ -166,6 +166,8 @@ const DistrrictListProfile = ( {navigation , route} ) => {
               var data = new URLSearchParams();
               data.append('Unitid',item);
               data.append('Role','3');
+              data.append('mobile', MyData.mobile);
+              data.append('token', MyData.token);
               _retrieveData(data ,'OwnerProfile')
             }
 

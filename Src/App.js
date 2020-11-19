@@ -30,6 +30,7 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
 import backarrow from '../assets/img/backnew.png';
 import { ro } from 'date-fns/locale';
+import MyData from './helper/MyData';
 
 
 var cid__my = '' 
@@ -115,7 +116,9 @@ class App extends Component {
    data.append('cid', cid__my);
    data.append('Month', this.state.date.substring(5,7));
    data.append('Year', this.state.date.substring(0, 4));
-   
+   data.append('mobile', MyData.mobile);
+   data.append('token', MyData.token);
+
     
      fetch(BASE_URL+"DayEndSummary", {
        method: "POST",
@@ -157,6 +160,8 @@ class App extends Component {
         data.append('month',month);
         var year = new Date().getFullYear()
         data.append('year', year);
+        data.append('mobile', MyData.mobile);
+        data.append('token', MyData.token);
         console.warn(data.toString())
         this.props.getPregnancyRequest(
           data.toString())

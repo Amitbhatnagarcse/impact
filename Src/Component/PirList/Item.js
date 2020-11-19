@@ -12,6 +12,7 @@ import file_upload from '../../../assets/img/file_download.png';
 import RNFetchBlob from 'rn-fetch-blob'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { BASE_URL, BlueColor, Yellowcolour } from '../../../Constants';
+import MyData from '../../helper/MyData';
 
 
 export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
@@ -26,6 +27,8 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
     console.warn(''+pir_id)
     data.append('PirId',pir_id);
     data.append('Role',role)
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
     setloading(true)
     
       fetch(BASE_URL+front, {

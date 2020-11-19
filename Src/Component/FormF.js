@@ -48,6 +48,7 @@ var my_navigation;
 var doctor_list = [{Code: 'Radiologist', CodeText : '' ,Address : '' },];
 
 import { CheckBox } from 'react-native-elements'
+import MyData from '../helper/MyData';
 
 var relation = {
   "relation_array": [
@@ -268,6 +269,8 @@ class FormF extends Component {
     this.setState({ load: true });
    var data = new URLSearchParams();
    data.append('stateid',id)
+   data.append('mobile', MyData.mobile);
+   data.append('token', MyData.token);
      fetch(BASE_URL+"GetDistrict", {
        method: "POST",
        headers: {
@@ -303,6 +306,8 @@ class FormF extends Component {
    this.setState({ load: true , refered_by : id ,refered_by_doctor : false,refered_by_other : true});
    var data = new URLSearchParams();
    data.append('cid','37');
+   data.append('mobile', MyData.mobile);
+   data.append('token', MyData.token);
    //data.append('MasterCode',id);
      fetch(BASE_URL+"GetDoctor", {
        method: "POST",

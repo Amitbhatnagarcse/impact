@@ -10,6 +10,7 @@ import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
  import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
  import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
  import {BASE_URL,BlueColor,Gradientcolourbluew,Yellowcolour} from '../../../Constants'
+import MyData from "../../helper/MyData";
 
 
 const PirList = ({navigation }) => 
@@ -112,7 +113,8 @@ const PirList = ({navigation }) =>
 
       const _retrieveData = async (data ,front,p_id) => {
 
-  
+        data.append('mobile', MyData.mobile);
+        data.append('token', MyData.token);
       setloading(true)
   
       fetch(BASE_URL+front, {

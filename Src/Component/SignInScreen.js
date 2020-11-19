@@ -151,7 +151,7 @@ export default class SignInScreen extends React.Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-      
+      debugger;
         alert(JSON.stringify(responseJson.ResponseData[0].OTP));
         this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
         //this.props.navigation.navigate("Category", responseJson);
@@ -188,6 +188,7 @@ export default class SignInScreen extends React.Component {
      else if(this.state.logindata.OTP == this.state.code)
       {
 
+        debugger;
         this.storeItem("centrename", this.state.logindata.CentreName);
         this.storeItem("districtid", this.state.logindata.DistrictId.toString());
         this.storeItem("blockid", this.state.logindata.BlockId.toString());
@@ -201,6 +202,8 @@ export default class SignInScreen extends React.Component {
         this.storeItem("userid",this.state.logindata.UserId.toString());        
         this.storeItem("username",this.state.logindata.UserName);        
         this.storeItem("role",this.state.logindata.Role.toString());
+        this.storeItem("token",'asdf');
+        this.storeItem("mobile",this.state.username);
 
       
         this.props.navigation.dispatch(

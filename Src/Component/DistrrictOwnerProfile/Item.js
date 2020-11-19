@@ -15,6 +15,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { BASE_URL, BlueColor, Gradientcolourbluew, Gradientcolouryellow, Yellowcolour  } from '../../../Constants';
 import RadioForm from 'react-native-simple-radio-button';
+import MyData from '../../helper/MyData';
 
 var current_number = 0;
 
@@ -29,6 +30,8 @@ export default function Item( { item  , index ,navigation ,role, actiondel , sel
     console.warn(''+pir_id)
     data.append('PirId',pir_id);
     data.append('Role',role)
+    data.append('mobile', MyData.mobile);
+    data.append('token', MyData.token);
     setloading(true)
     
       fetch(BASE_URL+front, {
