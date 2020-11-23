@@ -24,6 +24,7 @@ import MultiSelect from 'react-native-multiple-select';
 import ThumbImpressionFormF from './ThumbimpressionFormF';
 import {BASE_URL, BlueColor, Gradientcolour, Gradientcolourbluew, Gradientcolourlight, Gradientcolouryellow} from '../../Constants'
 import MyData from '../helper/MyData';
+import { te } from 'date-fns/locale';
 
 var current_dialogue = '';
 var current_list ='';
@@ -294,18 +295,18 @@ class FormFInvensive extends Component
     mydata.append('PResultConveyedTo',this.state.pre_natal_diagnostic_result);
     //(26) P_Result_Date : validate date format, >=PRegDate           Y
     mydata.append('P_Result_Date',this.state.on_date);
-    data.append('mobile', MyData.mobile);
-    data.append('token', MyData.token);
+    mydata.append('MobileNo', MyData.mobile);
+    mydata.append('TokenNo', MyData.token);
     // (27) P_Ultra_Norm_AbNorm :                                      Y
     // (27) P_AbNorm_Det : length <= 200                               Y  
     if(this.state.abnormality =='1')
         mydata.append('P_Ultra_Norm_AbNorm',true);
         else
         mydata.append('P_Ultra_Norm_AbNorm',false);
-    mydata.append('P_AbNorm_Det',this.state.abnormality_detected_value); 
-         
-    
-    console.log(mydata);
+  
+        mydata.append('P_AbNorm_Det',this.state.abnormality_detected_value); 
+      
+
     this.cllapiforPostdata('SaveFormF');
   } 
   async cllapiforPostdata(front) {
@@ -480,9 +481,9 @@ class FormFInvensive extends Component
 
        data.append('MasterCode',MasterCode);
        data.append('cid',cidi);
-       data.append('mobile', MyData.mobile);
-       data.append('token', MyData.token);
-        console.log(cidi)
+       data.append('MobileNo', MyData.mobile);
+       data.append('TokenNo', MyData.token);
+    
          fetch(BASE_URL+front, {
            method: "POST",
            headers: {

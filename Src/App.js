@@ -116,8 +116,8 @@ class App extends Component {
    data.append('cid', cid__my);
    data.append('Month', this.state.date.substring(5,7));
    data.append('Year', this.state.date.substring(0, 4));
-   data.append('mobile', MyData.mobile);
-   data.append('token', MyData.token);
+   data.append('MobileNo', MyData.mobile);
+   data.append('TokenNo', MyData.token);
 
     
      fetch(BASE_URL+"DayEndSummary", {
@@ -160,8 +160,8 @@ class App extends Component {
         data.append('month',month);
         var year = new Date().getFullYear()
         data.append('year', year);
-        data.append('mobile', MyData.mobile);
-        data.append('token', MyData.token);
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
         console.warn(data.toString())
         this.props.getPregnancyRequest(
           data.toString())

@@ -27,8 +27,8 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
     console.warn(''+pir_id)
     data.append('PirId',pir_id);
     data.append('Role',role)
-    data.append('mobile', MyData.mobile);
-    data.append('token', MyData.token);
+    data.append('MobileNo', MyData.mobile);
+    data.append('TokenNo', MyData.token);
     setloading(true)
     
       fetch(BASE_URL+front, {

@@ -34,6 +34,9 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
       var data = new URLSearchParams();
       data.append('Unitid','0');
       data.append('Role','0')
+
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
       _retrieveData(data ,'OwnerProfile',id)
     }
     const deleteItemById = async (id) => {
@@ -90,8 +93,8 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
               data.append('userid',userid);
               data.append('unitid',unitid);
               data.append('Role',role);
-              data.append('mobile', MyData.mobile);
-              data.append('token', MyData.token);
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
               console.warn(data.toString())
               _retrieveData(data ,'FeedbackList')
               setTimeout(()=>{
@@ -133,7 +136,10 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
       data.append('userid',userid);
       data.append('qType',typevalue+'');
       data.append('fquestion',feedback);
-      console.warn(data.toString())
+
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
+     
       _retrieveData(data,'FeedbackForm')
 
     }
@@ -184,7 +190,10 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
             { 
               var data = new URLSearchParams();
               data.append('Unitid','0');
-              data.append('Role','0')
+              data.append('Role','0');
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
              _retrieveData(data ,'OwnerProfile')
             }
 

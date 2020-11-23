@@ -36,8 +36,8 @@ export default class Project extends Component {
     this.setState({ load: true });
  
    var data = new URLSearchParams();
-   data.append('mobile', MyData.mobile);
-   data.append('token', MyData.token);
+   data.append('MobileNo', MyData.mobile);
+   data.append('TokenNo', MyData.token);
      fetch(BASE_URL+"Stateandidentityprooftype", {
        method: "POST",
        headers: {

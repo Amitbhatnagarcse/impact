@@ -16,6 +16,12 @@ import { format, parse } from "date-fns";
 import { id } from 'date-fns/locale';
 import MyData from '../helper/MyData';
 
+// import sha256 from 'crypto-js/sha256';
+// import hmacSHA512 from 'crypto-js/hmac-sha512';
+// import Base64 from 'crypto-js/enc-base64';
+
+import CryptoJS from "crypto-js";
+
 const arrayEarnReward = [
   // {
   //   name: 'DASHBOARD',
@@ -92,8 +98,8 @@ class Dashboard extends React.Component {
       this.setState({ load: true });
      var data = new URLSearchParams();
      data.append('Cid',id_)
-     data.append('mobile', MyData.mobile);
-     data.append('token', MyData.token);
+     data.append('MobileNo', MyData.mobile);
+     data.append('TokenNo', MyData.token);
        fetch(BASE_URL+"GetCenterDetail", {
          method: "POST",
          headers: {
@@ -134,9 +140,33 @@ class Dashboard extends React.Component {
   async getdataFromSharedPreference()
    {
 
-  
+    // const hashDigest = sha256('mohit');
+    // console.log('encrypted text hashDigest256' + hashDigest)
 
-    await  AsyncStorage.getItem('centrename', (err, result) => {
+    // const hmacDigest = Base64.stringify(hmacSHA512('path' + 'hashDigest', 'privateKey'));
+    // console.log('encrypted text hashDigest512' + hmacDigest)
+
+    // var data = [{id: 'token'}, {id: 'salt'}]
+     var data = ('token is best')
+
+// // Encrypt
+// var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'b14ca5898a4e4133bbce2ea2315a1916').toString();
+
+// console.log('encrypted text aes '+ciphertext); // [{id: 1}, {id: 2}]
+
+// var cipherdemo = "9crooGkXLc/FxyxoqUTGmA==";
+
+// console.log('encrypted text aes  shantnu'+cipherdemo); // [{id: 1}, {id: 2}]
+
+// // Decrypt
+// var bytes  = CryptoJS.AES.decrypt(cipherdemo, 'b14ca5898a4e4133bbce2ea2315a1916');
+
+// var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+// console.log('encrypted decrypt '+ JSON.stringify(decryptedData)); // [{id: 1}, {id: 2}]
+   
+
+        await  AsyncStorage.getItem('centrename', (err, result) => {
         this.center_name = result;
       });
     await AsyncStorage.getItem('username',(err ,result) => {

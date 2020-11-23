@@ -216,7 +216,7 @@ class FormFSecond extends Component
         }
        // 9 y
 
-       debugger
+       
         mydata = mydataintent;
         debugger
         mydata.append('NOTDPTP',this.state.notdptp);
@@ -244,7 +244,9 @@ class FormFSecond extends Component
         // 16 y
         mydata.append('P_AbNorm_Det',this.state.abnormality_value);
 
-        console.warn(mydata);
+        mydata.append('MobileNo', MyData.mobile);
+        mydata.append('TokenNo', MyData.token);
+       
         this.cllapiforPostdata('SaveFormF');
       }
       identity_Popup()
@@ -275,7 +277,9 @@ class FormFSecond extends Component
           
             if(responseJson.Status)
             {
-              alert(JSON.stringify(responseJson.Message));
+              setTimeout(()=>{
+                alert(JSON.stringify(responseJson.Message)) 
+              }, 300);  
               this.props.navigation.navigate('PDFExample' , {id_pdf : responseJson.Message.substring(65) , back_id : 'Dashboard' })
             }
             else
@@ -296,8 +300,8 @@ class FormFSecond extends Component
 
        data.append('MasterCode',MasterCode);
        data.append('cid',cidi);
-       data.append('mobile', MyData.mobile);
-       data.append('token', MyData.token);
+       data.append('MobileNo', MyData.mobile);
+       data.append('TokenNo', MyData.token);
          fetch(BASE_URL+front, {
            method: "POST",
            headers: {

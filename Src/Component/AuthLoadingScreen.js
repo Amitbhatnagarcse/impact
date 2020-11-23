@@ -20,7 +20,6 @@ export default class AuthLoadingScreen extends React.Component {
   
     try {
       const value = await AsyncStorage.getItem(username);
-      console.log(value)
       if (value !== null && value !== '') {
         // We have data!!
         this.props.navigation.navigate('PinScreen');

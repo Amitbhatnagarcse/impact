@@ -8,7 +8,7 @@ import FooterComponent from '../../CommonComponent/Footer'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import RadioForm from 'react-native-simple-radio-button';
 import Item from "./Item";
-
+import MyData from "../../helper/MyData";
 
 
 const Feedback = ( {navigation} ) => {
@@ -30,7 +30,9 @@ const Feedback = ( {navigation} ) => {
     {
       var data = new URLSearchParams();
       data.append('FeedbackId',id);
-      data.append('Role','role')
+      data.append('Role','role');
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
       _retrieveData(data ,'DeleteFeedback',id)
     }
     const deleteItemById = async (id) => {
@@ -90,7 +92,9 @@ const Feedback = ( {navigation} ) => {
               data.append('userid',userid);
               data.append('unitid',unitid);
               data.append('Role',role);
-              console.warn(data.toString())
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
+
               _retrieveData(data ,'FeedbackList')
               setTimeout(()=>{
                alert(responseJson.Message)
@@ -131,6 +135,9 @@ const Feedback = ( {navigation} ) => {
       data.append('userid',userid);
       data.append('qType',typevalue+'');
       data.append('fquestion',feedback);
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
+      
       console.warn(data.toString())
       _retrieveData(data,'FeedbackForm')
 
@@ -184,7 +191,9 @@ const Feedback = ( {navigation} ) => {
               data.append('userid',userid);
               data.append('unitid',unitid);
               data.append('Role',role);
-              //console.warn(data.toString())
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
+              console.warn(data.toString());
               _retrieveData(data ,'FeedbackList')
             }
 

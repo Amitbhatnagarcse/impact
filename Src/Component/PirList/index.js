@@ -77,8 +77,11 @@ const PirList = ({navigation }) =>
       {
         var data = new URLSearchParams();
         data.append('PirId',id);
-        data.append('Role',role)
-        _retrieveData(data ,'DeletePIReport',id)
+        data.append('Role',role);
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
+        _retrieveData(data.toString() ,'DeletePIReport',id)
       }
       const deleteItemById = async (id) => {
         
@@ -111,11 +114,9 @@ const PirList = ({navigation }) =>
       }
 
 
-      const _retrieveData = async (data ,front,p_id) => {
+      const _retrieveData = async (data  ,front,p_id) => {
 
-        data.append('mobile', MyData.mobile);
-        data.append('token', MyData.token);
-      setloading(true)
+        setloading(true)
   
       fetch(BASE_URL+front, {
         method: "POST",
@@ -205,6 +206,9 @@ const PirList = ({navigation }) =>
               data.append('Year',year);
               data.append('Did',district_id);
               data.append('Role',role);
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
               _retrieveData(data ,'GetPIReportByDID')
               
             }
@@ -212,7 +216,10 @@ const PirList = ({navigation }) =>
             {
               var data = new URLSearchParams();
               data.append('Role',role);
-              _retrieveData(data.toString() ,'GetAllDistrict')
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
+              _retrieveData(data ,'GetAllDistrict')
             }
         
           var date = new Date().getDate(); //Current Date
@@ -221,7 +228,6 @@ const PirList = ({navigation }) =>
           
           const unsubscribe = navigation.addListener('focus', () => {
 
-            console.warn(district_id)
             
             // var mydata = new URLSearchParams();
             // mydata.append('Year',year);
@@ -264,8 +270,11 @@ const PirList = ({navigation }) =>
           data.append('Year',year);
           data.append('Did',result.selectedItem.value);
           data.append('Role','3');
-          console.warn(data.toString())
-          _retrieveData(data ,'GetPIReportByDID')
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
+          
+          _retrieveData(data.toString() ,'GetPIReportByDID')
 
       
       } else {

@@ -7,6 +7,7 @@ import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../..
 import FooterComponent from '../CommonComponent/Footer'
 import { CommonActions } from '@react-navigation/native';
 
+
 import {
   StyleSheet,
   View,
@@ -106,9 +107,9 @@ export default class SignInScreen extends React.Component {
           if(responseJson.Status)
         {
           this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
-          setTimeout(()=>{
-            alert(JSON.stringify(responseJson.ResponseData[0].OTP));
-        }, 300);
+        //   setTimeout(()=>{
+        //     alert(JSON.stringify(responseJson.ResponseData[0].OTP));
+        // }, 300);
         }
         else
         {
@@ -202,7 +203,9 @@ export default class SignInScreen extends React.Component {
         this.storeItem("userid",this.state.logindata.UserId.toString());        
         this.storeItem("username",this.state.logindata.UserName);        
         this.storeItem("role",this.state.logindata.Role.toString());
-        this.storeItem("token",'asdf');
+
+    
+        this.storeItem("token",this.state.logindata.TokenNo);
         this.storeItem("mobile",this.state.username);
 
       
@@ -376,10 +379,10 @@ export default class SignInScreen extends React.Component {
                      placeholderTextColor="#adb4bc"
                      returnKeyType="go"
                      autoCapitalize="none"
+                     secureTextEntry={true}
                      maxLength ={4}
                      autoCorrect={false}
                      keyboardType={"numeric"}
-                     secureTextEntry={false}
                      onChangeText={value => this.onChangeText("pin", value)}
                     
                    />

@@ -37,8 +37,8 @@ const FeedbackDetails = ( {navigation , route} ) => {
         data.append('feedbackid',item.feedbackId)
         data.append('fanswer',feedback)
         data.append('answerById',role)
-        data.append('mobile', MyData.mobile);
-        data.append('token', MyData.token);
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
         console.log(data.toString())
         _retrieveData(data ,'FeedbackForm',item.feedbackId)
       }

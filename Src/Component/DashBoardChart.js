@@ -123,9 +123,10 @@ const backAction = () => {
     var data = new URLSearchParams();
     data.append('Role',role);
     data.append('UnitId',unitid);
-    data.append('mobile', MyData.mobile);
-    data.append('token', MyData.token);
-    console.warn(data.toString())
+    data.append('MobileNo', MyData.mobile);
+    data.append('TokenNo', MyData.token);
+
+   
       fetch(BASE_URL+"DashboardData", {
         method: "POST",
         headers: {
@@ -136,7 +137,7 @@ const backAction = () => {
       })
         .then(response => response.json())
         .then(responseJson => {
-          console.log(JSON.stringify(responseJson));
+        
           setloading(false)
           if(responseJson.Status)
           {
@@ -163,8 +164,8 @@ const backAction = () => {
     data.append('Role',role);
     if(role =='3')
     data.append('Did',did);
-    data.append('mobile', MyData.mobile);
-    data.append('token', MyData.token);
+    data.append('MobileNo', MyData.mobile);
+    data.append('TokenNo', MyData.token);
       fetch(BASE_URL+"RenewalReport", {
         method: "POST",
         headers: {

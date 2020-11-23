@@ -118,8 +118,8 @@ const backAction = () => {
                 if(role =='3' || role =='5')
                 data.append('did',did);
                 data.append('Role',role);
-                data.append('mobile', MyData.mobile);
-                data.append('token', MyData.token);
+                data.append('MobileNo', MyData.mobile);
+                data.append('TokenNo', MyData.token);
                 console.warn(data.toString())
                 dispatch(getFORMFREPORTRequest(data.toString()))
             }

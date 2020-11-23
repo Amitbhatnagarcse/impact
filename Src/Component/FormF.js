@@ -23,6 +23,7 @@ import {
 } from 'react-native';
 import {BASE_URL} from '../../Constants'
 import AsyncStorage from '@react-native-community/async-storage';
+import MyData from "../helper/MyData";
 
 
 
@@ -48,7 +49,6 @@ var my_navigation;
 var doctor_list = [{Code: 'Radiologist', CodeText : '' ,Address : '' },];
 
 import { CheckBox } from 'react-native-elements'
-import MyData from '../helper/MyData';
 
 var relation = {
   "relation_array": [
@@ -147,7 +147,7 @@ class FormF extends Component {
       center_name= await AsyncStorage.getItem('centrename');
        center_reg_no = await AsyncStorage.getItem('centreregno');
        center_reg_date = await AsyncStorage.getItem('centreregdate');
-        this.setState({'centername' : center_name ,'centerreg_no' :center_reg_no , 'centerregdate' : center_reg_date })
+      this.setState({'centername' : center_name ,'centerreg_no' :center_reg_no , 'centerregdate' : center_reg_date })
      
     } catch (error) {
      
@@ -227,6 +227,10 @@ class FormF extends Component {
    async cllapiforgetinglist(front) {
     this.setState({ load: true });
     var data = new URLSearchParams();
+    data.append('MobileNo', MyData.mobile);
+    data.append('TokenNo', MyData.token);
+    data.append('Role','5')
+    console.log(data.toString())
      fetch(BASE_URL+front, {
        method: "POST",
        headers: {
@@ -237,6 +241,7 @@ class FormF extends Component {
      })
        .then(response => response.json())
        .then(responseJson => {
+         console.log(JSON.stringify(responseJson))
         this.setState({ load: false });
          if(front == 'Stateandidentityprooftype')
          {
@@ -245,7 +250,6 @@ class FormF extends Component {
         else if (front == 'GetIndication')
          {
 
-         
           setTimeout(
             function() {
               this.setState( {multiPickerVisible : true,dataSource : responseJson.ResponseData })
@@ -269,8 +273,8 @@ class FormF extends Component {
     this.setState({ load: true });
    var data = new URLSearchParams();
    data.append('stateid',id)
-   data.append('mobile', MyData.mobile);
-   data.append('token', MyData.token);
+   data.append('MobileNo', MyData.mobile);
+   data.append('TokenNo', MyData.token);
      fetch(BASE_URL+"GetDistrict", {
        method: "POST",
        headers: {
@@ -306,8 +310,8 @@ class FormF extends Component {
    this.setState({ load: true , refered_by : id ,refered_by_doctor : false,refered_by_other : true});
    var data = new URLSearchParams();
    data.append('cid','37');
-   data.append('mobile', MyData.mobile);
-   data.append('token', MyData.token);
+   data.append('MobileNo', MyData.mobile);
+   data.append('TokenNo', MyData.token);
    //data.append('MasterCode',id);
      fetch(BASE_URL+"GetDoctor", {
        method: "POST",
@@ -1189,29 +1193,6 @@ class FormF extends Component {
 
                }
               
-          //  if(172800000 <=  Number(Difference_In_Time)) 
-          //  {
-             
-          //    total_weak = 0;
-          //    debugger
-          //  }
-          //  else if(  518400001 > Number (Difference_In_Time))
-          //  {
-             
-          //   total_weak = 1;
-          //   debugger
-          //  }
-          //  else 
-          //  {
-          //   total_weak = Math.floor( Difference_In_Time / (1000 * 3600 * 24) / 7 ); 
-          //  }
-          // {
-          //   Difference_In_Time = Difference_In_Time - 259200000
-          //   var total_weak = Math.floor( Difference_In_Time / (1000 * 3600 * 24) / 7 ); 
-          //   console.log(total_weak)
-          // }
-      
-          
          if(total_weak > 45)
          alert('date not greater then 45 weeks')
          else 

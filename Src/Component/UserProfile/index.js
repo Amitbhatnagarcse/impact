@@ -10,8 +10,6 @@ import RadioForm from 'react-native-simple-radio-button';
 import { da } from "date-fns/locale";
 import MyData from "../../helper/MyData";
 
-const { width } = Dimensions.get('screen')
-
 
 const UserProfile = ({ navigation, route }) => {
 
@@ -45,8 +43,6 @@ const UserProfile = ({ navigation, route }) => {
 
 
     setloading(true)
-    data.append('mobile', MyData.mobile);
-    data.append('token', MyData.token);
     fetch(BASE_URL + front, {
       method: "POST",
       headers: {
@@ -79,6 +75,7 @@ const UserProfile = ({ navigation, route }) => {
   }
 
   const _retrieveDataCenter = async (data, front) => {
+    console.log('center ' + data.toString())
     fetch(BASE_URL + front, {
       method: "POST",
       headers: {
@@ -101,6 +98,7 @@ const UserProfile = ({ navigation, route }) => {
         }
       })
       .catch(error => {
+        setloading(false)
       });
   }
 
@@ -152,9 +150,13 @@ const UserProfile = ({ navigation, route }) => {
       var data = new URLSearchParams();
       data.append('Unitid', '2805');
       data.append('Role', '5');
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
       _retrieveData(data.toString(), 'OwnerProfile')
 
       var data = new URLSearchParams();
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
       data.append('Cid', item);
       _retrieveDataCenter(data.toString(), 'GetCenterDetail')
 

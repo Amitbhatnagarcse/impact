@@ -166,8 +166,8 @@ const DistrrictListProfile = ( {navigation , route} ) => {
               var data = new URLSearchParams();
               data.append('Unitid',item);
               data.append('Role','3');
-              data.append('mobile', MyData.mobile);
-              data.append('token', MyData.token);
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
               _retrieveData(data ,'OwnerProfile')
             }
 

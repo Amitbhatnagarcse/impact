@@ -306,6 +306,9 @@ x
       }
       data.append('longitude',currentLongitude)
       data.append('latitude',currentLatitude)
+
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
     
       _retrieveData(data.toString() ,'SavePIReport')
     }
@@ -411,6 +414,9 @@ x
         setCenter_name(id.CenterName)
         var data = new URLSearchParams();
         data.append('Cid',id.Cid);
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
         _retrieveData(data.toString() ,'GetCenterDetail')
        
       }
@@ -423,12 +429,19 @@ x
         
       var data = new URLSearchParams();
       data.append('Role',role);
+
+      data.append('MobileNo', MyData.mobile);
+      data.append('TokenNo', MyData.token);
       _retrieveData(data.toString() ,'GetAllDistrict')
       }
       if(role =='3')
       {
         var data = new URLSearchParams();
         data.append('Did',district_id);
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
+
         _retrieveData(data.toString() ,'GetCentersByDID')
       }
 
@@ -448,8 +461,7 @@ x
 
 
   const _retrieveData = async (data ,front) => {
-    data.append('mobile', MyData.mobile);
-    data.append('token', MyData.token);
+   
     setloading(true)
       fetch(BASE_URL+front, {
         method: "POST",
@@ -575,6 +587,9 @@ x
           setDistrict_name(result.selectedItem.label) 
           var data = new URLSearchParams();
           data.append('Did',result.selectedItem.value);
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
           _retrieveData(data.toString() ,'GetCentersByDID')
 
         }  
@@ -584,6 +599,9 @@ x
           setCenter_id(result.selectedItem.value)
           var data = new URLSearchParams();
           data.append('Cid',result.selectedItem.value);
+
+        data.append('MobileNo', MyData.mobile);
+        data.append('TokenNo', MyData.token);
           _retrieveData(data.toString() ,'GetCenterDetail')
         }
       
