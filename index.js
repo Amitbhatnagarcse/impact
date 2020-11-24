@@ -10,7 +10,7 @@ import Stack from './Src/app/NewStack';
 import Splash from './Src/Component/Splash';
 import { Provider } from 'react-redux';
 import { store } from './Src/Store'
-
+import {} from './Src/erroe-handler'
 class Main extends Component{
     constructor(props){
         super(props);

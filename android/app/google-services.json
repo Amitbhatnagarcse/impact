@@ -1,0 +1,219 @@
+{
+  "project_info": {
+    "project_number": "362251554721",
+    "firebase_url": "https://logipaceuser.firebaseio.com",
+    "project_id": "logipaceuser",
+    "storage_bucket": "logipaceuser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362251554721:android:f4ec949fd97e755e",
+        "android_client_info": {
+          "package_name": "com.htl.logipace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362251554721-riuniu28v4stuqnfocaoa3pf4gsiqd0m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipace",
+            "certificate_hash": "6451fd0e3e5a2942ae19a3c2e27fbdcf19026cff"
+          }
+        },
+        {
+          "client_id": "362251554721-34jur56mr4md63ofd1lu76k006leehc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipace",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "362251554721-hsm1dhtnq05t1a9kovecktincbqtshf1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipace",
+            "certificate_hash": "9a2c0f50309e7960285cb6e68ebd22b573a6bf82"
+          }
+        },
+        {
+          "client_id": "362251554721-u4vqef095v1jrk6ujagv8f21fnhnt8df.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipace",
+            "certificate_hash": "0f4a702a2f120934262e0af6b44d2c6a6acae2cb"
+          }
+        },
+        {
+          "client_id": "362251554721-atl6jv9on4mlee0gb9pnnmq9jcoeegcg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipace",
+            "certificate_hash": "cac4386f7c8bdf560330399ab272a872940f002b"
+          }
+        },
+        {
+          "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPOddV_4K5HCxlc5C4uvOoLHRPl9bBiME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362251554721-fvsochtmir5pfgo005saaotlojo9o7j2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logipace.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362251554721:android:cea01708d54aed49d305e0",
+        "android_client_info": {
+          "package_name": "com.htl.logipacedriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362251554721-pgofttlo0ia9k9hae3rm2qt6mapunhh8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipacedriver",
+            "certificate_hash": "b748f30fabeb9021311c34db1fdcd18b260a45ef"
+          }
+        },
+        {
+          "client_id": "362251554721-mda3b659icvt61t9a51507jlrp5bora6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipacedriver",
+            "certificate_hash": "ed0706843f50985e17342d37795b929b1aae8656"
+          }
+        },
+        {
+          "client_id": "362251554721-2sh44psomj5qjs6i0812nejdg6gmmpof.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.htl.logipacedriver",
+            "certificate_hash": "907be14f9c813df6e0664e585a4857b2d3653407"
+          }
+        },
+        {
+          "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPOddV_4K5HCxlc5C4uvOoLHRPl9bBiME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362251554721-fvsochtmir5pfgo005saaotlojo9o7j2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logipace.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362251554721:android:e4c133b8a9b08607d305e0",
+        "android_client_info": {
+          "package_name": "com.impacts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPOddV_4K5HCxlc5C4uvOoLHRPl9bBiME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362251554721-fvsochtmir5pfgo005saaotlojo9o7j2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logipace.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362251554721:android:431bf3f6746afd2cd305e0",
+        "android_client_info": {
+          "package_name": "com.logipacedriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPOddV_4K5HCxlc5C4uvOoLHRPl9bBiME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362251554721-95dld6fq53cbkh3gtvgrv2i3ld3sfl00.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362251554721-fvsochtmir5pfgo005saaotlojo9o7j2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logipace.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
