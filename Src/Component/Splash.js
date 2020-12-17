@@ -1,6 +1,6 @@
 import React ,{Component} from 'react'
 import {StyleSheet,Text,View,Image,Dimensions,SafeAreaView} from 'react-native'
-import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
+import {Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
 
 import splash from '../../assets/img/splash.jpg'
 export default class Splash extends Component{

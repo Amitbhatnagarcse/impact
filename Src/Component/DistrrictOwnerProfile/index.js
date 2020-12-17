@@ -83,6 +83,7 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
           setloading(false)
           if(responseJson.Status)
           {
+            console.log(JSON.stringify(responseJson.ResponseData))
             if(front == 'OwnerProfile')
             {
               setListing(responseJson.ResponseData)
@@ -111,7 +112,27 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
                }
             }
             else{
-              alert(responseJson.Message)
+              setTimeout(()=>
+              {
+  
+                if(responseJson.Message.toString.includes ='Invalid request')
+                {
+                  Alert.alert(
+                    '',
+                   'Session Expired please verify again',
+                    [
+                      {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                      {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                    
+                    ],
+                    { 
+                      cancelable: true 
+                    }
+                  );
+                }
+                else 
+                alert(responseJson.Message)
+              },300); 
             }
         })
         .catch(error => {
@@ -192,9 +213,9 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
               data.append('Unitid','0');
               data.append('Role','0');
 
-        data.append('MobileNo', MyData.mobile);
-        data.append('TokenNo', MyData.token);
-             _retrieveData(data ,'OwnerProfile')
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
+              _retrieveData(data ,'OwnerProfile')
             }
 
             const unsubscribe = navigation.addListener('focus', () => {

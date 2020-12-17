@@ -50,7 +50,7 @@ export default function Item( { item  , index ,navigation ,role, actiondel} )
         style={Styles.inputtext}  > { item.CenterName} </Text>
           <Text 
         onPress={() => navigation.navigate('UserProfile', {item : item.CID , CenterName : item.CenterName})}
-        style={Styles.inputblue}  > {item.Flag == 2 ? 'F' : 'NF' } </Text>
+        style={Styles.inputblue}  > {item.Flag == 1 ? 'F' : 'NF' } </Text>
           </View>
           </TouchableOpacity> 
 

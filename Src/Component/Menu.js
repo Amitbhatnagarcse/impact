@@ -8,7 +8,7 @@ import {
   Image,
   Text,
 } from 'react-native';
-import {BASE_URL,BlueColor} from '../../Constants'
+import {BlueColor} from '../../Constants'
 
 
 const window = Dimensions.get('window');
@@ -73,6 +73,7 @@ export default function Menu({ onItemSelected , type , navigation , role , item 
 
         <Text
         onPress={() => {
+          console.warn(item)
           onItemSelected()
           if(role == 5)
           navigation.navigate('UserProfile', {item : item , CenterName : CenterName})
@@ -83,7 +84,7 @@ export default function Menu({ onItemSelected , type , navigation , role , item 
         }}
         style={styles.item}
       >
-       Owner Profile
+       Center Profile
       </Text>
         <View style ={{width:'100%',height:1,backgroundColor:'white'}}/>
 

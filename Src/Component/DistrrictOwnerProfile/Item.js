@@ -6,7 +6,8 @@ import {
   Image,
   TouchableOpacity, 
   TextInput,
-  Modal
+  Modal,
+  Alert
  
 } from "react-native";  
 import Styles from './style';
@@ -51,7 +52,27 @@ export default function Item( { item  , index ,navigation ,role, actiondel , sel
             download(''+image,responseJson.ResponseData[0].FileExtension)         
           }
           else{
-            alert(responseJson.Message)
+            setTimeout(()=>
+            {
+
+              if(responseJson.Message.toString.includes ='Invalid request')
+              {
+                Alert.alert(
+                  '',
+                 'Session Expired please verify again',
+                  [
+                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  
+                  ],
+                  { 
+                    cancelable: true 
+                  }
+                );
+              }
+              else 
+              alert(responseJson.Message)
+            },300); 
           }
         })
         .catch(error => {

@@ -475,7 +475,12 @@ x
         .then(responseJson => {
           setloading(false)
           if(responseJson.Status)
+          
           {
+            if(front == 'SavePIReport')
+            {
+              alert(responseJson.Message)
+            }
             if(front == 'GetAllDistrict')
             {
               setDistrictListing(responseJson.ResponseData)
@@ -491,7 +496,7 @@ x
               }
               if(front == 'SavePIReport')
                   {
-                    debugger
+                    
                     Alert.alert(  
                       'IMPACT',  
                     responseJson.Message,  
@@ -499,17 +504,13 @@ x
                           {text: 'OK', onPress: () => navigation.goBack()},  
                       ]  
                   );  
-                    //alert(responseJson.Message)  
                   }
             }
-         
-          else{
-            if(front == 'SavePIReport')
-            {
-              alert(responseJson.Message)
-            }
-          }
-        })
+            
+        }
+      
+        
+        )
         .catch(error => {
           alert(''+error)
           //this.setState({ load: false });
@@ -544,6 +545,16 @@ x
           
         <View style={Styles.container}>
         {_headerBar()}
+          
+        <OrientationLoadingOverlay visible={loading}>
+          <View>
+            <Image
+              source={require("../../../assets/img/loadlogo.gif")}
+              style={{ width: 80, height: 80 }}
+            />
+           
+          </View>
+        </OrientationLoadingOverlay>
 
         {imageSelector == true && (
         <View>
@@ -746,10 +757,20 @@ x
           <Image style={{width: 150, height: 150}} source={imagedata}/>
           </View>
 
-        <TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
-             <Text style={{	height:40 ,backgroundColor:BlueColor,padding:5,color:'white',marginBottom:10,paddingTop:10,
-		borderColor: 'white',width:'100%',textAlign:'center'}} >{submit}</Text>
-        </TouchableOpacity>
+{ submit === 'Submit' &&
+ <TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
+ <Text style={{	height:40 ,backgroundColor:BlueColor,padding:5,color:'white',paddingTop:10,
+borderColor: 'white',width:'100%',textAlign:'center'}} >{submit}</Text>
+</TouchableOpacity>
+}
+{ submit === 'Update' && route.params.show  &&
+<TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
+ <Text style={{	height:40 ,backgroundColor:BlueColor,padding:5,color:'white',paddingTop:10,
+borderColor: 'white',width:'100%',textAlign:'center'}} >{submit}</Text>
+</TouchableOpacity>
+
+}
+       
        </SafeAreaView>
   );
 }

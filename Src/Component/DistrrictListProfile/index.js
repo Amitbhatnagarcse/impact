@@ -84,10 +84,13 @@ const DistrrictListProfile = ( {navigation , route} ) => {
           setloading(false)
           if(responseJson.Status)
           {
+            console.log(JSON.stringify(responseJson.ResponseData))
+
             if(front == 'OwnerProfile')
             {
+              console.warn('response' + JSON.stringify(responseJson.ResponseData))
               setListingAll(responseJson.ResponseData); 
-              const data =  responseJson.ResponseData.filter(data => data.Flag == "2");
+              const data =  responseJson.ResponseData.filter(data => data.Flag == "1");
               setListingfilter(data)
             }
 
@@ -151,10 +154,10 @@ const DistrrictListProfile = ( {navigation , route} ) => {
           useEffect(() =>  {
 
             if(flagvalue == 1)
-            var data =  listingall.filter(data => data.Flag == "1");
-            if(flagvalue == 0)
             var data =  listingall.filter(data => data.Flag == "2");
-            setListingfilter(data)
+            if(flagvalue == 0)
+            var data =  listingall.filter(data => data.Flag == "1");
+            setListingfilter(data.sort(data.CenterName))
 
           },[flagvalue])
 
@@ -168,6 +171,7 @@ const DistrrictListProfile = ( {navigation , route} ) => {
               data.append('Role','3');
               data.append('MobileNo', MyData.mobile);
               data.append('TokenNo', MyData.token);
+              console.log('request ' + data.toString())
               _retrieveData(data ,'OwnerProfile')
             }
 

@@ -133,7 +133,29 @@ class App extends Component {
         
          this.setState({ load: false ,date : '',total_sono:'',women_sono:''});
          //console.warn(JSON.stringify(responseJson.ResposeData));
-         alert(JSON.stringify(responseJson.Message))
+         //alert(JSON.stringify(responseJson.Message))
+
+         setTimeout(()=>
+         {
+
+           if(responseJson.Message.toString.includes ='Invalid request')
+           {
+             Alert.alert(
+               '',
+              'Session Expired please verify again',
+               [
+                 {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                 {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+               
+               ],
+               { 
+                 cancelable: true 
+               }
+             );
+           }
+           else 
+           alert(responseJson.Message)
+         },300); 
          //this.setState({logindata : responseJson.ResposeData[0],loginui:false})
        })
        .catch(error => {

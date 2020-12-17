@@ -54,6 +54,10 @@ const rollthree = [
     img: require('../../assets/img/dashboard.png')
   },
   {
+    name: 'CENTER PROFILE',
+    img: require('../../assets/img/userimage.png')
+  },
+  {
     name: 'PIR UPLOAD',
     img: require('../../assets/img/renewal.png')
   },
@@ -65,13 +69,13 @@ const rollthree = [
     name: 'FORMF REPORT',
     img: require('../../assets/img/formfreport.png')
   },
-  {
-    name: 'FEEDBACK',
-    img: require('../../assets/img/feedback.png')
-  }
+  // {
+  //   name: 'FEEDBACK',
+  //   img: require('../../assets/img/feedback.png')
+  // }
 ]
 
-var role ="";
+
 var center_name = "";
 var center_id = ""
 class Dashboard extends React.Component {
@@ -89,7 +93,8 @@ class Dashboard extends React.Component {
               title : 'IMPACT',
               arrayEarnRewards:[], 
               username :'',
-              load : false        
+              load : false,
+              myrole : 5,        
             }
    }
 
@@ -111,23 +116,47 @@ class Dashboard extends React.Component {
          .then(response => response.json())
          .then(responseJson => {
           this.setState({ load: false });
-           const mydate = responseJson.ResponseData.ValidThrough.substring(14,24)
+          if(responseJson.Status)
+          { 
+            const mydate = responseJson.ResponseData.ValidThrough.substring(14,24)
            
-           var datee = String(mydate).split('/');
+            var datee = String(mydate).split('/');
+            var datenew = (datee[2] + '/' + datee[1] + '/' + datee[0] );
+            var date1 = new Date(datenew);
+           
+           var datev = new Date().getDate();
+           var month = new Date().getMonth() + 1;
+           var year = new Date().getFullYear();
+           var datecureent = (datev +'/'+ month +'/'+ year); 
+           
+           var date2 = new Date(datecureent); 
+           var Difference_In_Time = date1.getTime() - date2.getTime(); 
+            
+          }
+          else{
+            setTimeout(()=>
+            {
+
+              if(responseJson.Message.toString.includes ='Invalid request')
+              {
+                Alert.alert(
+                  '',
+                 'Session Expired please verify again',
+                  [
+                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  
+                  ],
+                  { 
+                    cancelable: true 
+                  }
+                );
+              }
+              else 
+              alert(responseJson.Message)
+            },300); 
+          }
           
-           var datenew = (datee[2] + '/' + datee[1] + '/' + datee[0] );
-           var date1 = new Date(datenew);
-            console.warn(date1)
-          
-          var datev = new Date().getDate();
-          var month = new Date().getMonth() + 1;
-          var year = new Date().getFullYear();
-          var datecureent = (datev +'/'+ month +'/'+ year); 
-          
-          var date2 = new Date(datecureent); 
-          console.warn(date2)
-          var Difference_In_Time = date1.getTime() - date2.getTime(); 
-          console.warn(JSON.stringify(Difference_In_Time))
           
          })
          .catch(error => {
@@ -147,7 +176,7 @@ class Dashboard extends React.Component {
     // console.log('encrypted text hashDigest512' + hmacDigest)
 
     // var data = [{id: 'token'}, {id: 'salt'}]
-     var data = ('token is best')
+    // var data = ('token is best')
 
 // // Encrypt
 // var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'b14ca5898a4e4133bbce2ea2315a1916').toString();
@@ -174,6 +203,8 @@ class Dashboard extends React.Component {
     })
     await  AsyncStorage.getItem('role', (err, result) => {
         this.role = result; 
+        this.setState({ 'myrole' : result})
+
         
        if(result == '0' || result=='1' || result =='3' )
        {
@@ -250,9 +281,15 @@ class Dashboard extends React.Component {
               {
                 this.props.navigation.navigate('Feedback')
               }
+              else if(item.name == 'CENTER PROFILE')
+              {
+                // if(this.state.myrole == 3)
+                // navigation.navigate('DistrrictListProfile', {item : 101 })
+                // else
+                navigation.navigate('DistrrictOwnerProfile')
+              }
               else
               {
-
               }  
             }}>
           <View >
@@ -290,7 +327,8 @@ class Dashboard extends React.Component {
             <Image
             resizeMode='contain'
             tintColor='white'
-            style={{ width: 35, height: 39, marginTop: 5 ,marginRight:4}}
+            style={{ width: 35, height: 39, marginTop: 5 ,marginRight:4 ,        transform: [{ rotate: '90deg' }]
+          }}
             source={require("../../assets/img/logout.png")}
             />
           </View>
@@ -412,8 +450,19 @@ class Dashboard extends React.Component {
               bounces={false}
             />}
 
-
+         
+          { this.state.myrole != 5 &&
+ <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Feedback')} >
+ <View style={{flexDirection: 'row',justifyContent:'center',alignItems:'center' , fontSize: 15,width:'100%' ,backgroundColor: 'rgba(52, 52, 52, 0.32)',}}>
+ <Image source={require("../../assets/img/feedback.png")} style={{width: 70, height: 70, borderRadius:70}} />
+ <Text style={{ backgroundColor:'lightblue', alignSelf: "center" ,marginStart: 20 }}>FeebBack</Text>
+ </View>
+ </TouchableWithoutFeedback>
+          }
+         
+          
           </LinearGradient>
+        
          {/* </ImageBackground> */}
         </View>
     

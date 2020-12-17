@@ -107,9 +107,9 @@ const PirList = ({navigation }) =>
       
    
       }
-      const editdata = async(item) => {
+      const editdata = async(item , showbutton ) => {
       
-         navigation.navigate('InspectionReport' , { id : item } )
+         navigation.navigate('InspectionReport' , { id : item , show : showbutton} )
 
       }
 
@@ -149,7 +149,27 @@ const PirList = ({navigation }) =>
             setDistrictListing(responseJson.ResponseData)   
             }
           else{
-            alert(responseJson.Message)
+            setTimeout(()=>
+            {
+
+              if(responseJson.Message.toString.includes ='Invalid request')
+              {
+                Alert.alert(
+                  '',
+                 'Session Expired please verify again',
+                  [
+                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  
+                  ],
+                  { 
+                    cancelable: true 
+                  }
+                );
+              }
+              else 
+              alert(responseJson.Message)
+            },300); 
           }
         })
         .catch(error => {
@@ -182,7 +202,7 @@ const PirList = ({navigation }) =>
       {
         return (
         <Item item = {item}  index = {index}  navigation = {navigation_} actionPer={deleteItemById} editfun ={editdata} role ={role}/>  
-        )
+        )  
       }
 
       const backAction = () => {

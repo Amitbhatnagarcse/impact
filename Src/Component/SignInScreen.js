@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {BASE_URL,Gradientcolourbluew,Gradientcolouryellow,BlueColor} from '../../Constants'
 import FooterComponent from '../CommonComponent/Footer'
 import { CommonActions } from '@react-navigation/native';
+import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
 
 
 import {
@@ -27,14 +28,22 @@ import {
   Alert,
   
 } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-community/async-storage';
-
+import { da } from "date-fns/locale";
+var relation = {
+  "relation_array": [
+    { "Code": 1, "CodeText": "Center 1" },
+    { "Code": 2, "CodeText": "Center 2" },
+  ]
+};
 
 export default class SignInScreen extends React.Component {
+ 
   constructor(props) {
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+   
   }
   state = {
     username: "",
@@ -44,7 +53,10 @@ export default class SignInScreen extends React.Component {
     loginui: true,
     load: false,
     logindata: '',
-    pin : ''
+    pin : '',
+    singlePickerVisible: false,
+    id_enter : '',
+    dataSource :[],
   };
 
   componentWillUnmount() {
@@ -83,16 +95,18 @@ export default class SignInScreen extends React.Component {
    }
    else
    {
-   this.cllapiforgetingDistrictlist(JSON.stringify(this.state.username));
+    //this.cllapiforgetingDistrictlist(JSON.stringify(this.state.username));
+    this.cllapiforgonlotp(JSON.stringify(this.state.username));
    }
   }
 
-  async cllapiforgetingDistrictlist(id) {
-    //alert(id);
+
+  async cllapiforgonlotp(id) {
+
      this.setState({ load: true });
     var data = new URLSearchParams();
     data.append('MobileNo',this.state.username);
-      fetch(BASE_URL+"PostValidateUser", {
+      fetch(BASE_URL+"ValidateUser", {
         method: "POST",
         headers: {
           'Accept' : "application/json",
@@ -106,10 +120,11 @@ export default class SignInScreen extends React.Component {
         console.warn(JSON.stringify(responseJson))
           if(responseJson.Status)
         {
-          this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
-        //   setTimeout(()=>{
-        //     alert(JSON.stringify(responseJson.ResponseData[0].OTP));
-        // }, 300);
+          //this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
+          this.setState({loginui:false,load : false})
+          setTimeout(()=>{
+            this.setState({ singlePickerVisible: true ,dataSource : relation.relation_array})
+          }, 300);
         }
         else
         {
@@ -120,10 +135,6 @@ export default class SignInScreen extends React.Component {
           
         }
        
-        
-        
-          //this.setState({ load: false ,dataSource : responseJson.IdentityProofType});
-         
          
         })
         .catch(error => {
@@ -136,35 +147,81 @@ export default class SignInScreen extends React.Component {
         
         });
     }
-  async cllapiforSendToken() {
-    
-   this.setState({ load: true });
-
-  var data = new URLSearchParams();
-  data.append('MobileNo', this.state.username);
-  fetch(BASE_URL+"PostValidateUser", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: data.toString,
-      json: true,
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-      debugger;
-        alert(JSON.stringify(responseJson.ResponseData[0].OTP));
-        this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
-        //this.props.navigation.navigate("Category", responseJson);
-        console.log(JSON.stringify(responseJson));
+  async cllapiforgetingDistrictlist(id) {
+    //alert(id);
+     this.setState({ load: true });
+    var data = new URLSearchParams();
+    data.append('MobileNo',this.state.username);
+    data.append('Otp',this.state.code);
+    data.append('UserPin',this.state.pin)
+      fetch(BASE_URL+"PostValidateUser", {
+        method: "POST",
+        headers: {
+          'Accept' : "application/json",
+          'Content-Type': 'application/x-www-form-urlencoded'        
+        },
+        body: data.toString(),
+        json: true,
       })
-      .catch(error => {
-        this.setState({ load: false });
-        //this.props.navigation.navigate("Category");
-         alert(JSON.stringify(error))
-      });
-  }
+        .then(response => response.json())
+        .then(responseJson => {
+        
+          console.warn(JSON.stringify(responseJson))
+          if(responseJson.Status)
+           {
+          this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
+          this.storeItem("centrename", responseJson.ResponseData[0].CentreName);
+          this.storeItem("districtid", responseJson.ResponseData[0].DistrictId.toString());
+          this.storeItem("blockid", responseJson.ResponseData[0].BlockId.toString());
+          this.storeItem("centreid", responseJson.ResponseData[0].CentreId.toString());
+          this.storeItem("centreregno", responseJson.ResponseData[0].CentreRegNo.toString());
+          this.storeItem("centreregdate", responseJson.ResponseData[0].CentreRegDate);
+          this.storeItem("districtname", responseJson.ResponseData[0].DistrictName);
+          this.storeItem("blockname",responseJson.ResponseData[0].BlockName);
+          this.storeItem("pin",this.state.pin);
+          this.storeItem("unitid",responseJson.ResponseData[0].UnitId.toString());
+          this.storeItem("userid",responseJson.ResponseData[0].UserId.toString());        
+          this.storeItem("username",responseJson.ResponseData[0].UserName);        
+          this.storeItem("role",responseJson.ResponseData[0].Role.toString());
+          //this.storeItem("token",this.state.logindata.TokenNo);
+          this.storeItem("mobile",this.state.username);
+  
+        
+          this.props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                { name: 'PinScreen' },
+                {
+                  name: 'PinScreen',
+                  params: { user: '' },
+                },
+              ],
+            })
+          );
+        }
+        else
+        {
+          this.setState({load :false})
+          setTimeout(()=>{
+            alert(JSON.stringify(responseJson.Message));
+       }, 300);
+          
+        }
+       
+         
+        })
+        .catch(error => {
 
+          this.setState({ load: false });
+          setTimeout(()=>{
+            alert(error);
+       }, 300);
+        
+        
+        });
+    }
+ 
   async storeItem(key, item) {
     try {   
       await AsyncStorage.setItem(key, item);
@@ -175,7 +232,7 @@ export default class SignInScreen extends React.Component {
 
   // ConfirmSign in users with Auth
   async confirmSign() {
-       //this.setState({load :true});
+      
        if(this.state.pin == '' )
        {
         alert('enter your pin code')
@@ -186,60 +243,45 @@ export default class SignInScreen extends React.Component {
          alert('enter 4 digit pin code')
          return;
        }
-     else if(this.state.logindata.OTP == this.state.code)
+     else
       {
-
-        debugger;
-        this.storeItem("centrename", this.state.logindata.CentreName);
-        this.storeItem("districtid", this.state.logindata.DistrictId.toString());
-        this.storeItem("blockid", this.state.logindata.BlockId.toString());
-        this.storeItem("centreid", this.state.logindata.CentreId.toString());
-        this.storeItem("centreregno", this.state.logindata.CentreRegNo.toString());
-        this.storeItem("centreregdate", this.state.logindata.CentreRegDate);
-        this.storeItem("districtname", this.state.logindata.DistrictName);
-        this.storeItem("blockname",this.state.logindata.BlockName);
-        this.storeItem("pin",this.state.pin);
-        this.storeItem("unitid",this.state.logindata.UnitId.toString());
-        this.storeItem("userid",this.state.logindata.UserId.toString());        
-        this.storeItem("username",this.state.logindata.UserName);        
-        this.storeItem("role",this.state.logindata.Role.toString());
-
-    
-        this.storeItem("token",this.state.logindata.TokenNo);
-        this.storeItem("mobile",this.state.username);
-
-      
-        this.props.navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [
-              { name: 'PinScreen' },
-              {
-                name: 'PinScreen',
-                params: { user: '' },
-              },
-            ],
-          })
-        );
-
-
-        //this.props.navigation.navigate('PinScreen');
-      }
-      else
-      {
-       alert('otp not matched');
-      }
-      //this.setState({ load: false });
-    
+       this.cllapiforgetingDistrictlist('')  
+      }  
   }
 
   render() {
    
-
     return (
     
       <SafeAreaView style={styles.safecontainer}>
+       
         <LinearGradient colors={[Gradientcolourbluew, Gradientcolouryellow]} style={styles.container}>
+
+        <SinglePickerMaterialDialog
+    title={'Select Center '}
+    scrolled
+    items={this.state.dataSource.map((row, index) =>
+     ( { value: row.Code, label: row.CodeText })) }
+    visible={this.state.singlePickerVisible}
+    selectedItem={this.state.PickerValueHolder}
+    onCancel={() => this.setState({ singlePickerVisible: false })}
+    onOk={result => {  
+     // console.warn(""+result.selectedItem );   
+      if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
+        
+      this.setState({ singlePickerVisible: false });
+      console.warn(result.selectedItem);
+       
+          this.setState({'id_enter':result.selectedItem.value});
+      
+      } else {
+              alert('please select value');
+      }
+  
+
+  
+    }}
+    />
 
         {!this.state.loginui &&
         <View style={{alignContent:'flex-start',width:'100%',height:40}}>
@@ -406,6 +448,7 @@ export default class SignInScreen extends React.Component {
         </KeyboardAvoidingView>
         <FooterComponent/>
         </LinearGradient>
+        
       </SafeAreaView>
     );
   }

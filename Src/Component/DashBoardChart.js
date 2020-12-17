@@ -33,6 +33,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import {getDashboardRequest} from '../actions'
 import MyData from '../helper/MyData';
+import { da } from 'date-fns/locale';
 
 
 const DashBoardChart = ({navigation}) => {
@@ -113,7 +114,6 @@ const backAction = () => {
 
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backAction);
-    // dispatch(getDashboardRequest(data.toString()))
     
   }, [role,unitid]);
   
@@ -126,7 +126,7 @@ const backAction = () => {
     data.append('MobileNo', MyData.mobile);
     data.append('TokenNo', MyData.token);
 
-   
+    console.warn(JSON.stringify(data.toString()))
       fetch(BASE_URL+"DashboardData", {
         method: "POST",
         headers: {
@@ -137,7 +137,7 @@ const backAction = () => {
       })
         .then(response => response.json())
         .then(responseJson => {
-        
+        console.warn(responseJson)
           setloading(false)
           if(responseJson.Status)
           {
@@ -145,9 +145,27 @@ const backAction = () => {
               setListing(responseJson.ResponseData)}, 300);
           }
           else{
-            setTimeout(()=>{
-              alert(responseJson.Message)    },300);
-           
+            setTimeout(()=>
+            {
+
+              if(responseJson.Message.toString.includes ='Invalid request')
+              {
+                Alert.alert(
+                  '',
+                 'Session Expired please verify again',
+                  [
+                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  
+                  ],
+                  { 
+                    cancelable: true 
+                  }
+                );
+              }
+              else 
+              alert(responseJson.Message)
+            },300);   
           }
         })
         .catch(error => {

@@ -7,7 +7,7 @@ import { BASE_URL, Gradientcolourbluew } from '../../../Constants'
 import FooterComponent from '../../CommonComponent/Footer'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import RadioForm from 'react-native-simple-radio-button';
-import { da } from "date-fns/locale";
+import { da, it } from "date-fns/locale";
 import MyData from "../../helper/MyData";
 
 
@@ -89,6 +89,7 @@ const UserProfile = ({ navigation, route }) => {
 
         if (responseJson.Status) {
 
+          console.log(JSON.stringify(responseJson))
           setCenterAddress(responseJson.ResponseData.CenterAddress)
           setRegistrationNo(responseJson.ResponseData.RegNo)
           setValidfrom(responseJson.ResponseData.ValidThrough)
@@ -148,7 +149,7 @@ const UserProfile = ({ navigation, route }) => {
     readData()
     if (role != '') {
       var data = new URLSearchParams();
-      data.append('Unitid', '2805');
+      data.append('Unitid', item);
       data.append('Role', '5');
       data.append('MobileNo', MyData.mobile);
       data.append('TokenNo', MyData.token);
@@ -234,7 +235,7 @@ const UserProfile = ({ navigation, route }) => {
               <Text>{RegistrationNo}</Text>
             </View>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>Valid Through</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Validity</Text>
               <Text>{Validfrom}</Text>
             </View>
           </View>

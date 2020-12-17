@@ -45,6 +45,7 @@ var center_id = '';
 var center_name  = '';
 var center_reg_date = ''
 var center_reg_no = ''
+var centreid_main = ''
 var my_navigation;
 var doctor_list = [{Code: 'Radiologist', CodeText : '' ,Address : '' },];
 
@@ -146,7 +147,8 @@ class FormF extends Component {
       center_id = value;
       center_name= await AsyncStorage.getItem('centrename');
        center_reg_no = await AsyncStorage.getItem('centreregno');
-       center_reg_date = await AsyncStorage.getItem('centreregdate');
+       center_reg_no = await AsyncStorage.getItem('centreregno');
+       centreid_main = await AsyncStorage.getItem('centreid');
       this.setState({'centername' : center_name ,'centerreg_no' :center_reg_no , 'centerregdate' : center_reg_date })
      
     } catch (error) {
@@ -243,22 +245,52 @@ class FormF extends Component {
        .then(responseJson => {
          console.log(JSON.stringify(responseJson))
         this.setState({ load: false });
-         if(front == 'Stateandidentityprooftype')
-         {
-          current_list = responseJson;
-         }
-        else if (front == 'GetIndication')
-         {
+        if(responseJson.Status)
 
-          setTimeout(
-            function() {
-              this.setState( {multiPickerVisible : true,dataSource : responseJson.ResponseData })
+        {
+          if(front == 'Stateandidentityprooftype')
+          {
+           current_list = responseJson;
+          }
+         else if (front == 'GetIndication')
+          {
+ 
+           setTimeout(
+             function() {
+               this.setState( {multiPickerVisible : true,dataSource : responseJson.ResponseData })
+             }
+             .bind(this),
+             500
+           );
+             
+          }
+        }
+        else
+        {
+          setTimeout(()=>
+          {
+
+            if(responseJson.Message.toString.includes ='Invalid request')
+            {
+              Alert.alert(
+                '',
+               'Session Expired please verify again',
+                [
+                  {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                  {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                
+                ],
+                { 
+                  cancelable: true 
+                }
+              );
             }
-            .bind(this),
-            500
-          );
-            
-         }
+            else 
+            alert(responseJson.Message)
+          },300); 
+        }
+
+        
         
          //this.setState({ load: false ,dataSource : responseJson.IdentityProofType});
         
@@ -309,7 +341,7 @@ class FormF extends Component {
    async getdoctype(id) {
    this.setState({ load: true , refered_by : id ,refered_by_doctor : false,refered_by_other : true});
    var data = new URLSearchParams();
-   data.append('cid','37');
+   data.append('cid',centreid_main);
    data.append('MobileNo', MyData.mobile);
    data.append('TokenNo', MyData.token);
    //data.append('MasterCode',id);
@@ -689,7 +721,7 @@ class FormF extends Component {
       if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
           
       this.setState({ singlePickerVisible: false });
-     console.warn(result.selectedItem);
+      console.warn(result.selectedItem);
         if(current_dialogue == 'id_proof')                    
         {
           this.setState({ 'id_proof': result.selectedItem.label ,'id_proof_id':result.selectedItem.value});

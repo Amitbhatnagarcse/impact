@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity, YellowBox
+  Alert,
+  TouchableOpacity,
 } from "react-native";  
 import Styles from './style';
 import file_upload from '../../../assets/img/file_download.png';
@@ -13,6 +14,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { BASE_URL, BlueColor, Yellowcolour } from '../../../Constants';
 import MyData from '../../helper/MyData';
+import { tr } from 'date-fns/locale';
 
 
 export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
@@ -42,14 +44,34 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         .then(response => response.json())
         .then(responseJson => {
           setloading(false)
-          debugger
+          
           if(responseJson.Status)
           {
             const image = responseJson.ResponseData[0].AttachedFile
             download(''+image,responseJson.ResponseData[0].FileExtension)         
           }
           else{
-            alert(responseJson.Message)
+            setTimeout(()=>
+            {
+
+              if(responseJson.Message.toString.includes ='Invalid request')
+              {
+                Alert.alert(
+                  '',
+                 'Session Expired please verify again',
+                  [
+                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  
+                  ],
+                  { 
+                    cancelable: true 
+                  }
+                );
+              }
+              else 
+              alert(responseJson.Message)
+            },300); 
           }
         })
         .catch(error => {
@@ -102,13 +124,15 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
           </View>
         </OrientationLoadingOverlay>
 
+        <TouchableOpacity style={Styles.inputboxview} onPress={() => editfun(item ,false)  }>
   
          <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>Center Name</Text>
+        <Text style={Styles.inputtext}>{item.PIRDate} </Text>
         <Text style={Styles.input}  >{item.CenterName} </Text>
           </View> 
+          </TouchableOpacity>
 
-          <View style={Styles.inputboxview} >
+          {/* <View style={Styles.inputboxview} >
         <Text style={Styles.inputtext}>PIR No.</Text>
         <Text style={Styles.input}  >{item.PIRNo} </Text>
           </View> 
@@ -122,16 +146,17 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
           <View style={Styles.inputboxview} >
         <Text style={Styles.inputtext}>PIR Appropirate Authority</Text>
         <Text style={Styles.input}  >{item.PIRAppAuth} </Text>
-          </View> 
+          </View>  */}
+    { role == 0  &&
 
           <View style={Styles.inputboxview} >
-          <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item)  }>
-        <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',
-		borderColor: 'white',width:'100%',textAlign:'center'}} >Edit</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item , true)  }>
+          <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',
+    	  	borderColor: 'white',width:'100%',textAlign:'center'}} >Edit</Text>
+          </TouchableOpacity>
         <TouchableOpacity style={Styles.buttonsubmit} onPress={() => actionPer(item.PirId)}>
         <Text style={{	backgroundColor:Yellowcolour,padding:5,color:'white',
-		borderColor: 'white',width:'100%',textAlign:'center'}}>Delete</Text>
+     		borderColor: 'white',width:'100%',textAlign:'center'}}>Delete</Text>
         </TouchableOpacity>
         <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
           _retrieveData('GetPIReportDetail',item.PirId)
@@ -140,7 +165,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         marginBottom:2,alignItems: 'center'}}/>
         </TouchableOpacity>
           </View> 
-
+  }
        </View>
       )
 }
