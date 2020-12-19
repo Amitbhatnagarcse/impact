@@ -129,7 +129,7 @@ class FormF extends Component {
     centername :'',
     centerreg_no : '',
     centerregdate : '',
-    maxDate : '2024-06-01'
+    maxDate : '06-01-2024'
 
   };
 
@@ -270,14 +270,14 @@ class FormF extends Component {
           setTimeout(()=>
           {
 
-            if(responseJson.Message.toString.includes ='Invalid request')
+            if(responseJson.Message = 'Invalid Request')
             {
               Alert.alert(
                 '',
                'Session Expired please verify again',
                 [
                   {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
-                  {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  {text: 'Yes', onPress: () =>this.props.navigation.navigate('PinScreen')},
                 
                 ],
                 { 
@@ -785,7 +785,7 @@ class FormF extends Component {
         mode="date"
         placeholder="select date"
         format="DD/MM/YYYY"
-        minDate="2018-05-01"
+        minDate="05-01-2018"
         maxDate={this.state.maxDate}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
@@ -1183,8 +1183,8 @@ class FormF extends Component {
         mode="date"
         placeholder="select date"
         format="DD/MM/YYYY"
-        minDate="2019-01-01"
-        maxDate="2030-06-01"
+        minDate="05-01-2018"
+        maxDate={this.state.maxDate}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -1206,12 +1206,13 @@ class FormF extends Component {
           var datev = new Date().getDate();
           var month = new Date().getMonth() + 1;
           var year = new Date().getFullYear();
-          var datecureent = (year +'/'+ month +'/'+ datev); 
+          var datecureent = (datev +'/'+ month +'/'+ year); 
           var date2 = new Date(datecureent);  
+        
           var Difference_In_Time = date2.getTime() - date1.getTime();  
+          
           var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
-
-          console.warn(Number(Difference_In_Days))   
+          console.warn(Difference_In_Days)
                var total_weak = 0 ;
                
                if(Difference_In_Days < 4)

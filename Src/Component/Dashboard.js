@@ -137,14 +137,14 @@ class Dashboard extends React.Component {
             setTimeout(()=>
             {
 
-              if(responseJson.Message.toString.includes ='Invalid request')
+              if(responseJson.Message =='Invalid Request')
               {
                 Alert.alert(
                   '',
                  'Session Expired please verify again',
                   [
                     {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
-                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                    {text: 'Yes', onPress: () =>this.props.navigation.navigate('PinScreen')},
                   
                   ],
                   { 
@@ -257,7 +257,8 @@ class Dashboard extends React.Component {
              <TouchableHighlight
              style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.32)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}
              onPress={() => {
-             
+              this.props.navigation.navigate('Formf')
+              return
               if(item.name == 'DAY \n END \nSUMMARY')
               this.props.navigation.navigate('Home')
               else if (item.name =='FORM F')

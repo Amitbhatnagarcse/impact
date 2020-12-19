@@ -130,31 +130,38 @@ class App extends Component {
      })
        .then(response => response.json())
        .then(responseJson => {
-        
+       
          this.setState({ load: false ,date : '',total_sono:'',women_sono:''});
-         //console.warn(JSON.stringify(responseJson.ResposeData));
+      
          //alert(JSON.stringify(responseJson.Message))
-
+        
          setTimeout(()=>
          {
-
-           if(responseJson.Message.toString.includes ='Invalid request')
-           {
-             Alert.alert(
-               '',
-              'Session Expired please verify again',
-               [
-                 {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
-                 {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
-               
-               ],
-               { 
-                 cancelable: true 
-               }
-             );
-           }
-           else 
-           alert(responseJson.Message)
+            if(responseJson.Status)
+            {
+              alert(responseJson.Message)
+            }
+            else
+            {
+              if(responseJson.Message == 'Invalid Request')
+              {
+                Alert.alert(
+                  '',
+                 'Session Expired please verify again',
+                  [
+                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                    {text: 'Yes', onPress: () => this.props.navigation.navigate('PinScreen')},
+                  
+                  ],
+                  { 
+                    cancelable: true 
+                  }
+                );
+              }
+              else 
+              alert(responseJson.Message)
+            }
+          
          },300); 
          //this.setState({logindata : responseJson.ResposeData[0],loginui:false})
        })
@@ -231,8 +238,8 @@ class App extends Component {
         mode="date"
         placeholder="select date"
         format="DD/MM/YYYY"
-        minDate="2018-05-01"
-        maxDate="2024-06-01"
+        minDate="05-01-2018"
+        maxDate="06-01-2024"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{

@@ -336,14 +336,14 @@ class FormFInvensive extends Component
           setTimeout(()=>
           {
 
-            if(responseJson.Message.toString.includes ='Invalid request')
+            if(responseJson.Message == 'Invalid Request')
             {
               Alert.alert(
                 '',
                'Session Expired please verify again',
                 [
                   {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
-                  {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                  {text: 'Yes', onPress: () => this.props.navigation.navigate('PinScreen')},
                 
                 ],
                 { 

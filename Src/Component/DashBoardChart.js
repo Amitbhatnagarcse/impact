@@ -148,7 +148,7 @@ const backAction = () => {
             setTimeout(()=>
             {
 
-              if(responseJson.Message.toString.includes ='Invalid request')
+              if(responseJson.Message =='Invalid request')
               {
                 Alert.alert(
                   '',

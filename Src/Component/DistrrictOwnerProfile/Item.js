@@ -55,7 +55,7 @@ export default function Item( { item  , index ,navigation ,role, actiondel , sel
             setTimeout(()=>
             {
 
-              if(responseJson.Message.toString.includes ='Invalid request')
+              if(responseJson.Message  =='Invalid request')
               {
                 Alert.alert(
                   '',
