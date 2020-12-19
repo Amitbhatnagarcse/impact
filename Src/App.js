@@ -112,7 +112,7 @@ class App extends Component {
    var data = new URLSearchParams();
    data.append('Totalpatientcount', this.state.total_sono);
    data.append('Totalpragnentwomen', this.state.women_sono);
-   data.append('Entrydate', this.state.date);
+   data.append('Entrydate', getFormatedDateForServer(this.state.date));
    data.append('cid', cid__my);
    data.append('Month', this.state.date.substring(5,7));
    data.append('Year', this.state.date.substring(0, 4));
@@ -204,7 +204,7 @@ class App extends Component {
  
     this.setState({
       date:
-        year + '-' + month + '-' + date ,
+      date + '-' + month + '-' +  year ,
     })
   
   }
@@ -230,7 +230,7 @@ class App extends Component {
         date={this.state.date}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YY"
         minDate="2018-05-01"
         maxDate="2024-06-01"
         confirmBtnText="Confirm"

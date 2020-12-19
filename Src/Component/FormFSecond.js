@@ -227,15 +227,15 @@ class FormFSecond extends Component
         // 11 y
         mydata.append('OtherNonInv',this.state.procedure_other_reason);
         //12 y
-        mydata.append('P_Consent_Date',this.state.datewomobtained);
+        mydata.append('P_Consent_Date',getFormatedDateForServer(this.state.datewomobtained));
         // 13 y
-        mydata.append('P_Proc_Date',this.state.dateprocedurecarriedout);
+        mydata.append('P_Proc_Date',getFormatedDateForServer(this.state.dateprocedurecarriedout));
         // 14 n
         mydata.append('P_A_Result',this.state.result_procedure_carried_out);
         // 15 y
         mydata.append('PResultConveyedTo',this.state.pre_natal_diagnostic);
         // 15 y
-        mydata.append('P_Result_Date',this.state.on_date);
+        mydata.append('P_Result_Date',getFormatedDateForServer(this.state.on_date));
         // 16 y 
         if(this.state.abnormality =='1')
         mydata.append('P_Ultra_Norm_AbNorm',true);
@@ -355,7 +355,7 @@ class FormFSecond extends Component
           var date = new Date().getDate(); //Current Date
           var month = new Date().getMonth() + 1; //Current Month
           var year = new Date().getFullYear(); //Current Year
-          maxDateCurrent = year + '/' + month + '/' + date 
+          maxDateCurrent = year + '/' + month + '/' + year 
 
           
          const{ data , name_p ,date_come  ,cid } = this.props.route.params;
@@ -563,7 +563,7 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
         date={this.state.datewomobtained}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate = {minDate}
         maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
@@ -592,7 +592,7 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
         date={this.state.dateprocedurecarriedout}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate={minDate}
         maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
@@ -647,7 +647,7 @@ onChangeText={value => this.onChangeText("procedure_other_reason", value)}  /> :
         date={this.state.on_date}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate={minDate}
         maxDate={maxDateCurrent}
         confirmBtnText="Confirm"

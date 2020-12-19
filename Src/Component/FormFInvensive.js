@@ -22,7 +22,7 @@ import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import MultiSelect from 'react-native-multiple-select';
 import ThumbImpressionFormF from './ThumbimpressionFormF';
-import {BASE_URL, BlueColor, Gradientcolour, Gradientcolourbluew, Gradientcolourlight, Gradientcolouryellow} from '../../Constants'
+import {BASE_URL, BlueColor, Gradientcolour, Gradientcolourbluew, Gradientcolourlight, Gradientcolouryellow, getFormatedDateForServer} from '../../Constants'
 import MyData from '../helper/MyData';
 import { te } from 'date-fns/locale';
 
@@ -273,7 +273,7 @@ class FormFInvensive extends Component
     mydata.append('P_C_GeneDis_Det',this.state.parents_sibling_value);
     mydata.append('P_D_OtherName',this.state.other_specify_value);
     //(20) P_Consent_Date : validate date format, >=PRegDate      Y
-    mydata.append('P_Consent_Date',this.state.datewomobtained);
+    mydata.append('P_Consent_Date',getFormatedDateForServer(this.state.datewomobtained));
     // (21) LOIPCO :                                              Y
     // P_OtherInvasive : length <= 200                            N
     mydata.append('LOIPCO',this.state.invansive_procedure_carry_out_values);
@@ -289,12 +289,12 @@ class FormFInvensive extends Component
     //(24) P_A_Result : length <= 200  N
     mydata.append('P_A_Result',this.state.pre_natal_diagnostic);
     //(25) P_Proc_Date : validate date format, >=PRegDate         Y
-    mydata.append('P_Proc_Date',this.state.date_of_procedure);
+    mydata.append('P_Proc_Date',getFormatedDateForServer(this.state.date_of_procedure));
    
     //(26) PResultConveyedTo : length <= 200                          Y  
     mydata.append('PResultConveyedTo',this.state.pre_natal_diagnostic_result);
     //(26) P_Result_Date : validate date format, >=PRegDate           Y
-    mydata.append('P_Result_Date',this.state.on_date);
+    mydata.append('P_Result_Date',getFormatedDateForServer(this.state.on_date));
     mydata.append('MobileNo', MyData.mobile);
     mydata.append('TokenNo', MyData.token);
     // (27) P_Ultra_Norm_AbNorm :                                      Y
@@ -563,7 +563,7 @@ class FormFInvensive extends Component
           var date = new Date().getDate(); //Current Date
           var month = new Date().getMonth() + 1; //Current Month
           var year = new Date().getFullYear(); //Current Year
-          maxDateCurrent = year + '/' + month + '/' + date 
+          maxDateCurrent = date + '/' + month + '/' + year 
           
           this.getdataFromSharedPreference();
         }
@@ -908,7 +908,7 @@ this.state.prv_child_other ?
         date={this.state.datewomobtained}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate={minDate}
         maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
@@ -1062,7 +1062,7 @@ onChangeText={value => this.onChangeText("comp_value", value)}  /> : null
         date={this.state.date_of_procedure}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate={minDate}
         maxDate={maxDateCurrent}
         confirmBtnText="Confirm"
@@ -1104,7 +1104,7 @@ onChangeText={value => this.onChangeText("comp_value", value)}  /> : null
         date={this.state.on_date}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate={minDate}
         maxDate={maxDateCurrent}
         confirmBtnText="Confirm"

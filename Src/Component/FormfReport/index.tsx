@@ -3,7 +3,7 @@ import { View, Text ,Image ,TouchableOpacity ,SafeAreaView,FlatList,BackHandler}
 import Styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 import pngIcons  from '../../../assets/img/images';
-import {BASE_URL,Yellowcolour,Gradientcolourbluew,Gradientcolourlight,Gradientcolouryellow} from '../../../Constants'
+import {BASE_URL,Yellowcolour,Gradientcolourbluew,Gradientcolourlight,Gradientcolouryellow, getFormatedDateForServer} from '../../../Constants'
 import FooterComponent from '../../CommonComponent/Footer'
 import { useSelector, useDispatch } from 'react-redux';
 import { getFORMFREPORTRequest } from '../../actions';
@@ -42,7 +42,6 @@ const FormfReport = ( {navigation} ) => {
   
     const setFunctionDate = async(dat) =>
     {
-      
      await setDate(dat)
     }
     const _headerBar = () => {
@@ -71,8 +70,8 @@ const FormfReport = ( {navigation} ) => {
           var yesterday = new Date(Date.now() - 864e5);
            //setDate(''+format(new Date(yesterday), 'yyyy/MM/dd'))  
            
-           setMaxDate(year + '/' + month + '/' + date)
-           setDate(year + '/' + month + '/' + date)
+           setMaxDate(date + '/' + month + '/' + year)
+           setDate(date + '/' + month + '/' + year)
          }
          const readData = async () => {
         
@@ -114,7 +113,7 @@ const backAction = () => {
             {
                //  FromDate=2018/07/15&Did=101&Role=3
                 var data = new URLSearchParams();
-                data.append('FromDate',dates);
+                data.append('FromDate',getFormatedDateForServer(dates));
                 if(role =='3' || role =='5')
                 data.append('did',did);
                 data.append('Role',role);
@@ -139,7 +138,7 @@ const backAction = () => {
         date={dates}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate="2018/05/01"
         maxDate={maxdate}
         confirmBtnText="Confirm"

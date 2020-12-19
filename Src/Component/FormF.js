@@ -21,7 +21,7 @@ import {
   BackHandler,
 
 } from 'react-native';
-import {BASE_URL} from '../../Constants'
+import {BASE_URL, getFormatedDateForServer} from '../../Constants'
 import AsyncStorage from '@react-native-community/async-storage';
 import MyData from "../helper/MyData";
 
@@ -390,15 +390,15 @@ class FormF extends Component {
  
     this.setState({
       date:
-        year + '-' + month + '-' + date ,
+      date  + '-' + month + '-' + year ,
     })
       this.setState({
         maxDate:
-          year + '-' + month + '-' + date ,
+        date  + '-' + month + '-' + year ,
       })
       this.setState({
         lmp:
-          year + '-' + month + '-' + date ,
+        date  + '-' + month + '-' + year ,
       })
   }
 
@@ -638,7 +638,7 @@ class FormF extends Component {
 
   
     data.append('LMPKnownOrNot',this.state.lmpnotknown);     
-    data.append('LMPDate',this.state.lmp);
+    data.append('LMPDate',getFormatedDateForServer(this.state.lmp));
     data.append('PPregWeeks',this.state.weeksofpregnancy);  
  
     
@@ -784,7 +784,7 @@ class FormF extends Component {
         date={this.state.date}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YYYY"
         minDate="2018-05-01"
         maxDate={this.state.maxDate}
         confirmBtnText="Confirm"
@@ -1182,7 +1182,7 @@ class FormF extends Component {
         date={this.state.lmp}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YY"
         minDate="2019-01-01"
         maxDate="2030-06-01"
         confirmBtnText="Confirm"

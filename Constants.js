@@ -76,4 +76,8 @@ export const API_GET_BUSINESS_REWARD = BASE_URL+'getbusiness_points';
 export const API_GET_PGREGNANCY_LIST = BASE_URL+'Dayendsummarylist';
 export const API_GET_DASHBOARD_CHART = BASE_URL+'DashboardData';
 export const API_GET_FORMF_REPORT_CHART = BASE_URL+'FormFReport';
+export const getFormatedDateForServer = (date) =>{
+    const newdate =date.split("/")
+    return `${newdate[2]}/${newdate[1]}/${newdate[0]}`
+}
 //export const API_GET_FORMF_REPORT_CHART = BASE_URL+'Dayendsummarylist';

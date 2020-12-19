@@ -292,7 +292,7 @@ x
     
       var data = new URLSearchParams();
       data.append('PIRNo',pir_no);
-      data.append('PIRDate',date);
+      data.append('PIRDate',getFormatedDateForServer(date));
       data.append('PIRTime',time);
       data.append('Role',role);
       data.append('PIRAppAuth',authority);
@@ -416,7 +416,7 @@ x
         setPir(''+id.PIRNo)
         //setDate(id.PIRDate)
         var datee = String(id.PIRDate).split('/');
-        setDate(datee[2] + '/' + datee[1] + '/' + datee[0] )
+        setDate(datee[0] + '/' + datee[1] + '/' + datee[2] )
         setTime(id.PIRTime)
         setAuthority(id.PIRAppAuth)
         setCenter_id(id.Cid)
@@ -458,7 +458,7 @@ x
       var date = new Date().getDate(); //Current Date
       var month = new Date().getMonth() + 1; //Current Month
       var year = new Date().getFullYear(); //Current Year
-      setMaxDate(year + '/' + month + '/' + date )
+      setMaxDate(date + '/' + month + '/' + year)
       
       allowLocationPermission()
      }
@@ -709,7 +709,7 @@ x
         date={date}
         mode="date"
         placeholder="select date"
-        format="YYYY/MM/DD"
+        format="DD/MM/YY"
         minDate="2018/05/01"
         maxDate={maxdate}
         confirmBtnText="Confirm"
