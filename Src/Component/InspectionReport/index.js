@@ -17,10 +17,15 @@ import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import {BASE_URL, BlueColor} from '../../../Constants'
 import Geolocation from '@react-native-community/geolocation';
-import { da } from "date-fns/locale";
+import { da, fil } from "date-fns/locale";
 import MyData from "../../helper/MyData";
 
 var pid_id = ''
+
+
+var block_id =''
+var _unit =''
+var o_role = ''
 
 const InspectionReport = ({navigation ,route}) => {
 
@@ -67,9 +72,6 @@ const InspectionReport = ({navigation ,route}) => {
 
 
 
-  var block_id =''
-  var _unit =''
-
      
   const allowLocationPermission = () => {
     if (locationPermissionStatus == RESULTS.DENIED) {
@@ -92,6 +94,12 @@ const InspectionReport = ({navigation ,route}) => {
     const readData = async () => {
    
         const role_id = await AsyncStorage.getItem("role")
+        var my_role = await AsyncStorage.getItem("orole");
+        if (my_role !== null)
+        {
+          o_role = my_role;
+        }
+        
         if (role_id !== null) {
         setrole(role_id)
         }
@@ -106,6 +114,7 @@ const InspectionReport = ({navigation ,route}) => {
           setDistrict(districtidv)
         }
         var districtnamev = await AsyncStorage.getItem('districtname')
+        console.warn(districtnamev)
         if (districtnamev !== null) {
           setDistrict_name(districtnamev)
           }
@@ -414,7 +423,6 @@ x
         setCenter_name(id.CenterName)
         var data = new URLSearchParams();
         data.append('Cid',id.Cid);
-
         data.append('MobileNo', MyData.mobile);
         data.append('TokenNo', MyData.token);
         _retrieveData(data.toString() ,'GetCenterDetail')
@@ -426,7 +434,8 @@ x
       }   
       if(role == '1' || role =='0')
       {
-        
+        const{ district_name } = route.params;
+        setDistrict_name(district_name)
       var data = new URLSearchParams();
       data.append('Role',role);
 
@@ -436,6 +445,7 @@ x
       }
       if(role =='3')
       {
+        
         var data = new URLSearchParams();
         data.append('Did',district_id);
 
@@ -462,6 +472,8 @@ x
 
   const _retrieveData = async (data ,front) => {
    
+    console.log( 'data' +data.toString);
+    console.log( 'data' +front);
     setloading(true)
       fetch(BASE_URL+front, {
         method: "POST",
@@ -475,19 +487,26 @@ x
         .then(responseJson => {
           setloading(false)
           if(responseJson.Status)
-          
+          console.log( 'front' +  front ,responseJson.ResponseData)
           {
-            if(front == 'SavePIReport')
-            {
-              alert(responseJson.Message)
-            }
+           
             if(front == 'GetAllDistrict')
             {
               setDistrictListing(responseJson.ResponseData)
             }
              if(front =='GetCentersByDID')
              {
-              setCenterListing(responseJson.ResponseData)
+                
+                  if(o_role != null && o_role == '4')
+                  {
+                    const filtereddata =  responseJson.ResponseData.filter(person => person.BlockId == block_id);
+                    setCenterListing(filtereddata)
+                  }
+                  else
+                  {
+                    setCenterListing(responseJson.ResponseData)
+                  }
+              
              }
               if(front == 'GetCenterDetail')
               {
@@ -495,8 +514,7 @@ x
                 setRegNo(responseJson.ResponseData.RegNo +  " "+ responseJson.ResponseData.ValidThrough)
               }
               if(front == 'SavePIReport')
-                  {
-                    
+                  { 
                     Alert.alert(  
                       'IMPACT',  
                     responseJson.Message,  
@@ -744,7 +762,7 @@ x
        
         </View>
           <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}> Attachmnet </Text>
+        <Text style={Styles.inputtext}> Attachment </Text>
        <TouchableOpacity style={{width:'50%',flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',}} onPress = {() => imagepicker()}>

@@ -12,9 +12,12 @@ import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
  import {BASE_URL,BlueColor,Gradientcolourbluew,Yellowcolour} from '../../../Constants'
 import MyData from "../../helper/MyData";
 
+var o_role = '' 
+var block_id = ''
 
 const PirList = ({navigation }) => 
 {
+
     const [role ,setrole] = useState('')
     const [district_id ,setDistrict] = useState('')
     const [loading , setloading] = useState(false)
@@ -58,6 +61,17 @@ const PirList = ({navigation }) =>
     const readData = async () => {
         
           const role_id = await AsyncStorage.getItem("role")
+          const block_my = await AsyncStorage.getItem('blockid');
+          if(block_my !== null)
+          {
+            block_id = block_my;
+          }
+          my_role = await AsyncStorage.getItem("orole")
+          if(my_role !== null)
+          {
+            o_role = my_role
+          }
+        
           if (role_id !== null) {
             setrole(role_id)                       
           }
@@ -65,11 +79,13 @@ const PirList = ({navigation }) =>
           if (district_i !== null) {
             setDistrict(district_i)                     
           }
-          var  district_name = await AsyncStorage.getItem('districtname')
+          var  district_name = await AsyncStorage.getItem('districtname');
 
           if (district_name !== null) {
             setDistrict_name(district_name)
           }
+       
+          
 
       }
  
@@ -109,7 +125,7 @@ const PirList = ({navigation }) =>
       }
       const editdata = async(item , showbutton ) => {
       
-         navigation.navigate('InspectionReport' , { id : item , show : showbutton} )
+         navigation.navigate('InspectionReport' , { id : item , show : showbutton, district_name  : district_name } )
 
       }
 
@@ -128,14 +144,27 @@ const PirList = ({navigation }) =>
       })
         .then(response => response.json())
         .then(responseJson => {
-          
+          console.log('front' , front);
+          console.log('response' , responseJson)
+          //alert(JSON.stringify(front))
           setloading(false)
+          console.warn(data.toString())
           if(responseJson.Status)
           {
-           
+            console.log('response' ,responseJson)
             if(front == 'GetPIReportByDID')
             {
-              setListing(responseJson.ResponseData)
+              
+              if(o_role != null && o_role == '4')
+              {
+                const filtereddata =  responseJson.ResponseData.filter(person => person.BlockId == block_id);
+                setListing(filtereddata)
+              }
+              else
+              {
+                setListing(responseJson.ResponseData)
+
+              }
             }
           
             if(front == 'DeletePIReport')
@@ -146,31 +175,35 @@ const PirList = ({navigation }) =>
             }
 
             if(front == 'GetAllDistrict')
-            setDistrictListing(responseJson.ResponseData)   
-            }
-          else{
-            setTimeout(()=>
             {
-
-              if(responseJson.Message.toString.includes ='Invalid request')
-              {
-                Alert.alert(
-                  '',
-                 'Session Expired please verify again',
-                  [
-                    {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
-                    {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
-                  
-                  ],
-                  { 
-                    cancelable: true 
-                  }
-                );
-              }
-              else 
-              alert(responseJson.Message)
-            },300); 
+              
+              setDistrictListing(responseJson.ResponseData)   
+            }
           }
+            else{
+              setTimeout(()=>
+              {
+
+                if(responseJson.Message.toString.includes = 'Invalid request')
+                {
+                  Alert.alert(
+                    '',
+                  'Session Expired please verify again',
+                    [
+                      {text: '', onPress: () => navigation.goBack(null), style: 'cancel'},
+                      {text: 'Yes', onPress: () =>navigation.navigate('PinScreen')},
+                    
+                    ],
+                    { 
+                      cancelable: true 
+                    }
+                  );
+                }
+                else 
+                alert(responseJson.Message)
+              },300); 
+            }
+          
         })
         .catch(error => {
           //this.setState({ load: false });
@@ -227,8 +260,8 @@ const PirList = ({navigation }) =>
               data.append('Did',district_id);
               data.append('Role',role);
 
-        data.append('MobileNo', MyData.mobile);
-        data.append('TokenNo', MyData.token);
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
               _retrieveData(data ,'GetPIReportByDID')
               
             }
@@ -237,8 +270,8 @@ const PirList = ({navigation }) =>
               var data = new URLSearchParams();
               data.append('Role',role);
 
-        data.append('MobileNo', MyData.mobile);
-        data.append('TokenNo', MyData.token);
+              data.append('MobileNo', MyData.mobile);
+              data.append('TokenNo', MyData.token);
               _retrieveData(data ,'GetAllDistrict')
             }
         
@@ -348,12 +381,12 @@ const PirList = ({navigation }) =>
 		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
         </TouchableOpacity>
 }
-{role =='1' &&
+{/* {role =='1' &&
           <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
              <Text style={{	backgroundColor:BlueColor,padding:5,color:'white',paddingTop:12,height:50,fontSize:18,
 		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
         </TouchableOpacity>
-}
+} */}
           </SafeAreaView> 
       )
 

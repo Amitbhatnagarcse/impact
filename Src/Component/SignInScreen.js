@@ -77,6 +77,8 @@ export default class SignInScreen extends React.Component {
       this.handleBackButtonClick
     );
     this.storeItem('role','')
+    this.storeItem('orole','')
+    
     this.setState({ loginui: true });
 
   }
@@ -122,9 +124,6 @@ export default class SignInScreen extends React.Component {
         {
           //this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
           this.setState({loginui:false,load : false})
-          setTimeout(()=>{
-            this.setState({ singlePickerVisible: true ,dataSource : relation.relation_array})
-          }, 300);
         }
         else
         {
@@ -169,37 +168,59 @@ export default class SignInScreen extends React.Component {
           console.warn(JSON.stringify(responseJson))
           if(responseJson.Status)
            {
-          this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
-          this.storeItem("centrename", responseJson.ResponseData[0].CentreName);
-          this.storeItem("districtid", responseJson.ResponseData[0].DistrictId.toString());
-          this.storeItem("blockid", responseJson.ResponseData[0].BlockId.toString());
-          this.storeItem("centreid", responseJson.ResponseData[0].CentreId.toString());
-          this.storeItem("centreregno", responseJson.ResponseData[0].CentreRegNo.toString());
-          this.storeItem("centreregdate", responseJson.ResponseData[0].CentreRegDate);
-          this.storeItem("districtname", responseJson.ResponseData[0].DistrictName);
-          this.storeItem("blockname",responseJson.ResponseData[0].BlockName);
-          this.storeItem("pin",this.state.pin);
-          this.storeItem("unitid",responseJson.ResponseData[0].UnitId.toString());
-          this.storeItem("userid",responseJson.ResponseData[0].UserId.toString());        
-          this.storeItem("username",responseJson.ResponseData[0].UserName);        
-          this.storeItem("role",responseJson.ResponseData[0].Role.toString());
-          //this.storeItem("token",this.state.logindata.TokenNo);
-          this.storeItem("mobile",this.state.username);
-  
-        
-          this.props.navigation.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [
-                { name: 'PinScreen' },
+          
+               
+              this.setState({logindata : responseJson.ResponseData[0],loginui:false,load : false})
+              if(responseJson.ResponseData[0].Role != undefined)
+              {
+                this.storeItem("centrename", responseJson.ResponseData[0].CentreName);
+                this.storeItem("districtid", responseJson.ResponseData[0].DistrictId.toString());
+                //this.storeItem("districtid", '101');
+                this.storeItem("blockid", responseJson.ResponseData[0].BlockId.toString());
+                this.storeItem("centreid", responseJson.ResponseData[0].CentreId.toString());
+                this.storeItem("centreregno", responseJson.ResponseData[0].CentreRegNo.toString());
+                this.storeItem("centreregdate", responseJson.ResponseData[0].CentreRegDate);
+                this.storeItem("districtname", responseJson.ResponseData[0].DistrictName);
+                //this.storeItem("districtname", responseJson.ResponseData[0].DistrictName);
+                this.storeItem("blockname",responseJson.ResponseData[0].BlockName);
+                this.storeItem("pin",this.state.pin);
+                this.storeItem("unitid",responseJson.ResponseData[0].UnitId.toString());
+                this.storeItem("userid",responseJson.ResponseData[0].UserId.toString());        
+                this.storeItem("username",responseJson.ResponseData[0].UserName); 
+                const rolemy = responseJson.ResponseData[0].Role.toString();
+                if(rolemy == '7')
                 {
-                  name: 'PinScreen',
-                  params: { user: '' },
-                },
-              ],
-            })
-          );
-        }
+                  this.storeItem("role",'3');
+                  this.storeItem("orole",responseJson.ResponseData[0].Role.toString());
+                }    
+                else 
+                {
+                  this.storeItem("role",responseJson.ResponseData[0].Role.toString());
+                }
+                //this.storeItem("token",this.state.logindata.TokenNo);
+                this.storeItem("mobile",this.state.username);
+                this.props.navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [
+                      { name: 'PinScreen' },
+                      {
+                        name: 'PinScreen',
+                        params: { user: '' },
+                      },
+                    ],
+                  })
+                );
+              }
+              else
+              {
+                setTimeout(()=>{
+                  this.setState({ singlePickerVisible: true ,dataSource : responseJson.ResponseData})
+                }, 300);
+              }
+              
+            
+          }
         else
         {
           this.setState({load :false})
@@ -221,6 +242,80 @@ export default class SignInScreen extends React.Component {
         
         });
     }
+
+    async cllapiforselectdis(id) {
+      //alert(id);
+       this.setState({ load: true });
+      var data = new URLSearchParams();
+      data.append('MobileNo',this.state.username);
+      data.append('userid',id)
+        fetch(BASE_URL+"ValidateUserRole4", {
+          method: "POST",
+          headers: {
+            'Accept' : "application/json",
+            'Content-Type': 'application/x-www-form-urlencoded'        
+          },
+          body: data.toString(),
+          json: true,
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+          
+            console.warn(JSON.stringify(responseJson))
+            if(responseJson.Status)
+             {
+            
+                  this.storeItem("centrename", responseJson.ResponseData.CentreName);
+                  this.storeItem("districtid", responseJson.ResponseData.DistrictId.toString());
+                  this.storeItem("blockid", responseJson.ResponseData.BlockId.toString());
+                  this.storeItem("centreid", responseJson.ResponseData.CentreId.toString());
+                  this.storeItem("centreregno", responseJson.ResponseData.CentreRegNo.toString());
+                  this.storeItem("centreregdate", responseJson.ResponseData.CentreRegDate);
+                  this.storeItem("districtname", responseJson.ResponseData.DistrictName);
+                  this.storeItem("blockname",responseJson.ResponseData.BlockName);
+                  this.storeItem("pin",this.state.pin);
+                  this.storeItem("unitid",responseJson.ResponseData.UnitId.toString());
+                  this.storeItem("userid",responseJson.ResponseData.UserId.toString());        
+                  this.storeItem("username",responseJson.ResponseData.UserName);        
+                  this.storeItem("orole",responseJson.ResponseData.Role.toString());
+                  //this.storeItem("token",this.state.logindata.TokenNo);
+                  this.storeItem("mobile",this.state.username);
+                  this.storeItem("role","3")
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        { name: 'PinScreen' },
+                        {
+                          name: 'PinScreen',
+                          params: { user: '' },
+                        },
+                      ],
+                    })
+                  );
+              
+            }
+          else
+          {
+            this.setState({load :false})
+            setTimeout(()=>{
+              alert(JSON.stringify(responseJson.Message));
+         }, 300);
+            
+          }
+         
+           
+          })
+          .catch(error => {
+  
+            this.setState({ load: false });
+            setTimeout(()=>{
+              alert(error);
+         }, 300);
+          
+          
+          });
+      }
  
   async storeItem(key, item) {
     try {   
@@ -258,10 +353,10 @@ export default class SignInScreen extends React.Component {
         <LinearGradient colors={[Gradientcolourbluew, Gradientcolouryellow]} style={styles.container}>
 
         <SinglePickerMaterialDialog
-    title={'Select Center '}
+    title={'Select Block User'}
     scrolled
     items={this.state.dataSource.map((row, index) =>
-     ( { value: row.Code, label: row.CodeText })) }
+     ( { value: row.UserId, label: row.UserName })) }
     visible={this.state.singlePickerVisible}
     selectedItem={this.state.PickerValueHolder}
     onCancel={() => this.setState({ singlePickerVisible: false })}
@@ -273,13 +368,12 @@ export default class SignInScreen extends React.Component {
       console.warn(result.selectedItem);
        
           this.setState({'id_enter':result.selectedItem.value});
+          this.cllapiforselectdis(result.selectedItem.value)
       
       } else {
               alert('please select value');
       }
-  
 
-  
     }}
     />
 

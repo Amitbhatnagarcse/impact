@@ -210,7 +210,6 @@ class Dashboard extends React.Component {
        {
         this.setState({ arrayEarnRewards : rollthree})
         AsyncStorage.getItem('districtid', (err, result) => {
-          console.warn('dist'+result)
           this.center_id = result;
         });
 
@@ -283,10 +282,10 @@ class Dashboard extends React.Component {
               }
               else if(item.name == 'CENTER PROFILE')
               {
-                // if(this.state.myrole == 3)
-                // navigation.navigate('DistrrictListProfile', {item : 101 })
-                // else
-                navigation.navigate('DistrrictOwnerProfile')
+                 if(this.state.myrole == 3)
+                 this.props.navigation.navigate('DistrrictListProfile', {item : this.center_id })
+                 else
+                 this.props.navigation.navigate('DistrrictOwnerProfile')
               }
               else
               {
@@ -361,8 +360,8 @@ class Dashboard extends React.Component {
     });
   }
   signout() {
-
-    this.props.navigation.navigate('SignIn')
+    BackHandler.exitApp();
+    //this.props.navigation.navigate('SignIn')
   }
   _openDialogue()
   {
