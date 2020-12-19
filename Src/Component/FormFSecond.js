@@ -19,7 +19,7 @@ import ThumbImpressionFormF from './ThumbimpressionFormF';
 import down from '../../assets/img/downspinner.png';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { centrename } from '../String';
-import {BASE_URL, BlueColor, Gradientcolourbluew, Gradientcolourlight} from '../../Constants'
+import {BASE_URL, BlueColor, Gradientcolourbluew, Gradientcolourlight,getFormatedDateForServer} from '../../Constants'
 import AsyncStorage from '@react-native-community/async-storage';
 import MyData from '../helper/MyData';
 
@@ -355,7 +355,7 @@ class FormFSecond extends Component
           var date = new Date().getDate(); //Current Date
           var month = new Date().getMonth() + 1; //Current Month
           var year = new Date().getFullYear(); //Current Year
-          maxDateCurrent = year + '/' + month + '/' + year 
+          maxDateCurrent = date + '/' + month + '/' + year 
 
           
          const{ data , name_p ,date_come  ,cid } = this.props.route.params;

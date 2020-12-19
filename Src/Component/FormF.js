@@ -1182,7 +1182,7 @@ class FormF extends Component {
         date={this.state.lmp}
         mode="date"
         placeholder="select date"
-        format="DD/MM/YY"
+        format="DD/MM/YYYY"
         minDate="2019-01-01"
         maxDate="2030-06-01"
         confirmBtnText="Confirm"

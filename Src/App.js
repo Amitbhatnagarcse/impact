@@ -20,7 +20,7 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
-import {BASE_URL,Gradientcolourlight,Gradientcolourbluew,Gradientcolouryellow, BlueColor} from '../Constants'
+import {BASE_URL,Gradientcolourlight,Gradientcolourbluew,Gradientcolouryellow, BlueColor ,getFormatedDateForServer} from '../Constants'
 import AsyncStorage from '@react-native-community/async-storage'
 
 
@@ -230,7 +230,7 @@ class App extends Component {
         date={this.state.date}
         mode="date"
         placeholder="select date"
-        format="DD/MM/YY"
+        format="DD/MM/YYYY"
         minDate="2018-05-01"
         maxDate="2024-06-01"
         confirmBtnText="Confirm"

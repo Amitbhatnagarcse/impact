@@ -157,8 +157,14 @@ const PirList = ({navigation }) =>
               
               if(o_role != null && o_role == '4')
               {
-                const filtereddata =  responseJson.ResponseData.filter(person => person.BlockId == block_id);
-                setListing(filtereddata)
+                try{
+                  const filtereddata =  responseJson.ResponseData.filter(person => person.BlockId == block_id);
+                  setListing(filtereddata)
+                }
+                catch(e)
+                {}
+
+             
               }
               else
               {

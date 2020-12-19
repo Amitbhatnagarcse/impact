@@ -15,7 +15,7 @@ import ImagePicker from 'react-native-image-picker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
-import {BASE_URL, BlueColor} from '../../../Constants'
+import {BASE_URL, BlueColor ,getFormatedDateForServer} from '../../../Constants'
 import Geolocation from '@react-native-community/geolocation';
 import { da, fil } from "date-fns/locale";
 import MyData from "../../helper/MyData";
@@ -283,7 +283,7 @@ x
       setTime(timeString)
     }
     const onSubmit = async () => {
-
+  
       if(role == '3' && submit =='Update')
       {
         alert('You are not authorized to update')
@@ -296,10 +296,11 @@ x
       data.append('PIRTime',time);
       data.append('Role',role);
       data.append('PIRAppAuth',authority);
-
+  
       if(submit =='Update')
       {
        data.append('PirID',pid_id)
+       alert(pid_id)
       }
       else
       {
@@ -499,8 +500,14 @@ x
                 
                   if(o_role != null && o_role == '4')
                   {
-                    const filtereddata =  responseJson.ResponseData.filter(person => person.BlockId == block_id);
-                    setCenterListing(filtereddata)
+                    try{
+                      const filtereddata =  responseJson.ResponseData.filter(person => person.BlockId == block_id);
+                      setCenterListing(filtereddata)
+                    }
+                   catch(e)
+                   {
+
+                   }
                   }
                   else
                   {
@@ -709,7 +716,7 @@ x
         date={date}
         mode="date"
         placeholder="select date"
-        format="DD/MM/YY"
+        format="DD/MM/YYYY"
         minDate="2018/05/01"
         maxDate={maxdate}
         confirmBtnText="Confirm"
