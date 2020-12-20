@@ -1201,8 +1201,9 @@ class FormF extends Component {
           // ... You can check the source to find the other keys.
         }}
         onDateChange={(date) => { 
-          
-          var date1 = new Date(date);
+          const newdateformate= date.split('/')
+          debugger;
+          var date1 = new Date(`${newdateformate[2]}/${newdateformate[1]}/${newdateformate[0]}`);
           var datev = new Date().getDate();
           var month = new Date().getMonth() + 1;
           var year = new Date().getFullYear();
