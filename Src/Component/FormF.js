@@ -1206,9 +1206,10 @@ class FormF extends Component {
           var datev = new Date().getDate();
           var month = new Date().getMonth() + 1;
           var year = new Date().getFullYear();
-          var datecureent = (datev +'/'+ month +'/'+ year); 
+          var datecureent = (year +'/'+ month +'/'+ datev); 
           var date2 = new Date(datecureent);  
-        
+        console.log('date1'+ date1)
+        console.log('date2' + date2)
           var Difference_In_Time = date2.getTime() - date1.getTime();  
           
           var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 

@@ -54,7 +54,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
             setTimeout(()=>
             {
 
-              if(responseJson.Message.toString.includes ='Invalid request')
+              if(responseJson.Message == 'Invalid Request')
               {
                 Alert.alert(
                   '',
@@ -147,7 +147,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         <Text style={Styles.inputtext}>PIR Appropirate Authority</Text>
         <Text style={Styles.input}  >{item.PIRAppAuth} </Text>
           </View>  */}
-    { role == 0 &&
+    { role == 0  &&
 
           <View style={Styles.inputboxview} >
           <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item , true)  }>
