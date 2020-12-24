@@ -40,6 +40,7 @@ import FeedbackDetails from '../Component/FeedbackDetails';
 import DistrrictOwnerProfile from '../Component/DistrrictOwnerProfile';
 import DistrrictListProfile from '../Component/DistrrictListProfile';
 import UserProfile from '../Component/UserProfile';
+import DistrrictListPir from '../Component/DistrrictListPir';
 
 
 import {
@@ -101,6 +102,8 @@ function App() {
       <Stack.Screen name="DistrrictOwnerProfile" component={DistrrictOwnerProfile} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
       <Stack.Screen name="DistrrictListProfile" component={DistrrictListProfile} />
+      <Stack.Screen name="DistrrictListPir" component={DistrrictListPir} />
+
       
       </Stack.Navigator>
     </NavigationContainer>

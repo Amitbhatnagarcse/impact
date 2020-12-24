@@ -129,7 +129,7 @@ class FormF extends Component {
     centername :'',
     centerreg_no : '',
     centerregdate : '',
-    maxDate : '06-01-2024'
+    maxDate : '06/01/2024'
 
   };
 
@@ -390,15 +390,15 @@ class FormF extends Component {
  
     this.setState({
       date:
-      date  + '-' + month + '-' + year ,
+      date  + '/' + month + '/' + year ,
     })
       this.setState({
         maxDate:
-        date  + '-' + month + '-' + year ,
+        date  + '/' + month + '/' + year ,
       })
       this.setState({
         lmp:
-        date  + '-' + month + '-' + year ,
+        date  + '/' + month + '/' + year ,
       })
   }
 
@@ -571,12 +571,12 @@ class FormF extends Component {
     }
      if(this.state.refered_by == '2' && this.state.refered_by_name == '')
     {
-      this.conditionMessage('Genetic Center Name');
+      this.conditionMessage('Genetic Centre Name');
       return;
     }
      if(this.state.refered_by == '2' && this.state.refered_by_address == '')
     {
-      this.conditionMessage('Genetic Center Address');
+      this.conditionMessage('Genetic Centre Address');
       return;
     }
      if(this.state.lmp == '' || this.state.weeksofpregnancy == '')
@@ -603,7 +603,7 @@ class FormF extends Component {
 
    
     data.append('CID' ,center_id)
-    data.append('PRegDate', this.state.date); 
+    data.append('PRegDate',getFormatedDateForServer(this.state.date)); 
     data.append('PatientRegNo',this.state.patient_reg_no);
     data.append('PCTSID',this.state.pcts_id); 
     data.append('IdentityType',this.state.id_proof_id); 
@@ -761,13 +761,13 @@ class FormF extends Component {
   
 
     <View style={styles.inputboxview} >
-        <Text style={styles.inputtextunder}>Center Name  :   {this.state.centername}</Text>
+        <Text style={styles.inputtextunder}>Centre Name  :   {this.state.centername}</Text>
        
           </View>
 
 
           <View style={styles.inputboxview} >
-  <Text style={styles.inputtext}>Center Reg No. : {this.state.centerreg_no}</Text>
+  <Text style={styles.inputtext}>Centre Reg No. : {this.state.centerreg_no}</Text>
   <Text style={styles.inputtext}> Date : {this.state.centerregdate}</Text>
           </View>
 
@@ -785,7 +785,7 @@ class FormF extends Component {
         mode="date"
         placeholder="select date"
         format="DD/MM/YYYY"
-        minDate="05-01-2018"
+        minDate="05/01/2018"
         maxDate={this.state.maxDate}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
@@ -1140,7 +1140,7 @@ class FormF extends Component {
          null
         :  <View style = {styles.inputboxviewcolumn}>
             <View style={styles.inputboxview} >
-        <Text style={styles.inputtext}>Genetic Center Name</Text>
+        <Text style={styles.inputtext}>Genetic Centre Name</Text>
         <TextInput
                         style={styles.input}
                         placeholderTextColor="#adb4bc"
@@ -1151,7 +1151,7 @@ class FormF extends Component {
                         onChangeText={value => this.onChangeText("refered_by_name", value)}  />
           </View>
           <View style={styles.inputboxview} >
-        <Text style={styles.inputtext}>Address  of Genetic Center</Text>
+        <Text style={styles.inputtext}>Address  of Genetic Centre</Text>
         <TextInput
                         style={styles.input}
                         placeholderTextColor="#adb4bc"
@@ -1202,7 +1202,6 @@ class FormF extends Component {
         }}
         onDateChange={(date) => { 
           const newdateformate= date.split('/')
-          debugger;
           var date1 = new Date(`${newdateformate[2]}/${newdateformate[1]}/${newdateformate[0]}`);
           var datev = new Date().getDate();
           var month = new Date().getMonth() + 1;

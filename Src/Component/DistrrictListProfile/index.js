@@ -29,8 +29,8 @@ const DistrrictListProfile = ( {navigation , route} ) => {
 
     
     const radio_props = [
-      {label: 'Functional Centers', value: '0' },
-      {label: 'Non Functional Centers', value: '1' }
+      {label: 'Functional Centres', value: '0' },
+      {label: 'Non Functional Centres', value: '1' }
     ];
 
 
@@ -91,7 +91,10 @@ const DistrrictListProfile = ( {navigation , route} ) => {
               console.warn('response' + JSON.stringify(responseJson.ResponseData))
               setListingAll(responseJson.ResponseData); 
               const data =  responseJson.ResponseData.filter(data => data.Flag == "1");
-              setListingfilter(data)
+              setListingfilter( data.sort((a,b) => {
+                return a.CenterName > b.CenterName;
+            }))
+            
             }
 
             setTimeout(()=>{
@@ -127,7 +130,7 @@ const DistrrictListProfile = ( {navigation , route} ) => {
                 </TouchableOpacity>
               </View>
     
-              <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Center List Profile</Text> 
+              <Text style={{ color: 'white',  fontSize: 20,marginLeft:-50,  textAlign: 'center', width: '100%',alignContent:'center' ,justifyContent:'center' }}>Centre List Profile</Text> 
           </View>    
           )
          };
@@ -157,7 +160,10 @@ const DistrrictListProfile = ( {navigation , route} ) => {
             var data =  listingall.filter(data => data.Flag == "2");
             if(flagvalue == 0)
             var data =  listingall.filter(data => data.Flag == "1");
-            setListingfilter(data.sort(data.CenterName))
+           
+            setListingfilter( data.sort((a,b) => {
+              return a.CenterName > b.CenterName;
+          }))
 
           },[flagvalue])
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform,StyleSheet, Image, ImageBackground, BackHandler, FlatList, Text, View, TouchableHighlight, TouchableWithoutFeedback, SafeAreaView,Dimensions } from 'react-native';
+import { Alert,Platform,StyleSheet, Image, ImageBackground, BackHandler, FlatList, Text, View, TouchableHighlight, TouchableWithoutFeedback, SafeAreaView,Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -54,7 +54,7 @@ const rollthree = [
     img: require('../../assets/img/dashboard.png')
   },
   {
-    name: 'CENTER PROFILE',
+    name: 'CENTRE PROFILE',
     img: require('../../assets/img/userimage.png')
   },
   {
@@ -78,6 +78,7 @@ const rollthree = [
 
 var center_name = "";
 var center_id = ""
+var district_name = ''
 class Dashboard extends React.Component {
 
   constructor() 
@@ -212,6 +213,10 @@ class Dashboard extends React.Component {
         AsyncStorage.getItem('districtid', (err, result) => {
           this.center_id = result;
         });
+        AsyncStorage.getItem('districtname', (err, result) => {
+          this.district_name = result;
+        });
+
 
        }
        
@@ -257,8 +262,7 @@ class Dashboard extends React.Component {
              <TouchableHighlight
              style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.32)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}
              onPress={() => {
-              this.props.navigation.navigate('Formf')
-              return
+               
               if(item.name == 'DAY \n END \nSUMMARY')
               this.props.navigation.navigate('Home')
               else if (item.name =='FORM F')
@@ -267,7 +271,10 @@ class Dashboard extends React.Component {
               }
               else if(item.name == 'PIR UPLOAD')
               {
-                this.props.navigation.navigate('PirList')
+                // if(this.state.myrole == 3)
+                // this.props.navigation.navigate('PirList' , {item : this.center_id , distname : this.district_name})
+                // else
+                this.props.navigation.navigate('DistrrictListPir')
               }
               else if(item.name ==  'DASHBOARD')
               {
@@ -281,7 +288,7 @@ class Dashboard extends React.Component {
               {
                 this.props.navigation.navigate('Feedback')
               }
-              else if(item.name == 'CENTER PROFILE')
+              else if(item.name == 'CENTRE PROFILE')
               {
                  if(this.state.myrole == 3)
                  this.props.navigation.navigate('DistrrictListProfile', {item : this.center_id })
@@ -361,8 +368,19 @@ class Dashboard extends React.Component {
     });
   }
   signout() {
-    BackHandler.exitApp();
-    //this.props.navigation.navigate('SignIn')
+
+    Alert.alert(
+      '',
+     'Are you sure you want to exist',
+      [
+        {text: 'No', onPress: () => navigation.goBack(null), style: 'cancel'},
+        {text: 'Yes', onPress: () => BackHandler.exitApp()},
+      
+      ],
+      { 
+        cancelable: true 
+      }
+    );
   }
   _openDialogue()
   {

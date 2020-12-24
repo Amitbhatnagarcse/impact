@@ -60,6 +60,12 @@ class App extends Component {
       [key]: value
     });
   }
+  async onUpdate()
+  {
+    this.onChangeText("total_sono", '0')
+    this.onChangeText("women_sono", '0')
+
+  }
   async onSubmit()
   {
  
@@ -298,11 +304,19 @@ class App extends Component {
           </View>
       </View>
 
-         <TouchableOpacity  onPress={() => this.onSubmit()}>
-          <Text style={styles.button}>Submit</Text>
+      <View style={{alignItems: 'center',
+   flexDirection:'row',width:'100%',height:60}} >
+
+         <TouchableOpacity  onPress={() => this.onUpdate()}>
+          <Text style={styles.button}  >0 Data </Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.onSubmit()}>
+          <Text style={styles.button} >Submit</Text>
+        </TouchableOpacity>
+
+        </View>
         
-        {this.props.loading ==false && <DayEndSummaryList
+        {this.props.loading == false && <DayEndSummaryList
          data={this.props.pregnancyArray}
          func={this.handleClick.bind(this)}
        
@@ -366,9 +380,10 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 12,
+    width:'100%',
     color: 'white',
-   marginLeft:100,
-   marginRight:100,
+    marginLeft:40,
+    marginRight:40,
     fontSize: 14,
     fontWeight: 'bold',
     overflow: 'hidden',

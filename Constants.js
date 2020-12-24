@@ -67,8 +67,8 @@ export const METHOD_TYPE_PUT = 'PUT';
 /////////////////////////////////////// API NAMES ////////////////////////////////////
 
 //export const BASE_URL = 'http://18.188.100.196:3000/';
-export const BASE_URL = 'http://164.100.153.176/pcpndtdemo/api/User/';
-//export const BASE_URL = 'http://164.100.153.176/PcpndtApp/api/User/';
+//export const BASE_URL = 'http://164.100.153.176/pcpndtdemo/api/User/';
+export const BASE_URL = 'http://164.100.153.176/PcpndtApp/api/User/';
 
 
 

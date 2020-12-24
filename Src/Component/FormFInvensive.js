@@ -313,6 +313,7 @@ class FormFInvensive extends Component
 
     this.setState({ load: true });
  
+    console.log('data' ,mydata.toString)
 
      fetch(BASE_URL+front, {
        method: "POST",
@@ -503,7 +504,7 @@ class FormFInvensive extends Component
        data.append('cid',cidi);
        data.append('MobileNo', MyData.mobile);
        data.append('TokenNo', MyData.token);
-    
+    console.log('data' ,data.toString)
          fetch(BASE_URL+front, {
            method: "POST",
            headers: {

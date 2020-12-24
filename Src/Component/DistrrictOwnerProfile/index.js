@@ -24,8 +24,8 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
     const [listing, setListing] = useState('');
 
     const radio_props = [
-      {label: 'Functional Centers', value: '0' },
-      {label: 'Non Functional Centers', value: '1' }
+      {label: 'Functional Centres', value: '0' },
+      {label: 'Non Functional Centres', value: '1' }
     ];
 
 
@@ -83,10 +83,15 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
           setloading(false)
           if(responseJson.Status)
           {
+            
             console.log(JSON.stringify(responseJson.ResponseData))
             if(front == 'OwnerProfile')
             {
-              setListing(responseJson.ResponseData)
+
+              setListing( responseJson.ResponseData.sort((a,b) => {
+                return a.DistrictName > b.DistrictName;
+            }))
+             // setListing(responseJson.ResponseData)
             }
             if(front == 'FeedbackForm')
             {
@@ -108,7 +113,10 @@ const DistrrictOwnerProfile = ( {navigation} ) => {
            if(front == 'DeleteFeedback')
             {
              const filteredData = listing.filter(item => item.feedbackId !== id);
-            setListing(filteredData)       
+           // setListing(filteredData)   
+            setListing( filteredData.sort((a,b) => {
+              return a.DistrictName > b.DistrictName;
+          }))    
                }
             }
             else{
