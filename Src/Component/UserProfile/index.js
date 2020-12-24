@@ -89,7 +89,6 @@ const UserProfile = ({ navigation, route }) => {
 
         if (responseJson.Status) {
 
-          console.log(JSON.stringify(responseJson))
           setCenterAddress(responseJson.ResponseData.CenterAddress)
           setRegistrationNo(responseJson.ResponseData.RegNo)
           setValidfrom(responseJson.ResponseData.ValidThrough)
@@ -118,7 +117,7 @@ const UserProfile = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={{ color: 'white', marginTop: 20, fontSize: 20, marginLeft: 50, alignContent: 'center', justifyContent: 'center' }}>Center Profile</Text>
+        <Text style={{ color: 'white', marginTop: 20, fontSize: 20, marginLeft: 50, alignContent: 'center', justifyContent: 'center' }}>Centre Profile</Text>
       </View >
     )
   };
@@ -218,11 +217,11 @@ const UserProfile = ({ navigation, route }) => {
         <View style={{ marginLeft: 20, padding: 20, marginRight: 20, marginTop: 20, borderRadius: 10, backgroundColor: '#fff' }}>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>Center Name</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Centre Name</Text>
               <Text>{CenterName}</Text>
             </View>
             <View style={{ flex: .5 }}>
-              <Text style={{ color: '#000', opacity: .4 }}>Center Mobile</Text>
+              <Text style={{ color: '#000', opacity: .4 }}>Centre Mobile</Text>
               <Text>{CenterMobileNo}</Text>
             </View>
           </View>
@@ -243,7 +242,7 @@ const UserProfile = ({ navigation, route }) => {
 
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <View style={{ flex: 1 }}>
-              <Text style={{ color: '#000', opacity: .3 }}>Center Address</Text>
+              <Text style={{ color: '#000', opacity: .3 }}>Centre Address</Text>
               <Text>{CenterAddress}</Text>
             </View>
 

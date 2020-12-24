@@ -137,7 +137,7 @@ class FormFSecond extends Component
       };
       submit()
       {
-      
+    
         if(this.state.notdptp == '')
         {
           alert('Please Select Procedure peforming doctor');
@@ -359,6 +359,7 @@ class FormFSecond extends Component
 
           
          const{ data , name_p ,date_come  ,cid } = this.props.route.params;
+         console.log('date_come' , date_come)
          cidi = cid;
          minDate = date_come
          this.setState({dateprocedurecarriedout: date_come , on_date : date_come , pre_natal_diagnostic: name_p});

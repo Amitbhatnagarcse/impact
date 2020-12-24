@@ -84,7 +84,7 @@ export default function Menu({ onItemSelected , type , navigation , role , item 
         }}
         style={styles.item}
       >
-       Center Profile
+       Centre Profile
       </Text>
         <View style ={{width:'100%',height:1,backgroundColor:'white'}}/>
 

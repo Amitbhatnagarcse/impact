@@ -10,7 +10,7 @@ const TabThree
         // Try setting `flexDirection` to `column`.
         <View style={Styles.containertab}>
           
-            <Text style={Styles.tabtitle}>Center Name</Text>
+            <Text style={Styles.tabtitle}>Centre Name</Text>
             <View style={Styles.line} />
             <Text style={Styles.tabtitlehlaf}>FormF Entered</Text>
         </View>

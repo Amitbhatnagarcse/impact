@@ -8,14 +8,14 @@ const TabZero = ( {navigation} ) => {
     return (
         // Try setting `flexDirection` to `column`.
         <View style={Styles.containertabcolumn}>
-        <View style={Styles.containertab}>
+        <View style={Styles.containertabwithout}>
             <Text style={Styles.tabtitle}>District Name</Text>
             <View style={Styles.line} />
-            <Text style={Styles.tabtitle}> Center </Text>
+            <Text style={Styles.tabtitlecenter}> Centre </Text>
             <View style={Styles.line} />
             <Text style={Styles.tabtitle}>FormF </Text>
         </View>
-          <View style={Styles.containertab}>
+          <View style={Styles.containertabwithout}>
           <Text style={Styles.tabtitle}></Text>
           <View style={Styles.line} />
           <Text style={Styles.tabtitlehlaf}> Total </Text>

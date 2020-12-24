@@ -91,10 +91,20 @@ export default class SignInScreen extends React.Component {
   }
   // Sign in users with Auth
   async signIn() {
+    console.warn(Number(this.state.username.charAt(0)) )
 
     if (this.state.username == '') {
       alert('Enter Mobile Number');
     }
+    else if((this.state.username == '5555555551' || this.state.username == '5555555553' || this.state.username == '5555555555' || this.state.username == '5555555557'  || this.state.username == '5555555550'  || this.state.username == '5555555554'))
+    {
+      this.cllapiforgonlotp(JSON.stringify(this.state.username));
+    }
+    else if (Number(this.state.username.charAt(0)) <= 5 )
+    {
+      alert('Please Enter Correct Mobile Number');
+    }
+
     else {
       //this.cllapiforgetingDistrictlist(JSON.stringify(this.state.username));
       this.cllapiforgonlotp(JSON.stringify(this.state.username));
@@ -176,7 +186,6 @@ export default class SignInScreen extends React.Component {
             this.storeItem("centreregno", responseJson.ResponseData[0].CentreRegNo.toString());
             this.storeItem("centreregdate", responseJson.ResponseData[0].CentreRegDate);
             this.storeItem("districtname", responseJson.ResponseData[0].DistrictName);
-            //this.storeItem("districtname", responseJson.ResponseData[0].DistrictName);
             this.storeItem("blockname", responseJson.ResponseData[0].BlockName);
             this.storeItem("pin", this.state.pin);
             this.storeItem("unitid", responseJson.ResponseData[0].UnitId.toString());
@@ -413,7 +422,7 @@ export default class SignInScreen extends React.Component {
 
                     <Image
                       resizeMode={"contain"}
-                      source={require("../../assets/img/logintop.png")}
+                      source={require("../../assets/img/nhm.png")}
                       style={{ width: 200, height: 170, marginTop: 20, marginBottom: 20 }}
                     />
                     <TextInput
@@ -471,7 +480,7 @@ export default class SignInScreen extends React.Component {
                       </Text>
                       <Image
                         resizeMode={"contain"}
-                        source={require("../../assets/img/logintop.png")}
+                        source={require("../../assets/img/nhm.png")}
                         style={{ width: 200, height: 170, marginTop: 0, marginBottom: 20 }}
                       />
                     </View>

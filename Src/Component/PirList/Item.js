@@ -113,7 +113,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
      }
   
     return (
-      <View style = {{margin:5 ,borderRadius: 5, shadowColor: '#cc8800', borderColor:'#e1e1e1' ,elevation : 5,backgroundColor: 'rgba(52, 52, 52, 0.4)'}}>
+      <View style = {{margin:2 ,borderRadius: 2, shadowColor: '#cc8800', borderColor:'#e1e1e1' ,elevation : 1,backgroundColor: 'rgba(52, 52, 52, 0.4)'}}>
        <OrientationLoadingOverlay visible={loading}>
           <View>
             <Image
@@ -129,6 +129,13 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
          <View style={Styles.inputboxview} >
         <Text style={Styles.inputtext}>{item.PIRDate} </Text>
         <Text style={Styles.input}  >{item.CenterName} </Text>
+        <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
+          _retrieveData('GetPIReportDetail',item.PirId)
+          }>
+        <Image source={file_upload} style={{ right: 2,height:30,width:30,  justifyContent: 'center',
+        marginBottom:2,alignItems: 'center'}}/>
+        </TouchableOpacity>
+        
           </View> 
           </TouchableOpacity>
 
@@ -147,7 +154,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         <Text style={Styles.inputtext}>PIR Appropirate Authority</Text>
         <Text style={Styles.input}  >{item.PIRAppAuth} </Text>
           </View>  */}
-    { role == 0  &&
+    { role == 0 &&
 
           <View style={Styles.inputboxview} >
           <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item , true)  }>
@@ -158,12 +165,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         <Text style={{	backgroundColor:Yellowcolour,padding:5,color:'white',
      		borderColor: 'white',width:'100%',textAlign:'center'}}>Delete</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
-          _retrieveData('GetPIReportDetail',item.PirId)
-          }>
-        <Image source={file_upload} style={{ bottom: 0, right: 2,height:30,width:30,  justifyContent: 'center',
-        marginBottom:2,alignItems: 'center'}}/>
-        </TouchableOpacity>
+     
           </View> 
   }
        </View>

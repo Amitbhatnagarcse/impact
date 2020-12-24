@@ -21,7 +21,8 @@ input: {
     marginBottom: 10,
   },
   container: {
-    flex: 1,
+	flex: 1,
+	alignItems: 'center',
     backgroundColor: Gradientcolourlight,
   },
   textInput: {
@@ -30,7 +31,7 @@ input: {
     marginRight: 10,
   },
   resultTitle: {
-    marginTop: 20,
+    marginTop: 10,
     fontSize: 20,
   },
   result: {
@@ -58,7 +59,7 @@ input: {
 		alignItems: 'center',
 		borderWidth: 0.3,
 		backgroundColor:Gradientcolourlight,
-		justifyContent:'space-evenly'
+		
 	  },  
 	inputboxview :{
 		margin : 2, 
@@ -68,7 +69,6 @@ input: {
 		alignItems: 'center',
 		borderWidth: 0.3,
 		backgroundColor:'white',
-		justifyContent:'space-evenly'
 	  },  
 	
 	  inputliketext: {
@@ -145,7 +145,7 @@ input: {
 		borderColor: 'white',
 		borderRadius: 1,
 		color: 'white',
-		width:'45%',
+		width:'50%',
 	    marginLeft:0,
 	    marginRight:0,
 		fontSize: 14,

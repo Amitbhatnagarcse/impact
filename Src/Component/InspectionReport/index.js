@@ -300,7 +300,6 @@ x
       if(submit =='Update')
       {
        data.append('PirID',pid_id)
-       alert(pid_id)
       }
       else
       {
@@ -433,17 +432,22 @@ x
       {
         setSubmit('Submit')
       }   
-      if(role == '1' || role =='0')
-      {
+      try{
         const{ district_name } = route.params;
         setDistrict_name(district_name)
-      var data = new URLSearchParams();
-      data.append('Role',role);
-
-      data.append('MobileNo', MyData.mobile);
-      data.append('TokenNo', MyData.token);
-      _retrieveData(data.toString() ,'GetAllDistrict')
       }
+      catch(e){}
+  
+      // if(role == '1' || role =='0')
+      // {
+     
+      // var data = new URLSearchParams();
+      // data.append('Role',role);
+
+      // data.append('MobileNo', MyData.mobile);
+      // data.append('TokenNo', MyData.token);
+      // _retrieveData(data.toString() ,'GetAllDistrict')
+      // }
       if(role =='3')
       {
         
@@ -652,11 +656,11 @@ x
         <Text style={Styles.inputtext}> District </Text>
        <TouchableOpacity style={{width:'50%',flexDirection:'row',
     justifyContent: 'center',
-    alignItems: 'center',}} onPress = {() => identity_Popup()}>
+    alignItems: 'center',}} onPress = {() => console.log('s')}>
          <Text style={Styles.inputliketext}
               >{district_name}</Text>
-              <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
-        marginBottom:3,alignItems: 'center',}}/>
+              {/* <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
+        marginBottom:3,alignItems: 'center',}}/> */}
            </TouchableOpacity>
           </View>
 
@@ -674,7 +678,7 @@ x
  
 
           <View style={Styles.inputboxview} >
-        <Text style={Styles.inputtext}>Center Address</Text>
+        <Text style={Styles.inputtext}>Centre Address</Text>
         <Text style={Styles.input}  >{center_address} </Text>
           </View>
 

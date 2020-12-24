@@ -11,21 +11,23 @@ import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
  import { requestMultiple, checkMultiple, PERMISSIONS, checkNotifications, RESULTS, requestNotifications, openSettings } from 'react-native-permissions';
  import {BASE_URL,BlueColor,Gradientcolourbluew,Yellowcolour} from '../../../Constants'
 import MyData from "../../helper/MyData";
-
+import FooterComponent from '../../CommonComponent/Footer'
 var o_role = '' 
 var block_id = ''
 
-const PirList = ({navigation }) => 
+const PirList = ({navigation ,route}) => 
 {
 
+     const { item , distname ,year_my} = route.params;
+    
     const [role ,setrole] = useState('')
     const [district_id ,setDistrict] = useState('')
     const [loading , setloading] = useState(false)
-    const [listing ,setListing] = useState([])
+    const [listing ,setListing] = useState([''])
     const [permisssion, setPermission] = useState(RESULTS.DENIED)
     const [district_list  ,setDistrictListing] = useState([])
     const [visiblesingle ,setSingleVisible] = useState([])
-    const [district_name, setDistrict_name] = useState('')  
+    // const [district_name, setDistrict_name] = useState('')  
 
     const allowStoragePermission =  () => {
     
@@ -59,7 +61,8 @@ const PirList = ({navigation }) =>
         }
 
     const readData = async () => {
-        
+          
+          
           const role_id = await AsyncStorage.getItem("role")
           const block_my = await AsyncStorage.getItem('blockid');
           if(block_my !== null)
@@ -75,16 +78,14 @@ const PirList = ({navigation }) =>
           if (role_id !== null) {
             setrole(role_id)                       
           }
-          var  district_i = await AsyncStorage.getItem('districtid')
-          if (district_i !== null) {
-            setDistrict(district_i)                     
-          }
-          var  district_name = await AsyncStorage.getItem('districtname');
-
-          if (district_name !== null) {
-            setDistrict_name(district_name)
-          }
-       
+          // var  district_i = await AsyncStorage.getItem('districtid')
+          // if (district_i !== null) {
+          //   setDistrict(district_i)                     
+          // }
+          // var  district_name = await AsyncStorage.getItem('districtname');
+          // if (district_name !== null) {
+          //   setDistrict_name(district_name)
+          // }
           
 
       }
@@ -125,12 +126,14 @@ const PirList = ({navigation }) =>
       }
       const editdata = async(item , showbutton ) => {
       
-         navigation.navigate('InspectionReport' , { id : item , show : showbutton, district_name  : district_name } )
+         navigation.navigate('InspectionReport' , { id : item , show : showbutton, district_name  : distname } )
 
       }
 
 
       const _retrieveData = async (data  ,front,p_id) => {
+
+        console.warn('data', front + data.toString())
 
         setloading(true)
   
@@ -144,8 +147,9 @@ const PirList = ({navigation }) =>
       })
         .then(response => response.json())
         .then(responseJson => {
-          console.log('front' , front);
+          console.log('response' , front);
           console.log('response' , responseJson)
+          console.log('response length' , responseJson.ResponseData.length)
           //alert(JSON.stringify(front))
           setloading(false)
           console.warn(data.toString())
@@ -163,13 +167,10 @@ const PirList = ({navigation }) =>
                 }
                 catch(e)
                 {}
-
-             
               }
               else
               {
                 setListing(responseJson.ResponseData)
-
               }
             }
           
@@ -181,8 +182,7 @@ const PirList = ({navigation }) =>
             }
 
             if(front == 'GetAllDistrict')
-            {
-              
+            {        
               setDistrictListing(responseJson.ResponseData)   
             }
           }
@@ -255,44 +255,34 @@ const PirList = ({navigation }) =>
       useEffect(() => {
     
           readData()
-          if(district_id != '' && role != '')
+          if(role != '')
           {
-            
-            if(role =='3')
-            {
+              // if(role =='3' || role =='0' || role == '5')
+              // {
               var data = new URLSearchParams();
               var year = new Date().getFullYear(); //Current Year
-              data.append('Year',year);
-              data.append('Did',district_id);
-              data.append('Role',role);
-
+             
+              data.append('Year',year_my);
+              //data.append('Did',district_id);
+              data.append('Did',item);
+              data.append('Role','3');
               data.append('MobileNo', MyData.mobile);
               data.append('TokenNo', MyData.token);
               _retrieveData(data ,'GetPIReportByDID')
               
-            }
-          else
-            {
-              var data = new URLSearchParams();
-              data.append('Role',role);
+           // }
+          // else
+          //   {
+          //     var data = new URLSearchParams();
+          //     data.append('Role',role);
 
-              data.append('MobileNo', MyData.mobile);
-              data.append('TokenNo', MyData.token);
-              _retrieveData(data ,'GetAllDistrict')
-            }
+          //     data.append('MobileNo', MyData.mobile);
+          //     data.append('TokenNo', MyData.token);
+          //     _retrieveData(data ,'GetAllDistrict')
+          //   }
         
-          var date = new Date().getDate(); //Current Date
-          var month = new Date().getMonth() + 1; //Current Month
-          var year = new Date().getFullYear(); //Current Year
           
           const unsubscribe = navigation.addListener('focus', () => {
-
-            
-            // var mydata = new URLSearchParams();
-            // mydata.append('Year',year);
-            // mydata.append('Did',district_id);
-            // mydata.append('Role','3');
-            // _retrieveData(mydata ,'GetPIReportByDID')
 
             BackHandler.addEventListener("hardwareBackPress", backAction);
 
@@ -306,7 +296,7 @@ const PirList = ({navigation }) =>
           //allowLocationPermission()
           }
           // dispatch(getDashboardRequest(data.toString()))
-        }, [district_id,role]);
+        }, [role]);
 
       return (
         <SafeAreaView style={{flex: 1, backgroundColor: Gradientcolourbluew}} >
@@ -322,16 +312,16 @@ const PirList = ({navigation }) =>
           if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
           setSingleVisible(false)
        
-          setDistrict(result.selectedItem.value)
-          setDistrict_name(result.selectedItem.label) 
+          //setDistrict(result.selectedItem.value)
+          //setDistrict_name(result.selectedItem.label) 
           var data = new URLSearchParams();
           var year = new Date().getFullYear(); //Current Year
           data.append('Year',year);
           data.append('Did',result.selectedItem.value);
           data.append('Role','3');
 
-        data.append('MobileNo', MyData.mobile);
-        data.append('TokenNo', MyData.token);
+          data.append('MobileNo', MyData.mobile);
+          data.append('TokenNo', MyData.token);
           
           _retrieveData(data.toString() ,'GetPIReportByDID')
 
@@ -356,30 +346,28 @@ const PirList = ({navigation }) =>
         </OrientationLoadingOverlay>
           {_headerBar()}
 
-          { role != '3' &&
+          
           <View style={Styles.inputboxview} >
          <Text style={Styles.inputtextbig}> District </Text>
-          <TouchableOpacity style={{width:'50%',flexDirection:'row',
-           justifyContent: 'center',
-           alignItems: 'center',}} onPress = {() => identity_Popup()}>
+         
             <Text style={Styles.inputliketext}
-                  >{district_name}</Text>
-                  <Image source={down} style={{position: "absolute", bottom: 0, right: 5,height:20,width:20,  justifyContent: 'center',
-            marginBottom:3,alignItems: 'center',}}/>
-              </TouchableOpacity>
+                  >{distname}</Text>
+                  
            </View>
 
-          }
+          
           <FlatList
-              style={{
-               flex:1,
+               style={{
+                flex:1,
               width:'100%'}}
               renderItem={(item, index) => _renderItem(item.item , index,navigation)}
               data={listing}
               numColumns={1}
               bounces={false}
-            />
+              contentContainerStyle={{marginBottom:165 }}
 
+            />
+          
           </View>
           {role =='3' &&
           <TouchableOpacity   onPress={() => navigation.navigate('InspectionReport')}>
@@ -393,6 +381,7 @@ const PirList = ({navigation }) =>
 		borderColor: 'white',width:'100%',textAlign:'center'}} >ADD Inspection Report</Text>
         </TouchableOpacity>
 } */}
+
           </SafeAreaView> 
       )
 

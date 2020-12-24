@@ -134,8 +134,8 @@ const PinScren = ({navigation}) => {
 
           <View>
             <Image
-                          source={require("../../assets/img/logintop.png")}
-                          style={{ width: 180, height: 180 }}
+                          source={require("../../assets/img/nhm.png")}
+                          style={{ width: 225, height: 180 }}
             />
            
           </View>
