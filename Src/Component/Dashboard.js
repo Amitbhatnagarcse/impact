@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { Alert,Platform,StyleSheet, Image, ImageBackground, BackHandler, FlatList, Text, View, TouchableHighlight, TouchableWithoutFeedback, SafeAreaView,Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -262,7 +263,8 @@ class Dashboard extends React.Component {
              <TouchableHighlight
              style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(52, 52, 52, 0.32)', width: '100%', flex: 1,borderColor:'#fff',borderRadius:1 }}
              onPress={() => {
-               
+              // this.props.navigation.navigate('Formf')
+              // return
               if(item.name == 'DAY \n END \nSUMMARY')
               this.props.navigation.navigate('Home')
               else if (item.name =='FORM F')
