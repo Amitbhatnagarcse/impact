@@ -20,10 +20,12 @@ export default class DayEndSummaryList extends Component
 
   Item(item) 
   {
-   
+   const date = item.EntryDate.toString().substring(0,10)
+   const valu = date.split('-')
+   const dateformat = valu[2]+'/' + valu[1] + '/' + valu[0]
     return (
     
-      <TouchableWithoutFeedback onPress={() => this.onPresss(''+item.TotalPatientCount,''+item.TotalPragnentWomen,item.EntryDate) }>
+      <TouchableWithoutFeedback onPress={() => this.onPresss(''+item.TotalPatientCount,''+item.TotalPragnentWomen,dateformat) }>
       <View style={{ flexDirection: 'row',
       height: 50,
       marginTop: 0,
@@ -40,7 +42,7 @@ export default class DayEndSummaryList extends Component
     <Text style={styles.buttonblack}>{item.TotalPragnentWomen}</Text>
     </ View>
     < View style = {{flex: 1.8,height: 50,justifyContent:'space-around'}} >
-    <Text style={styles.buttonblack}>{item.EntryDate.toString().substring(0,10)}</Text>
+    <Text style={styles.buttonblack}>{dateformat}</Text>
     </ View>
     < View style = {{flex: 0.8,height: 50,justifyContent:'space-around',alignItems:'center'}} >
     <Image source={leftarrow} style={{ width: 35,

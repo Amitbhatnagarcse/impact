@@ -22,14 +22,12 @@ import {
 } from 'react-native';
 import { BASE_URL, Gradientcolourlight, Gradientcolourbluew, Gradientcolouryellow, BlueColor, getFormatedDateForServer } from '../Constants'
 import AsyncStorage from '@react-native-community/async-storage'
-
-
+import FooterComponent from './CommonComponent/Footer'
 import DayEndSummaryList from './Component/DayEndSummaryList';
 import { getBusinessRequest, getPregnancyRequest } from './actions'
 import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
 import backarrow from '../assets/img/backnew.png';
-import { ro } from 'date-fns/locale';
 import MyData from './helper/MyData';
 
 
@@ -107,16 +105,15 @@ class App extends Component {
   }
 
   async cllapiforPregnancy() {
-
+ 
     this.setState({ load: true });
-
     var data = new URLSearchParams();
     data.append('Totalpatientcount', this.state.total_sono);
     data.append('Totalpragnentwomen', this.state.women_sono);
     data.append('Entrydate', getFormatedDateForServer(this.state.date));
     data.append('cid', cid__my);
-    data.append('Month', this.state.date.substring(5, 7));
-    data.append('Year', this.state.date.substring(0, 4));
+    data.append('Month', this.state.date.substring(3, 5));
+    data.append('Year', this.state.date.substring(6,11));
     data.append('MobileNo', MyData.mobile);
     data.append('TokenNo', MyData.token);
 
@@ -208,13 +205,14 @@ class App extends Component {
 
     this.setState({
       date:
-        date + '-' + month + '-' + year,
+        date + '/' + month + '/' + year,
     })
 
   }
 
   handleClick(name, wom, dat) {
-    //  console.warn(name + wom + dat);
+
+      console.warn(name + wom + dat);
     this.setState({ total_sono: name, women_sono: wom, date: dat });
   }
 
@@ -237,8 +235,8 @@ class App extends Component {
                 mode="date"
                 placeholder="select date"
                 format="DD/MM/YYYY"
-                minDate="05-01-2018"
-                maxDate="06-01-2024"
+                minDate="05/01/2018"
+                maxDate="06/01/2024"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
@@ -258,7 +256,9 @@ class App extends Component {
                   }
                   // ... You can check the source to find the other keys.
                 }}
-                onDateChange={(date) => { this.setState({ date: date }) }}
+                onDateChange={(date) => { 
+                  this.setState({ date: date }) 
+                }}
               />
             </View>
           </View>
@@ -304,10 +304,10 @@ class App extends Component {
             flexDirection: 'row', width: '100%', height: 60
           }} >
 
-            <TouchableOpacity style={{ marginLeft: -30 }} onPress={() => this.onUpdate()}>
-              <Text style={styles.button}  >0 Data </Text>
+            <TouchableOpacity style={{ marginLeft: -40 , width:'35%' }} onPress={() => this.onUpdate()}>
+              <Text style={styles.button}  > 0 Reporting </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginRight: 45, width: 160 }} onPress={() => this.onSubmit()}>
+            <TouchableOpacity style={{ marginRight: 45, width:'40%'  }} onPress={() => this.onSubmit()}>
               <Text style={styles.button} >Submit</Text>
             </TouchableOpacity>
 
@@ -320,7 +320,9 @@ class App extends Component {
           />}
 
           {this.props.loading && <ActivityIndicator />}
+          <FooterComponent />
         </View>
+        
       </SafeAreaView>
     );
   }
