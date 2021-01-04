@@ -543,7 +543,9 @@ export default class SignInScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.safecontainer}>
-        <ScrollView style={{ flex: 1, alignContent: 'center' }}>
+        <ScrollView 
+         keyboardShouldPersistTaps='handled'
+        style={{ flex: 1, alignContent: 'center' }}>
           <View style={{ height: height - 122, flex: 1 }}>
             {this.middleitem()}
           </View>
