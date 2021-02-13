@@ -674,7 +674,9 @@ class FormF extends Component {
            
           </View>
         </OrientationLoadingOverlay>
-         <ScrollView style={styles.container}>
+         <ScrollView 
+           keyboardShouldPersistTaps='handled'
+         style={styles.container}>
          <MultiPickerMaterialDialog
           title={"Pick one or more elements!"}
           scrolled
@@ -1318,6 +1320,7 @@ const styles = StyleSheet.create({
 
   },
   container: {
+
     flex: 1,
     backgroundColor:Gradientcolourlight
   },

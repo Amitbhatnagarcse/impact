@@ -26,6 +26,7 @@ var pid_id = ''
 var block_id =''
 var _unit =''
 var o_role = ''
+var user_id = ''
 
 const InspectionReport = ({navigation ,route}) => {
 
@@ -114,10 +115,20 @@ const InspectionReport = ({navigation ,route}) => {
           setDistrict(districtidv)
         }
         var districtnamev = await AsyncStorage.getItem('districtname')
-        console.warn(districtnamev)
         if (districtnamev !== null) {
           setDistrict_name(districtnamev)
           }
+       }
+       if(role_id == '1')
+       {
+         user_id = await AsyncStorage.getItem('userid')   
+          const{ did } = route.params; 
+          setDistrict(did)
+          var data = new URLSearchParams();
+          data.append('Did',did);
+          data.append('MobileNo', MyData.mobile);
+          data.append('TokenNo', MyData.token);
+          _retrieveData(data.toString() ,'GetCentersByDID')
        }
        
      
@@ -303,6 +314,10 @@ x
       }
       else
       {
+        if(role =='1')
+        {
+          data.append('UserId',user_id);         
+        }
         data.append('UploadBy',''+unitid);
         data.append('CID',center_id);
         data.append('Did',district_id);
@@ -318,8 +333,8 @@ x
 
       data.append('MobileNo', MyData.mobile);
       data.append('TokenNo', MyData.token);
-    
-      _retrieveData(data.toString() ,'SavePIReport')
+      alert(data.toString())
+      //_retrieveData(data.toString() ,'SavePIReport')
     }
     const backAction = () => {
 
@@ -359,13 +374,12 @@ x
         
         //Setting Longitude state
         setCurrentLatitude(currentLatitude);
-        console.warn(''+currentLatitude)
       },
       (error) => {
         setLocationStatus(error.message);
       },
       {
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
         timeout: 30000,
         maximumAge: 1000
       },
@@ -405,7 +419,7 @@ x
   };
    
     useEffect(() => {
-   
+    debugger
     readData()
     if(role != '')
     {
@@ -490,6 +504,8 @@ x
       })
         .then(response => response.json())
         .then(responseJson => {
+          console.log( 'data' + responseJson.toString);
+
           setloading(false)
           if(responseJson.Status)
           console.log( 'front' +  front ,responseJson.ResponseData)
@@ -595,8 +611,8 @@ x
           >
             <View style={Styles.dialogue}>
               <View style={Styles.dialogueContainer}>
-                <Text style={Styles.dialogCamera} onPress={launchCamera}>Camera</Text>
-                <Image style={{ width: 280, height: 1, backgroundColor: '#e1e1e1'}} />
+                {/* <Text style={Styles.dialogCamera} onPress={launchCamera}>Camera</Text>
+                <Image style={{ width: 280, height: 1, backgroundColor: '#e1e1e1'}} /> */}
                 <Text style={Styles.dialogCamera} onPress={launchImageLibrary}>Gallery</Text>
                 <Image style={{ width: 280, height: 1, backgroundColor: '#e1e1e1'}} />
                 <Text style={Styles.dialogCamera} onPress={selectFile}>File</Text>
@@ -620,16 +636,15 @@ x
           onCancel={() => setSingleVisible(false)}
           onOk={result => {   
       if (typeof(result.selectedItem) !== 'undefined' || result.selectedItem != null) {
-      setSingleVisible(false)
+         setSingleVisible(false)
         if(current_dialogue == 'district')                    
         {
           setDistrict(result.selectedItem.value)
           setDistrict_name(result.selectedItem.label) 
           var data = new URLSearchParams();
           data.append('Did',result.selectedItem.value);
-
-        data.append('MobileNo', MyData.mobile);
-        data.append('TokenNo', MyData.token);
+          data.append('MobileNo', MyData.mobile);
+          data.append('TokenNo', MyData.token);
           _retrieveData(data.toString() ,'GetCentersByDID')
 
         }  

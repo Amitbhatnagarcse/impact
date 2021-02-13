@@ -1,6 +1,6 @@
 {
   "name": "impacts",
-  "version": "0.0.1",
+  "version": "1.0.1.21",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

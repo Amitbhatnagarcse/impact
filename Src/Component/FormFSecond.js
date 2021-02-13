@@ -430,7 +430,9 @@ class FormFSecond extends Component
     
      <SafeAreaView style={styles.containersafe}>
         {this._headerBar()}
-        <ScrollView style={styles.container}>
+        <ScrollView 
+        keyboardShouldPersistTaps='handled'
+        style={styles.container}>
         <MultiPickerMaterialDialog
           title={"Pick one or more options"}
           scrolled

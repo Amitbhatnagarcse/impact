@@ -9,6 +9,7 @@ import {
   Text,
 } from 'react-native';
 import {BlueColor} from '../../Constants'
+import { version } from '../../package.json';
 
 
 const window = Dimensions.get('window');
@@ -52,6 +53,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     color:'#fff',
 
+  },
+  itembottom: {
+    fontSize: 12,
+    fontWeight: '300',
+    color:'#fff',
+    
+    marginTop: -20
   },
 });
 
@@ -114,7 +122,18 @@ export default function Menu({ onItemSelected , type , navigation , role , item 
       </Text>
       </>
 }
+
+<Text
+        onPress={() =>
+          {
+          onItemSelected()
+         }}
+        style={styles.itembottom}
+      >Version {version}
+      </Text>
+
     </ScrollView>
+ 
   );
 }
 

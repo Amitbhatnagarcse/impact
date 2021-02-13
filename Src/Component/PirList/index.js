@@ -45,7 +45,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const PirList = ({navigation, route}) => {
-  const {item, distname, year_my} = route.params;
+  const {item, distname, year_my } = route.params;
 
   const [role, setrole] = useState('');
   const [district_id, setDistrict] = useState('');
@@ -162,7 +162,7 @@ const PirList = ({navigation, route}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log('response', front);
-        console.log('response', responseJson);
+        console.warn('response', responseJson);
         console.log('response length', responseJson.ResponseData.length);
         //alert(JSON.stringify(front))
         setloading(false);
@@ -259,6 +259,7 @@ const PirList = ({navigation, route}) => {
   };
 
   const _renderItem = (item, index, navigation_) => {
+    console.warn(role)
     return (
       <Item
         item={item}
@@ -369,7 +370,7 @@ const PirList = ({navigation, route}) => {
         {_headerBar()}
 
         <View style={Styles.inputboxview}>
-          <Text style={Styles.inputtextbig}> District </Text>
+          <Text style={Styles.inputtextbig}> {distname === 'State' ? distname :'District'} </Text>
 
           <Text style={Styles.inputliketext}>{distname}</Text>
         </View>
@@ -391,9 +392,13 @@ const PirList = ({navigation, route}) => {
           /> */}
         </ScrollView>
       </View>
-      {role == '3' && (
+      {(role == '3'  || role == '1' )&& (
         <TouchableOpacity
-          onPress={() => navigation.navigate('InspectionReport')}>
+          onPress={() =>  navigation.navigate('InspectionReport', {
+            did : item,
+            show: false,
+            district_name: distname,
+          })}>
           <Text
             style={{
               backgroundColor: BlueColor,

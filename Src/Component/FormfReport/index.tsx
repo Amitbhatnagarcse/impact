@@ -63,14 +63,13 @@ const FormfReport = ( {navigation} ) => {
          };
 
          const getDaten = async () =>{
-          var date = new Date().getDate(); //Current Date
-          var month = new Date().getMonth() + 1; //Current Month
+          var date = ('0' + new Date().getDate()).slice(-2); //Current Date
+          var month = ('0' + (new Date().getMonth()+1)).slice(-2); //Current Month
           var year = new Date().getFullYear(); //Current Year
-         
           var yesterday = new Date(Date.now() - 864e5);
+          //alert(('0' + (new Date().getMonth()+1)).slice(-2)  + 'date' + month)
            //setDate(''+format(new Date(yesterday), 'yyyy/MM/dd'))  
-           
-           setMaxDate(date + '/' + month + '/' + year)
+           setMaxDate(date+ '/' + month + '/' + year)
            setDate(date + '/' + month + '/' + year)
          }
          const readData = async () => {
@@ -139,7 +138,7 @@ const backAction = () => {
         mode="date"
         placeholder="select date"
         format="DD/MM/YYYY"
-        minDate="2018/05/01"
+        minDate="2012/05/01"
         maxDate={maxdate}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"

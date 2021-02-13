@@ -631,6 +631,7 @@ class FormFInvensive extends Component
      <SafeAreaView style={styles.containersafe}>
         {this._headerBar()}
         <ScrollView 
+          keyboardShouldPersistTaps='handled'
         style={styles.container}
          //ref={ref => {this.scrollView = ref}}
          //onContentSizeChange={(width,height) => this.scrollView.scrollToEnd({animated: true})}

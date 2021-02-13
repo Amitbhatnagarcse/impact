@@ -213,7 +213,7 @@ const DistrrictListPir = ( {navigation , route} ) => {
         />
 
     <View style={Styles.inputboxview} >   
-        <Text style={Styles.inputtext}>Identity Proof</Text>
+        <Text style={Styles.inputtext}>Year</Text>
        <TouchableOpacity style={{width:'50%',flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',}} onPress = {() => setsinglePickerVisible(true)}>

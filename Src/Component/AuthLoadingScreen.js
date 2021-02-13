@@ -2,7 +2,8 @@ import React from 'react'
 import {
   StyleSheet,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  BackHandler,
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -11,11 +12,22 @@ export default class AuthLoadingScreen extends React.Component {
   state = {
     userToken: false
   }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
    componentDidMount () {
    this._retrieveData('role')
-   var pkg = require('../../package.json');     
+   var pkg = require('../../package.json'); 
+   BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    
   }
 
+  handleBackButtonClick() {
+   BackHandler.exitApp();
+    //this.props.navigation.goBack(null);
+    return true;
+  }
   _retrieveData = async (username) => {
   
     try {

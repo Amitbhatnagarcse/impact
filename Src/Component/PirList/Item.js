@@ -14,12 +14,10 @@ import RNFetchBlob from 'rn-fetch-blob'
 import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 import { BASE_URL, BlueColor, Yellowcolour } from '../../../Constants';
 import MyData from '../../helper/MyData';
-import { tr } from 'date-fns/locale';
 
 
 export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
 {
- 
 
   const [loading , setloading] = useState(false)
 
@@ -154,7 +152,7 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
         <Text style={Styles.inputtext}>PIR Appropirate Authority</Text>
         <Text style={Styles.input}  >{item.PIRAppAuth} </Text>
           </View>  */}
-    { role == 0 &&
+    { role == '0'  &&
 
           <View style={Styles.inputboxview} >
           <TouchableOpacity style={Styles.buttonsubmit} onPress={() => editfun(item , true)  }>
