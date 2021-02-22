@@ -14,30 +14,28 @@ export default class AuthLoadingScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
-   componentDidMount () {
-   this._retrieveData('role')
-   var pkg = require('../../package.json'); 
-   BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-    
+  componentDidMount() {
+    this._retrieveData('role')
+    var pkg = require('../../package.json');
+
   }
 
   handleBackButtonClick() {
-   BackHandler.exitApp();
+    BackHandler.exitApp();
     //this.props.navigation.goBack(null);
     return true;
   }
   _retrieveData = async (username) => {
-  
+
     try {
       const value = await AsyncStorage.getItem(username);
       if (value !== null && value !== '') {
         // We have data!!
-        this.props.navigation.navigate('PinScreen');
+        this.props.navigation.replace('PinScreen');
         //this.props.navigation.navigate('SignIn')
 
-      }else{
+      } else {
         this.props.navigation.navigate('SignIn');
         //this.props.navigation.navigate( 'PinScreen')
 
@@ -46,10 +44,10 @@ export default class AuthLoadingScreen extends React.Component {
       // Error retrieving data
     }
   };
-  
+
   render() {
     return (
-      <View style={styles.container}> 
+      <View style={styles.container}>
         <ActivityIndicator size="large" color="#fff" />
       </View>
     )

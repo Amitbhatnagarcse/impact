@@ -7,6 +7,7 @@ export default class MyData {
 
     static token = '';
     static mobile = '';
+    static screenName = '';
 
     constructor(item) {
         MyData.token = item;

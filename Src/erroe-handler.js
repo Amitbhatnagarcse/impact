@@ -1,10 +1,15 @@
 import { setJSExceptionHandler } from 'react-native-exception-handler';
 import crashlytics from '@react-native-firebase/crashlytics';
+import { BackHandler } from 'react-native';
+import MyData from './helper/MyData';
 
 // customise error handler:
 const exceptionhandler = (error) => {
-    crashlytics().log('RN Error log = ' + error);
-    crashlytics().recordError(error);
+  if (MyData.sharedInstance.screenName === "DashBorad") {
+    BackHandler.exitApp();
+  }
+  crashlytics().log('RN Error log = ' + error);
+  crashlytics().recordError(error);
 };
 
 /*
