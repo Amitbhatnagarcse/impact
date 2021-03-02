@@ -371,7 +371,6 @@ x
 
         //Setting Longitude state
         setCurrentLongitude(currentLongitude);
-        
         //Setting Longitude state
         setCurrentLatitude(currentLatitude);
       },
@@ -387,7 +386,7 @@ x
   };
 
   const subscribeLocationLocation = () => {
-    watchID = Geolocation.watchPosition(
+   watchID = Geolocation.watchPosition(
       (position) => {
         //Will give you the location on location change
         

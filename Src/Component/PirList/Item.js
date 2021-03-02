@@ -16,7 +16,7 @@ import { BASE_URL, BlueColor, Yellowcolour } from '../../../Constants';
 import MyData from '../../helper/MyData';
 
 
-export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role} )
+export default function Item( { item  , index ,navigation ,actionPer ,editfun ,role,showonly} )
 {
 
   const [loading , setloading] = useState(false)
@@ -122,13 +122,14 @@ export default function Item( { item  , index ,navigation ,actionPer ,editfun ,r
           </View>
         </OrientationLoadingOverlay>
 
-        <TouchableOpacity style={Styles.inputboxview} onPress={() => editfun(item ,false)  }>
+        {/* <TouchableOpacity style={Styles.inputboxview} onPress={() => editfun(item ,false)  }> */}
+        <TouchableOpacity style={Styles.inputboxview} onPress={() => showonly(item) }>
   
          <View style={Styles.inputboxview} >
         <Text style={Styles.inputtext}>{item.PIRDate} </Text>
         <Text style={Styles.input}  >{item.CenterName} </Text>
         <TouchableOpacity style={Styles.buttonsubmityellow} onPress={() => 
-          _retrieveData('GetPIReportDetail',item.PirId)
+           _retrieveData('GetPIReportDetail',item.PirId)
           }>
         <Image source={file_upload} style={{ right: 2,height:30,width:30,  justifyContent: 'center',
         marginBottom:2,alignItems: 'center'}}/>

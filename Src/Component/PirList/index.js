@@ -145,6 +145,12 @@ const PirList = ({navigation, route}) => {
       district_name: distname,
     });
   };
+  const showonly = async (item) => {
+    navigation.navigate('InspectionReportNew', {
+      id: item,
+      district_name: distname,
+    });
+  };
 
   const _retrieveData = async (data, front, p_id) => {
     console.warn('data', front + data.toString());
@@ -267,6 +273,7 @@ const PirList = ({navigation, route}) => {
         navigation={navigation_}
         actionPer={deleteItemById}
         editfun={editdata}
+        showonly={showonly}
         role={role}
       />
     );

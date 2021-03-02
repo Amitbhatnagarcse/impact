@@ -10,8 +10,6 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
-  View,
-  Text,
   StatusBar,
 } from 'react-native';
 
@@ -41,6 +39,7 @@ import DistrrictOwnerProfile from '../Component/DistrrictOwnerProfile';
 import DistrrictListProfile from '../Component/DistrrictListProfile';
 import UserProfile from '../Component/UserProfile';
 import DistrrictListPir from '../Component/DistrrictListPir';
+import InspectionReportNew from '../Component/InspectionReportView';
 
 
 import {
@@ -103,6 +102,7 @@ function App() {
       <Stack.Screen name="UserProfile" component={UserProfile} />
       <Stack.Screen name="DistrrictListProfile" component={DistrrictListProfile} />
       <Stack.Screen name="DistrrictListPir" component={DistrrictListPir} />
+      <Stack.Screen name="InspectionReportNew" component={InspectionReportNew} />
 
       
       </Stack.Navigator>
