@@ -386,7 +386,7 @@ x
   };
 
   const subscribeLocationLocation = () => {
-   watchID = Geolocation.watchPosition(
+   Geolocation.watchPosition(
       (position) => {
         //Will give you the location on location change
         
@@ -418,7 +418,6 @@ x
   };
    
     useEffect(() => {
-    debugger
     readData()
     if(role != '')
     {
@@ -800,19 +799,12 @@ x
           <Image style={{width: 150, height: 150}} source={imagedata}/>
           </View>
 
-{ submit === 'Submit' &&
- <TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
- <Text style={{	height:40 ,backgroundColor:BlueColor,padding:5,color:'white',paddingTop:10,
-borderColor: 'white',width:'100%',textAlign:'center'}} >{submit}</Text>
-</TouchableOpacity>
-}
-{ submit === 'Update' && route.params.show  &&
+
 <TouchableOpacity style={{width:'100%',alignItems:'center',alignSelf:'center'}}   onPress={() => onSubmit()}>
  <Text style={{	height:40 ,backgroundColor:BlueColor,padding:5,color:'white',paddingTop:10,
 borderColor: 'white',width:'100%',textAlign:'center'}} >{submit}</Text>
 </TouchableOpacity>
 
-}
        
        </SafeAreaView>
   );
